@@ -1,0 +1,212 @@
+<html>
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <title>Joshua Moyers</title>
+      <style>
+         #main {
+            margin: 0 auto;
+            width: 900px;
+         }
+
+         #jmoyers .gist .gist-file {
+            margin: 20px 5px 20px 5px;
+            border: none;
+         }
+
+         #jmoyers .gist .gist-file .gist-meta {
+            height: 14px;
+            font-size: 10px;
+            background-color: white;
+         }
+
+         #jmoyers .gist .gist-file .gist-data {
+            background-color: #E6E6E6;
+            border: 1px solid #CFCFCF;
+            font-size: 14px;
+         }
+      </style>
+      <script src="js/highlight.min.js" type="text/javascript" charset="utf-8"></script>
+      <link rel="stylesheet" href="css/github.css" type="text/css" media="screen" charset="utf-8">
+   </head>
+   <body id="jmoyers">
+      <div id='main'>
+         <div class='post'>
+            <h1>Glue Code is Bullshit</h1>
+            
+            <p>
+            Glue code is useless. Even if it seems trivial to write, it results in
+            wasted time, more bugs, and a boring professional experience. Effective
+            event-driven design can massively reduce cruft.
+            </p>
+
+            <p>
+            Here I catalogue my observations on event implementations I've seen in C++, Cocoa/iOS, 
+            the browser and Node.js over the past few months. I'd say my experience is heavily 
+            colored by my successes with dynamic language event implementations and 
+            I am still struggling with an effective C++ implementation.
+            </p>
+
+
+            <h2>Who's got the right idea?</h2>
+
+            <p>
+            The body of work out there that I prefer is largely based on well-known patterns like
+            <a href='http://en.wikipedia.org/wiki/Observer_pattern'>observer</a> and 
+            <a href='http://en.wikipedia.org/wiki/Publish/subscribe'>pub/sub</a>.
+            </p>
+
+            <p>
+            The good citizens I'd like to reference are as follows:
+            <ul>
+               <li><a href='http://nodejs.org/docs/v0.5.5/api/events.html#events.EventEmitter'>EventEmitter</a> (Node.js)</li>
+               <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html'>NSNotificationCenter</a> (iOS)</li>
+               <li><a href='https://developer.mozilla.org/en/DOM/element.addEventListener'>addEventListener</a> (Browser)</li>
+            </ul>
+
+            <p>
+            They certainly aren't all perfect, especially the browser implementation with
+            all its warts and cross-platform inconsistencies (this version is not properly
+            supported in IE until version 9, for instance). However, every modern application
+            framework for the browser has event support built on top of this mechanism, and as
+            such a lot of people have spent a lot of time agonizing over its design.
+            </p>
+
+            <p>
+            In Node, we have a push metaphor that uses strings to route with a typeless payload. 
+            Here is a simple example to illustrate basic use. This won't blow your mind, but 
+            this concept feeds into and evolves into better abstractions.
+            </p>
+
+            <script src="https://gist.github.com/1193804.js"></script>
+            <pre><code>
+var EventEmitter = require('events').EventEmitter,
+   emitter = new EventEmitter();
+
+emitter.on('channel', function(event){
+   console.log(event);
+});
+
+emitter.emit('channel', {
+   name        : 'Event',
+   description : 'An arbitrary hash of data in an object literal'
+});
+            </code></pre>
+
+            <p>
+            This feels like a simple concept. Like, perhaps <em>too</em> simple.
+            Strings as channel or route specifier? Well, it turns out you can do 
+            some pretty fancy routing if you embrace strings. If you're interested,
+            you can take a look at RabbitMQ
+            <a href='http://www.rabbitmq.com/tutorials/tutorial-five-python.html'>
+            topic exchange examples</a> or 
+            <a href='https://github.com/hij1nx/EventEmitter2'>hij1nx/EventEmitter2</a>.
+            Regardless, you can get pretty far with no DSL related to routing at
+            all. A plain string is expressive, it doesn't require a crufty type definition
+            somewhere, and it can be stored in a hash for quick lookup. The only reasonable
+            downside I've heard is that its succeptible to typos, and you get no compile 
+            time errors. Okay, whatever.
+            </p>
+
+            <h2>Design Considerations</h2>
+
+            <p>
+            For event driven interfaces, I feel like there are a few key design principles
+            which need to be observed to end up with a workable, maintainable design.
+            </p>
+
+            <ul>
+               <li>Avoid the enormous switch statement, or <strong>seperation of concerns</strong></li>
+               <li>Avoid kitchen sink event classes, or <strong>give me only the data I need</strong>
+               <li>Avoid spinning up a thread and blocking on read loops, or <strong>embrace asynchronous push</strong></li>
+               <li>Avoid strongly typed channel/route specifiers, or <strong>keep your routing method generalized</strong></li>
+               <li>Think hard about using an event bus as a global shim, or <strong>scope your emitters with appropriate narrowness</strong></li>
+            </ul>
+
+            <p>
+               There are some ancilliary things that make a huge difference in practice. The biggest being this
+               is usually a hot code path, and therefore needs to be like, <em>fast</em>. There are lots of 
+               interesting issues when it comes to trying to preserve a strongly typed environment. I haven't
+               quite internalized all that just yet, but I have some pointers after having <a href='https://github.com/jmoyers/EventEmitter'>
+               explored a little bit</a>.
+            </p>
+
+            <h2>Seperations of concerns</h2>
+
+            <p>
+            I am not a fan of one big handler, or relying too much on hierarchical delegation.
+            I should not have to go back to a source file that has absolutely nothing to do with
+            the domain business logic to glue one layer to another. It makes for large, unwieldy
+            files that are only loosely tied by logistics, not business or interface logic.
+            </p>
+
+            <p>
+            In other words, big switch statements suck. Even where appropriate, I much prefer a function map
+            or implicit delegation based on good routing logic. Here lies a place where bugs grow and deeply
+            nested blocks flourish.
+            </p>
+
+            <script src="https://gist.github.com/1193790.js?file=event.cpp"></script>
+
+            <p>
+            The alternative is to build your state model such that it updates itself, or has a generic parent that
+            handles that task. There are pitfalls here, depending on how you look at things. Some people prefer 
+            to put as much logic into a model as possible -- Martin Fowler <a href='http://www.martinfowler.com/bliki/AnemicDomainModel.html'>
+            bags on the Anemic Domain Model approach furiously</a>. Some prefer to keep the models as anemic as possible and push
+            logic into a controller or view controller.
+            </p>
+
+            <p>
+            My preference is to have a generic way for an object to keep track of its state. Assume your network 
+            interface is an event emitter that will push data about your models on to specific channels, say with 
+            a channel structure like:</p>
+
+            <script src="https://gist.github.com/1193923.js?file=channel_structure.txt"></script>
+
+            In this case, you can build some assumptions about the channel structure into your models and encapsulate
+            interpreting the state coming off the wire within your model objects. You can also move this logic into an
+            external construct, but I find it convenient that they update themselves.
+
+            <script src="https://gist.github.com/1193923.js?file=user.js"></script>
+
+            <h2>Give me only the data I need</h2>
+
+            <p>
+            This one is relatively simple, but it seems to happen on projects that grow organically over time, especially 
+            in a typed language. You build a class or data structure that is used to propogate data through your event system.
+            You end using the same bus for more than one type of data. And thus a baby kitchen sink class is born. You start using
+            flags and accessors to deleniate usage. If you find yourself building branching logic into event handlers, you are
+            going down the wrong alley. Head it off at the pass.
+            </p>
+
+            <p>
+            A good example is the evolution of <a href='http://socket.io'>socket.io</a>. Pre 0.7, you have exactly one channel over
+            which you could send arbitrary json. Many folks ended up building a shim to properly re-emit more specific events. For example:
+            </p>
+
+            <script src="https://gist.github.com/1210390.js?file=events-pre0.7.js"></script>
+
+            <p>
+            In a post 0.7 world, we have two things build into socket.io that helps you manage contextual complexity in your networking
+            layer. They are custom events and first class channels. Custom events are simple, and you can see it in the first example on
+            their home page:
+            </p>
+
+            <p style='font-weight: bold'>Custom Events, Server</p>
+            <script src="https://gist.github.com/1210390.js?file=post-0.7-server.js"></script>
+
+            <p style='font-weight: bold'>Custom Events, Client</p>
+            <script src="https://gist.github.com/1210390.js?file=post-0.7-client.html"></script>
+
+            <p>
+            The second thing they provide is a <strong>namespace</strong> or channel. This makes the channel concept a first class citizen,
+            and more or less
+
+
+         </div>
+
+      </div>
+      <script type='text/javascript'>
+         hljs.initHighlightingOnLoad();
+      </script>
+   </body>
+</html>
