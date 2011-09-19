@@ -1,20 +1,43 @@
+<!DOCTYPE html>
 <html>
    <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
       <title>Joshua Moyers</title>
       <style>
+         body, html {
+            margin: 0;
+            padding: 0;
+         }
+         h1 {
+            margin-top: 0;
+         }
          #main {
             margin: 0 auto;
-            width: 900px;
+            width: 800px;
+            padding: 30px 50px 30px 50px;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+         }
+
+         #jmoyers pre code {
+            border: 3px solid gray;
+            border-radius: 5px; 
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            padding: 20px;
          }
       </style>
       <script src="js/highlight.min.js" type="text/javascript" charset="utf-8"></script>
-      <link rel="stylesheet" href="css/github.css" type="text/css" media="screen" charset="utf-8">
+      <link rel="stylesheet" href="css/solarized_dark.css" type="text/css" media="screen" charset="utf-8">
    </head>
    <body id="jmoyers">
       <div id='main'>
-         <div class='post'>
-            <h1>Glue Code is Bullshit</h1>
+         <h1>jmoyers <span style='color: #0BD6D6;'>(on)</span> design</h1>
+         <article class='post'>
+            <header>
+               <h2>Modern Events</h2>
+            </header>
             
             <p>
             Glue code is useless. Even if it seems trivial to write, it results in
@@ -29,8 +52,7 @@
             I am still struggling with an effective C++ implementation.
             </p>
 
-
-            <h2>Who's got the right idea?</h2>
+            <h3>Who's got the right idea?</h3>
 
             <p>
             The body of work out there that I prefer is largely based on well-known patterns like
@@ -87,7 +109,7 @@ emitter.emit('channel', {
             time errors. Okay, whatever.
             </p>
 
-            <h2>Design Considerations</h2>
+            <h3>Design Considerations</h3>
 
             <p>
             There are a few key design principles which need to be observed to end up with something workable.
@@ -109,7 +131,7 @@ emitter.emit('channel', {
                explored a little bit</a>.
             </p>
 
-            <h2>Keep it in context</h2>
+            <h3>Keep it in context</h3>
 
             <p>
             I am not a fan of one big handler, or relying too much on hierarchical delegation.
@@ -188,7 +210,7 @@ network.emit("user.92329D39-6F5C-4520-ABFC-AAB64544E172", {
    email: "jmoyers [at] gmail.com"
 });</code></pre>
 
-            <h2>Give me only the data I need</h2>
+            <h3>Give me only the data I need</h3>
 
             <p>
             This one is relatively simple, but it seems to happen on projects that grow organically over time, especially 
@@ -302,7 +324,7 @@ var news = io
             things easier to read for those new to the code base &mdash; there are no complicated shims related to glue.
             </p>
 
-            <h2>Embrace asynchronous push</h2>
+            <h3>Embrace asynchronous push</h3>
 
             <p>
             I think its fair to say that your average networking program uses the OS thread model freely.  Threads are not inexpensive 
@@ -353,7 +375,7 @@ server.listen(8080);</code></pre>
             your platforms asynchronous network api &mdash; the subject of another blog post altogether.
             </p>
 
-            <h2>Keep your routing method generalized</h2>
+            <h3>Keep your routing method generalized</h3>
 
             <p>
             This concept seems to go against the hot code path note from above. Perhaps it does, but I'm not going to guess. I haven't seen someone point out an
@@ -374,7 +396,7 @@ server.listen(8080);</code></pre>
 
             <pre><code>
             </pre></code>
-         </div>
+         </article>
 
       </div>
       <script type='text/javascript'>
