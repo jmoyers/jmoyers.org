@@ -181,7 +181,7 @@
                time errors. Okay, whatever.
                </p>
 
-               <h3>Design Considerations</h3>
+               <h3>Design considerations</h3>
 
                <p>
                There are a few key design principles which need to be observed to end up with something workable.
@@ -472,7 +472,9 @@
          </div>
       </div>
       <script type='text/javascript'>
-         hljs.initHighlightingOnLoad();
+         var animationGuard = false,
+            clicked = false,
+            handled = false;
 
          var headings = $('h2, h3').each(function(){
             var name = $(this).text()
@@ -489,7 +491,6 @@
             $('<li></li>').html(a).appendTo($('#nav ul'));
          });
 
-         var animationGuard = false;
 
          $('#nav').localScroll({
             onBefore: function(){
@@ -502,15 +503,23 @@
             lock: true
          });
 
-         var anchors = $('#nav a');
+         var anchors = $('#nav a').click(function(){
+            clicked = this;
+         });
 
          $(window).scroll($.throttle(1000,function(){
             if (animationGuard) return;
+            if (clicked) {
+               anchors.removeClass('selected');
+               $(clicked).addClass('selected');
+               clicked = false;
+               return;
+            }
             var scrollTop = $(window).scrollTop(),
                 found = false,
                 selected = false;
             headings.each(function(){
-               if (scrollTop >= $(this).offset().top) {
+               if (scrollTop + 50 >= $(this).offset().top) {
                   selected = $('#nav a:contains('+$(this).text()+')');
                   found = true;
                }
@@ -523,6 +532,7 @@
             }
          }));
 
+         hljs.initHighlightingOnLoad();
       </script>
    </body>
 </html>
