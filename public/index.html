@@ -476,15 +476,18 @@
       <script src="js/localscroll.js" type="text/javascript" charset="utf-8"></script>
       <script src="js/throttle.js" type="text/javascript" charset="utf-8"></script>
       <script type='text/javascript'>
+         function urlify(string){
+            return string.replace(/ /g, '-')
+               .replace(/[^a-zA-Z\-]+/g, '')
+               .toLowerCase();
+         }
+
          var animationGuard = false,
             clicked = false,
             handled = false;
 
          var headings = $('h2, h3').each(function(){
-            var name = $(this).text()
-               .replace(/ /g, '-')
-               .replace(/[^a-zA-Z\-]+/g, '')
-               .toLowerCase();
+            var name = urlify($(this).text());
 
             $(this).prepend($('<a name='+name+'></a>'));
 
@@ -540,6 +543,10 @@
       </script>
       <script type="text/javascript">
           var disqus_shortname = 'jmoyers';
+          var disqus_identifier = urlify($($('h2')[0]).text());
+          var disqus_url = 'http://jmoyers.org/' + urlify($($('h2')[0]).text());
+
+          console.log(disqus_shortname, disqus_identifier, disqus_url);
 
           (function() {
               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
