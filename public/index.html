@@ -498,28 +498,27 @@
             onAfter: function(){
                animationGuard = false;
             },
-            hash: true
+            hash: true,
+            lock: true
          });
 
          var anchors = $('#nav a');
 
-         anchors.click(function(){
-            anchors.removeClass('selected');
-            $(this).addClass('selected');
-         });
-
          $(window).scroll($.throttle(1000,function(){
             if (animationGuard) return;
-            var scrollTop = $(window).scrollTop();
-            var found = false;
+            var scrollTop = $(window).scrollTop(),
+                found = false,
+                selected = false;
             headings.each(function(){
                if (scrollTop >= $(this).offset().top) {
+                  selected = $('#nav a:contains('+$(this).text()+')');
                   found = true;
-                  anchors.removeClass('selected');
-                  $('#nav a:contains('+$(this).text()+')').addClass('selected');
                }
             });
-            if (!found) {
+            if (found) {
+               anchors.removeClass('selected');
+               selected.addClass('selected');
+            } else {
                anchors.removeClass('selected');
             }
          }));
