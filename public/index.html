@@ -32,23 +32,24 @@
 
          #nav a {
             display: block;
+            border-bottom: 2px solid white;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
             padding: 3px;
             line-height: 20px;
             color: #cb4b16;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 14px;
          }
 
          #nav a.selected {
-            border-bottom: 2px solid #002b36;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
+            border-bottom: 2px solid #C9C9C9;
          }
 
          #nav a.h2-anchor {
             color: black;
-            font-size: 12px;
+            font-size: 16px;
             display: block;
             width: 100%;
          }
@@ -509,7 +510,7 @@
             clicked = this;
          });
 
-         $(window).scroll($.throttle(1000,function(){
+         $(window).scroll($.throttle(300,function(){
             if (animationGuard) return;
             if (clicked) {
                anchors.removeClass('selected');
