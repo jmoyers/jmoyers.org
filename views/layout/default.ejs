@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <title>Joshua Moyers</title>
+      <link rel="stylesheet" href="css/solarized_dark.css" type="text/css" media="screen" charset="utf-8">
+      <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+      
+      <style>
+         body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Droid Sans', sans-serif;
+         }
+
+         h1, h1 a, h1 a:active, h1 a:hover, h1 a:visited {
+            color: black;
+            text-decoration: none;
+            margin-top: 0;
+         }
+
+         #nav {
+            float: left;
+            position: fixed;
+            width: 150px;
+            margin-top: 100px;
+         }
+
+         a, a:active, a:hover, a:visited {
+            color: #cb5b16; 
+         }
+
+         #nav a {
+            display: block;
+            border-bottom: 2px solid white;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            padding: 3px;
+            line-height: 20px;
+            color: #cb4b16;
+            text-decoration: none;
+            font-size: 14px;
+         }
+
+         #nav a.selected {
+            border-bottom: 2px solid #C9C9C9;
+         }
+
+         #nav a.h2-anchor {
+            color: black;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+         }
+
+         #nav ul {
+            padding: 0;
+            margin: 0;
+         }
+
+         #nav ul li {
+            list-style: none;
+            padding: 3px;
+            margin-bottom: 8px;
+         }
+
+         #container {
+            width: 1250px;
+            margin: 0 auto;
+         }
+
+         #main {
+            background-color: white;
+            width: 800px;
+            margin: 0 auto;
+            padding: 30px 50px 30px 50px;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+         }
+
+         article, code {
+            /** text selection **/
+            position: relative; 
+         }
+
+         #jmoyers pre code {
+            border: 3px solid gray;
+            border-radius: 5px; 
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            padding: 20px;
+         }
+      </style>
+   </head>
+   <body id='jmoyers'>
+      <div id='container'>
+         <div id='nav'>
+            <ul>
+               <li></li>
+            </ul>
+         </div>
+         <div id='main'>
+            <a name='top'></a>
+            <h1><a href='/'>jmoyers <span style='color: #268bd2;'>(on)</span> web</a></h1>
+
+            <%- body %>
+
+            <div id="disqus_thread"></div>
+         </div>
+      </div>
+      <script src="js/highlight.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/scrollto.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/localscroll.js" type="text/javascript" charset="utf-8"></script>
+      <script src="js/throttle.js" type="text/javascript" charset="utf-8"></script>
+      <script type='text/javascript'>
+         function urlify(string){
+            return string.replace(/ /g, '-')
+               .replace(/[^a-zA-Z\-]+/g, '')
+               .toLowerCase();
+         }
+
+         var animationGuard = false,
+            clicked = false,
+            handled = false;
+
+         var headings = $('h2, h3').each(function(){
+            var name = urlify($(this).text());
+
+            $(this).prepend($('<a name='+name+'></a>'));
+
+            var a = $('<a href="#'+name+'"></a>')
+               .html($(this).text())
+               .attr('class', this.nodeName.toLowerCase() + '-anchor');
+
+            $('<li></li>').html(a).appendTo($('#nav ul'));
+         });
+
+
+         $('#nav').localScroll({
+            onBefore: function(){
+               animationGuard = true;
+            },
+            onAfter: function(){
+               animationGuard = false;
+            },
+            hash: true,
+            lock: true
+         });
+
+         var anchors = $('#nav a').click(function(){
+            clicked = this;
+         });
+
+         $(window).scroll($.throttle(300,function(){
+            if (animationGuard) return;
+            if (clicked) {
+               anchors.removeClass('selected');
+               $(clicked).addClass('selected');
+               clicked = false;
+               return;
+            }
+            var scrollTop = $(window).scrollTop(),
+                found = false,
+                selected = false;
+            headings.each(function(){
+               if (scrollTop + 50 >= $(this).offset().top) {
+                  selected = $('#nav a:contains('+$(this).text()+')');
+                  found = true;
+               }
+            });
+            if (found) {
+               anchors.removeClass('selected');
+               selected.addClass('selected');
+            } else {
+               anchors.removeClass('selected');
+            }
+         }));
+
+         hljs.initHighlightingOnLoad();
+      </script>
+      <script type="text/javascript">
+          var disqus_shortname = 'jmoyers';
+          var disqus_identifier = urlify($($('h2')[0]).text());
+          var disqus_url = 'http://jmoyers.org/' + urlify($($('h2')[0]).text());
+
+          console.log(disqus_shortname, disqus_identifier, disqus_url);
+
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      </script>
+   </body>
+</html>

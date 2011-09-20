@@ -1,0 +1,362 @@
+<article>
+   <h2>Modern Events</h2>
+   
+   <p>
+   Glue code is useless. Even if it seems trivial to write, it results in
+   wasted time, more bugs, and a boring professional experience. Effective
+   event-driven design can massively reduce cruft.
+   </p>
+
+   <p>
+   Here I catalogue my observations on event implementations I've seen in C++, Cocoa/iOS, 
+   the browser and Node.js over the past few months. I'd say my experience is heavily 
+   colored by my successes with dynamic language event implementations and 
+   I am still struggling with an effective C++ implementation.
+   </p>
+
+   <h3>Who's got the right idea?</h3>
+
+   <p>
+   The body of work out there that I prefer is largely based on well-known patterns like
+   <a href='http://en.wikipedia.org/wiki/Observer_pattern'>observer</a> and 
+   <a href='http://en.wikipedia.org/wiki/Publish/subscribe'>pub/sub</a>.
+   </p>
+
+   <p>
+   The good citizens I'd like to reference are as follows:
+   <ul>
+      <li><a href='http://nodejs.org/docs/v0.5.5/api/events.html#events.EventEmitter'>EventEmitter</a> (Node.js)</li>
+      <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html'>NSNotificationCenter</a> (iOS)</li>
+      <li><a href='https://developer.mozilla.org/en/DOM/element.addEventListener'>addEventListener</a> (Browser)</li>
+   </ul>
+
+   <p>
+   They certainly aren't all perfect, especially the browser implementation with
+   all its warts and cross-platform inconsistencies (this version is not properly
+   supported in IE until version 9, for instance). However, every modern application
+   framework for the browser has event support built on top of this mechanism, and as
+   such a lot of people have spent a lot of time agonizing over smoothing it over.
+   </p>
+
+   <p>
+   In Node, we have a push metaphor that uses strings to route with a typeless payload. 
+   Here is a simple example to illustrate basic use. This won't blow your mind, but 
+   this concept feeds into and evolves into better abstractions.
+   </p>
+
+   <pre><code>var EventEmitter = require('events').EventEmitter,
+emitter = new EventEmitter();
+
+emitter.on('channel', function(event){
+   console.log(event);
+});
+
+emitter.emit('channel', {
+   name        : 'Event',
+   description : 'An arbitrary hash of data in an object literal'
+});</code></pre>
+
+   <p>
+   This feels like a simple concept. Like, perhaps <em>too</em> simple.
+   Strings as channel or route specifier? Well, it turns out you can do 
+   some pretty fancy routing if you embrace strings. If you're interested,
+   you can take a look at RabbitMQ
+   <a href='http://www.rabbitmq.com/tutorials/tutorial-five-python.html'>
+   topic exchange examples</a> or 
+   <a href='https://github.com/hij1nx/EventEmitter2'>hij1nx/EventEmitter2</a>.
+   Regardless, you can get pretty far with no DSL related to routing at
+   all. A plain string is expressive, it doesn't require a crufty type definition
+   somewhere, and it can be stored in a hash for quick lookup. The only reasonable
+   downside I've heard is that its succeptible to typos, and you get no compile 
+   time errors. Okay, whatever.
+   </p>
+
+   <h3>Design considerations</h3>
+
+   <p>
+   There are a few key design principles which need to be observed to end up with something workable.
+   </p>
+
+   <ul>
+      <li>Avoid the enormous switch statement, or <strong>keep it in context</strong></li>
+      <li>Avoid kitchen sink event classes, or <strong>give me only the data I need</strong>
+      <li>Avoid spinning up a thread and blocking on read loops, or <strong>embrace asynchronous push</strong></li>
+      <li>Avoid strongly typed channel/route specifiers, or <strong>keep your routing method generalized</strong></li>
+      <li>Think hard about using an event bus as a global shim, or <strong>scope your emitters with appropriate narrowness</strong></li>
+   </ul>
+
+   <p>
+      There are some ancilliary things that make a huge difference in practice. The biggest being this
+      is usually a hot code path, and therefore needs to be like, <em>fast</em>. There are lots of 
+      interesting issues when it comes to trying to preserve a strongly typed environment. I haven't
+      quite internalized all that just yet, but I have some pointers after having <a href='https://github.com/jmoyers/EventEmitter'>
+      explored a little bit</a>.
+   </p>
+
+   <h3>Keep it in context</h3>
+
+   <p>
+   I am not a fan of one big handler, or relying too much on hierarchical delegation.
+   I should not have to go back to a source file that has absolutely nothing to do with
+   the domain business logic to glue one layer to another. It makes for large, unwieldy
+   files that are only loosely tied by logistics, not business or interface logic.
+   </p>
+
+   <p>
+   In other words, big switch statements suck. Even where appropriate, I much prefer a function map
+   or implicit delegation based on good routing logic. Here lies a place where bugs grow and deeply
+   nested blocks flourish.
+   </p>
+
+<pre><code>// A little C++ read loop
+while(ReadEvent(&event)){
+   switch(event->type){
+      case EVENT_TYPE_1:
+         // unpack and dispatch
+         break;
+      case EVENT_TYPE_2:
+         // unpack and dispatch
+         break;
+      case EVENT_TYPE_3:
+         // some nested if statements, a loop, dispatch
+         break;
+      // and so on, to infinity
+      }
+   }
+}</pre></code>
+   <p>
+   The alternative is to build your state model such that it updates itself, or has a generic parent that
+   handles that task. There are pitfalls here, depending on how you look at things. Some people prefer 
+   to put as much logic into a model as possible -- Martin Fowler <a href='http://www.martinfowler.com/bliki/AnemicDomainModel.html'>
+   bags on the Anemic Domain Model approach furiously</a>. Some prefer to keep the models as anemic as possible and push
+   logic into a controller or view controller.
+   </p>
+
+   <p>
+   My preference is to have a generic way for an object to keep track of its state. Assume your network 
+   interface is an event emitter that will push data about your models on to specific channels, say with 
+   a channel structure like: <pre></code>entity.id [or] user.92329D39-6F5C-4520-ABFC-AAB64544E172</code></pre>
+
+   In this case, you can build some assumptions about the channel structure into your models and encapsulate
+   interpreting the state coming off the wire within your model objects. You can also move this logic into an
+   external construct, but I find it convenient that they update themselves.
+
+<pre><code>// The constructor for the User object. We pass the network interface in the 
+// constructor as a contrived example
+function User(network){
+   // The attributes we're interested in tracking
+   this.attributes = {
+      first_name: "",
+      last_name: "",
+      email: ""
+   };
+
+   // Uniquely identify the model
+   this.id = uuid();
+
+   // Subscribe to events about this particular model
+   network.on("user." + this.id, function(state){
+      // And our model is in sync
+      this.attributes = state;
+   }.bind(this));
+}
+
+var user = new User(network);
+
+// Here an example of an event the network interface might fire. We get a state
+// update over the wire, and emit this as an event on the {entity.id} channel.
+// The objects listening for state updates on this entity will see this new data
+network.emit("user.92329D39-6F5C-4520-ABFC-AAB64544E172", {
+   first_name: "Joshua",
+   last_name: "Moyers",
+   email: "jmoyers [at] gmail.com"
+});</code></pre>
+
+   <h3>Give me only the data I need</h3>
+
+   <p>
+   This one is relatively simple, but it seems to happen on projects that grow organically over time, especially 
+   in a typed language. You build a class or data structure that is used to propogate data through your event system.
+   You end using the same bus for more than one type of data. And thus a baby kitchen sink class is born. You start using
+   flags and accessors to deleniate usage. 
+   </p>
+
+   <p>
+   If you find yourself building branching logic into event handlers, you are
+   going down the wrong alley. Head it off at the pass with sufficiently narrow event emitters and data structures that
+   have the data you need and no more. Think hard about whether you should put the state itself on the events, or provide 
+   a pointer. I'm generally a fan of including the data itself on an event, rather than a pointer &mdash; this way one can
+   reason about the threading model and not have to worry about locks. This data is <strong>mine</strong>!
+   </p>
+
+   <p>
+   A good example is the evolution of <a href='http://socket.io'>socket.io</a>. Pre 0.7, you have exactly one channel over
+   which you could send arbitrary json-encoded data. Many folks ended up building a shim to properly re-emit more specific events. 
+   For example:
+   </p>
+
+<pre><code>// Subscribe to the generic `message` event on the socket interface
+// We'll use this as a shim to re-emit the generic message on a more specific channel
+socket.on('message', function(data) {
+   // Pull the event type off the object
+   var type = data.type;
+
+   // Delete the event type from the object
+   delete data.type;
+
+   // Re-emit the object on a channel specific to the event type
+   socket.emit(type, data);
+});
+
+socket.on('more-specific-event', function(data){
+   // Here we can build a more specific handler and keep
+   // control logic and nested if statements related to 
+   // event handling out of our application logic
+});</code></pre>
+
+   <p>
+   In a post 0.7 world, we have two things built into socket.io that helps you manage contextual complexity in your networking
+   layer. They are custom events and first class channels. Custom events are simple, and you can see it in the first example on
+   their home page:
+   </p>
+
+   <p style='font-weight: bold'>Custom Events, Server</p>
+<pre><code>var io = require('socket.io').listen(80);
+
+io.sockets.on('connection', function (socket) {
+   socket.emit('news', { hello: 'world' });
+   socket.on('my other event', function (data) {
+      console.log(data);
+   });
+});</code></pre>
+
+   <p style='font-weight: bold'>Custom Events, Client</p>
+<pre><code>&lt;script src=&quot;/socket.io/socket.io.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+var socket = io.connect('http://localhost');
+socket.on('news', function (data) {
+   console.log(data);
+   socket.emit('my other event', { my: 'data' });
+});
+&lt;/script&gt;</pre></code>
+   <p>
+   In short, you can emit directly on the socket, and transparently it fires on the client side with event of the same name. This
+   conveniently removes the need for the data event shim shown in my first example. This gets you further down the road of writing
+   sufficiently specific event handlers.
+   </p>
+
+   <p>
+   The second thing they provide is a <strong>namespace</strong> or channel. This makes the channel concept a first class citizen,
+   and does so without having to open many websocket connections.
+   </p>
+
+   <p style='font-weight: bold;'>Namespaced Channels, Server</p>
+<pre><code>// Listen for websocket connections on port 80
+var io = require('socket.io').listen(80);
+
+// Namespace the chat object to the /chat route. Events specific to chat will
+// be fired over this channel, and you can hang more specific event handlers
+// off this object
+var chat = io
+   .of('/chat')
+   .on('connection', function (socket) {
+   socket.emit('a message', {
+      that: 'only'
+    , '/chat': 'will get'
+   });
+
+   chat.emit('a message', {
+      everyone: 'in'
+    , '/chat': 'will get'
+   });
+});
+
+// Same goes for this news object. This provides a way to effectively 
+// compartmentalize business logic
+var news = io
+   .of('/news')
+   .on('connection', function (socket) {
+      socket.emit('item', { news: 'item' });
+   });</pre></code>
+
+   <p>
+   As you can see, in this model, we are given two objects, chat and news, which are essentially there to provide a place to hang 
+   business logic specific to those channels. If you keep a good domain driven design, these channels can be sufficiently specific
+   such that you're able to write code only applicable to one part of the application at a time. This is quite nice from a context
+   perspective, because you know very specifically that you're working on <em>just news</em> or <em>just chat</em>. It also makes
+   things easier to read for those new to the code base &mdash; there are no complicated shims related to glue.
+   </p>
+
+   <h3>Embrace asynchronous push</h3>
+
+   <p>
+   I think its fair to say that your average networking program uses the OS thread model freely.  Threads are not inexpensive 
+   (the default thread stack ranges from small to many megabytes). Some use threads more efficiently than others: they will 
+   employ a <a href='http://en.wikipedia.org/wiki/Thread_pool_pattern'>Thread Pool</a> or some other resource management tactic. 
+   Mostly, we are doing it because it is convenient. However, when you consider the relative problem: the internet is much, much, 
+   <em>much</em> slower than RAM or local computation. You spend an enormous amount of time just sitting around waiting
+   on the network. This doesn't mean the threads are actually <em>scheduled</em>, but as we know, locks, semaphores, and other 
+   constructs to deal with multi-threaded data access are simply not fun to reason about and can lead to some of the most heinous 
+   debugging sessions ever.
+   </p>
+
+   <p>
+   Most platforms have a way for the OS to notify you that a file descriptors state has changed. 
+   There's <a href='http://en.wikipedia.org/wiki/Input/output_completion_port'>IOCP</a> on Windows, and select, kqueue, epoll on *nix 
+   platforms. Node.js embraces these asynchronous API's, and with the help of libev (now wrapped in <a href='https://github.com/joyent/libuv'>
+   libuv</a> for cross-platform compatibility) event loop, its able to maintain a low memory and thread footprint with tens of thousands of
+   connections. <a href='http://en.wikipedia.org/wiki/New_I/O'>NIO</a> does something similar for the JVM, and I believe the Jetty web server
+   uses this tech under the covers.
+   </p>
+
+   <p>
+   Mostly, it seems like a well design program using this model will employ the use of the smallest possible language construct that
+   encapsulates a unit of work. This is often an anonymous function, block, or lambda. I enjoy programs that use this model because of
+   their simplicity. Others will employ something larger, such as a named function, or even a class. I enjoy these less because they 
+   encourage what in my opinion is unecessary structure. Consider this node program:
+
+   <pre><code class='javascript'>var http = require('http');
+
+// Create a server and pass in the request handler function
+var server = http.createServer(function(req, res){
+   // You have a handle to the request and the response, both if which are evented
+   // streams. You can listen for data events from the request if you need to
+   // parse data incrementally from the client, for instance.
+   //
+   // For our purposes, we'll just immediately respond
+   res.end('Hello world!');
+});
+
+// Listen on port 8080
+server.listen(8080);</code></pre>
+
+   <p>
+   This is your standard hello world gobbledy gook &mdash; however, you will notice a few things. First is the use of the anonymous function.
+   You are passing a handler to this newly created http server in the form of the smallest language construct capable of encapsulating a behavior.
+   Second is that there is no thread model present at this layer of code. You are not responsible for managing a thread pool, or spinning up a blocking
+   read loop on another thread. Instead you can focus on the application logic. Under the hood, this is powered by an event loop in combination with
+   your platforms asynchronous network api &mdash; the subject of another blog post altogether.
+   </p>
+
+   <h3>Keep your routing method generalized</h3>
+
+   <p>
+   This concept seems to go against the hot code path note from above. Perhaps it does, but I'm not going to guess. I haven't seen someone point out an
+   objective benchmark saying this is a bottleneck. I have embraced strings &mdash; some in the typed language world might call it inappropriate use of 
+   `magic constants`. You know, you see somebody just arbitrarily add 10 to some variable. Why is it 10 and not 20? Is it padding, margin, correcting 
+   an offset?</p>
+   
+   <p>However, strings are naturally pretty expressive and they also keep you from having to define arbitrary data structures such as enums or 
+   class static const variables to categorize things. On the other hand, the compiler is not going to hold your hand and tell you you've made 
+   a typo. Thats frustrating to some. I've learned to deal with that efficiently.
+   </p>
+
+   <p>
+   One can also take things up a notch and define complicated routing logic. You can find this kind of thing in a topic exchange message queue,
+   where you can subscribe to a group of channels by specifying a wildcard, such as 'user.*' &mdash; one can subscribe to updates about all users. This is also
+   common in the web development world when specifying routes on an applciation server. Take <a href='expressjs.com'>Express</a> for example:
+   </p>
+
+   <pre><code>
+   </pre></code>
+</article>
