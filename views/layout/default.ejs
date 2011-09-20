@@ -31,6 +31,11 @@
             margin-top: 0;
          }
 
+         #nav h1, #nav h1 a, #nav h1 a:active, #nav h1 a:hover, #nav h1 a:visited {
+            color: black;
+            font-size: 18px;
+         }
+
          a, a:active, a:hover, a:visited {
             color: #cb5b16; 
          }
@@ -38,8 +43,8 @@
          #nav {
             position: fixed;
             height: 100%;
-            width: 170px;
-            padding-top: 90px;
+            width: 200px;
+            padding-top: 40px;
             -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
             -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
@@ -47,13 +52,13 @@
          } 
 
          #nav a {
+            text-align: center;
             display: block;
-            border-bottom: 2px solid white;
             padding: 3px;
-            line-height: 20px;
+            line-height: 30px;
             color: #cb4b16;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 12px;
          }
 
          #nav a.h2-anchor {
@@ -74,15 +79,14 @@
          }
 
          #main {
-            left: 180px;
-            width: 750px;
+            left: 210px;
+            width: 800px;
             position: absolute;
             background-color: white;
             padding: 30px 50px 30px 50px;
          }
 
          article, code {
-            /** text selection **/
             position: relative; 
          }
 
@@ -96,7 +100,7 @@
 
          #arrow {
             position: absolute;
-            left: 169px;
+            left: 199px;
          }
 
          .arrow {
@@ -116,7 +120,7 @@
             border-width: 20px;
             height: 0;
             width: 0;
-            left: 1px;
+            left: 0px;
             z-index: 999;
             position: absolute;
          }
@@ -125,6 +129,7 @@
    <body id='jmoyers'>
       <div id='container'>
          <div id='nav'>
+            <h1><a href='/'>jmoyers <span style='color: #268bd2;'>(on)</span> web</a></h1>
             <div id='arrow'>
                <div class='arrow'></div>
                <div class='arrow-border'></div>
@@ -134,7 +139,6 @@
          </div>
          <div id='main'>
             <a name='top'></a>
-            <h1><a href='/'>jmoyers <span style='color: #268bd2;'>(on)</span> web</a></h1>
 
             <%- body %>
 
