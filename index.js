@@ -14,17 +14,28 @@ function urlify(string){
    return string.replace(/ /g, '-')                                    
       .replace(/[^a-zA-Z\-]+/g, '')                                    
       .toLowerCase();                                                  
-} 
+}
+
+var posts = [];
+
+function createPostRoute(file){
+   console.log('Creating route for %s', file);
+   var view = urlify(file.substring(0, file.indexOf('.')));
+   var handler = function(req, res){
+      res.render(file, {
+         layout: 'layout/default.ejs'
+      });
+   }
+   app.get('/posts/' + view, handler);
+   return handler;
+}
 
 fs.readdir('views', function(err, files){
-   files.forEach(function(file){
-      var view = urlify(file.substring(0, file.indexOf('.')));
-      app.get('/' + view, function(req, res){
-         res.render(file, {
-            layout: 'layout/default.ejs'
-         });
-      });
-   });
+   posts = files.filter(function(f){
+      return ~f.indexOf('.html')
+   }).map(createPostRoute);
+   app.get('/', posts[0]);
 });
+
 
 app.listen(8080)
