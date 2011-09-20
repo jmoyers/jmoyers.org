@@ -7,6 +7,17 @@
       <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
       
       <style>
+         #dsq-subscribe {
+            display: none;
+         }
+         .dsq-trackback-url {
+            display: none;
+         }
+
+         #dsq-num-posts {
+            display: none;
+         }
+
          body, html {
             margin: 0;
             padding: 0;
@@ -186,9 +197,7 @@
       <script type="text/javascript">
           var disqus_shortname = 'jmoyers';
           var disqus_identifier = urlify($($('h2')[0]).text());
-          var disqus_url = 'http://jmoyers.org/' + urlify($($('h2')[0]).text());
-
-          console.log(disqus_shortname, disqus_identifier, disqus_url);
+          var disqus_url = 'http://jmoyers.org/posts/' + urlify($($('h2')[0]).text());
 
           (function() {
               var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
