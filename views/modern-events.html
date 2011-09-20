@@ -27,6 +27,7 @@
    <ul>
       <li><a href='http://nodejs.org/docs/v0.5.5/api/events.html#events.EventEmitter'>EventEmitter</a> (Node.js)</li>
       <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html'>NSNotificationCenter</a> (iOS)</li>
+      <li>Key Value Observing (iOS)</li>
       <li><a href='https://developer.mozilla.org/en/DOM/element.addEventListener'>addEventListener</a> (Browser)</li>
    </ul>
 
@@ -260,16 +261,16 @@ var io = require('socket.io').listen(80);
 var chat = io
    .of('/chat')
    .on('connection', function (socket) {
-   socket.emit('a message', {
-      that: 'only'
-    , '/chat': 'will get'
-   });
+      socket.emit('a message', {
+         that: 'only'
+       , '/chat': 'will get'
+      });
 
-   chat.emit('a message', {
-      everyone: 'in'
-    , '/chat': 'will get'
+      chat.emit('a message', {
+         everyone: 'in'
+       , '/chat': 'will get'
+      });
    });
-});
 
 // Same goes for this news object. This provides a way to effectively 
 // compartmentalize business logic
@@ -290,39 +291,29 @@ var news = io
    <h3>Embrace asynchronous push</h3>
 
    <p>
-   I think its fair to say that your average networking program uses the OS thread model freely.  Threads are not inexpensive 
-   (the default thread stack ranges from small to many megabytes). Some use threads more efficiently than others: they will 
-   employ a <a href='http://en.wikipedia.org/wiki/Thread_pool_pattern'>Thread Pool</a> or some other resource management tactic. 
-   Mostly, we are doing it because it is convenient. However, when you consider the relative problem: the internet is much, much, 
-   <em>much</em> slower than RAM or local computation. You spend an enormous amount of time just sitting around waiting
-   on the network. This doesn't mean the threads are actually <em>scheduled</em>, but as we know, locks, semaphores, and other 
-   constructs to deal with multi-threaded data access are simply not fun to reason about and can lead to some of the most heinous 
-   debugging sessions ever.
+   People use threads freely.  That is to say, it is convenient to spin up a thread when you need to attach to a blocking api,
+   such as a socket or reading from disk. They are not exactly free. There is a default thread stack which is totally platform 
+   dependent. Sometimes you have to reason about mutable shared memory &mdash; deadlocks, livelocks. I'm not saying you can't mitigate some of 
+   these problems. Embracing share-nothing and immutable memory. <a href='http://en.wikipedia.org/wiki/Thread_pool_pattern'>Thread Pools</a> 
+   or resource sharing tactics.
    </p>
 
    <p>
-   Most platforms have a way for the OS to notify you that a file descriptors state has changed. 
-   There's <a href='http://en.wikipedia.org/wiki/Input/output_completion_port'>IOCP</a> on Windows, and select, kqueue, epoll on *nix 
-   platforms. Node.js embraces these asynchronous API's, and with the help of libev (now wrapped in <a href='https://github.com/joyent/libuv'>
-   libuv</a> for cross-platform compatibility) event loop, its able to maintain a low memory and thread footprint with tens of thousands of
-   connections. <a href='http://en.wikipedia.org/wiki/New_I/O'>NIO</a> does something similar for the JVM, and I believe the Jetty web server
-   uses this tech under the covers.
+   However, for a large class of problems you are simply waiting &mdash; you are doing no active computation. You just want to be notified
+   about a network event. Consider the following node program.
    </p>
-
-   <p>
-   Mostly, it seems like a well design program using this model will employ the use of the smallest possible language construct that
-   encapsulates a unit of work. This is often an anonymous function, block, or lambda. I enjoy programs that use this model because of
-   their simplicity. Others will employ something larger, such as a named function, or even a class. I enjoy these less because they 
-   encourage what in my opinion is unecessary structure. Consider this node program:
 
    <pre><code class='javascript'>var http = require('http');
 
 // Create a server and pass in the request handler function
 var server = http.createServer(function(req, res){
+   // SOMEONE HAS CONNECTED! YES, I HAVE BEEN NOTIFIED!
+
    // You have a handle to the request and the response, both if which are evented
    // streams. You can listen for data events from the request if you need to
-   // parse data incrementally from the client, for instance.
-   //
+   // parse data incrementally from the client, or send data incrementally out
+   // through the request
+
    // For our purposes, we'll just immediately respond
    res.end('Hello world!');
 });
@@ -330,33 +321,80 @@ var server = http.createServer(function(req, res){
 // Listen on port 8080
 server.listen(8080);</code></pre>
 
-   <p>
-   This is your standard hello world gobbledy gook &mdash; however, you will notice a few things. First is the use of the anonymous function.
-   You are passing a handler to this newly created http server in the form of the smallest language construct capable of encapsulating a behavior.
-   Second is that there is no thread model present at this layer of code. You are not responsible for managing a thread pool, or spinning up a blocking
-   read loop on another thread. Instead you can focus on the application logic. Under the hood, this is powered by an event loop in combination with
-   your platforms asynchronous network api &mdash; the subject of another blog post altogether.
+   <ul>
+      <li>We use the smallest language construct capable of encapsulating behavior as the listener, the function</li>
+      <li>There is no thread model present at this level of the application. No read loop, no locks/mutexes or worry over shared data</li>
+      <li>As described, here we are simply waiting on someone to connect, so that we may exhange some data with them.</li>
+      <li>
+         Under the hood this is powered by select, kqueue, epoll, or <a href='http://en.wikipedia.org/wiki/Input/output_completion_port'>IOCP</a>
+         and an event loop powered by <a href='https://github.com/joyent/libuv'>libuv</a>. Low memory and thread footprint.
+      </li>
+   </ul>
+
+   There we go. I can focus on my application now and not reasoning about a deadlock, livelock, or how to manage a resource pool.
+   As for the underlying technique, <a href='http://en.wikipedia.org/wiki/New_I/O'>NIO</a> does something similar for the JVM. Erlang
+   takes a slightly different and also effective approach with their process model.
    </p>
 
    <h3>Keep your routing method generalized</h3>
 
    <p>
-   This concept seems to go against the hot code path note from above. Perhaps it does, but I'm not going to guess. I haven't seen someone point out an
-   objective benchmark saying this is a bottleneck. I have embraced strings &mdash; some in the typed language world might call it inappropriate use of 
-   `magic constants`. You know, you see somebody just arbitrarily add 10 to some variable. Why is it 10 and not 20? Is it padding, margin, correcting 
-   an offset?</p>
+   Maybe this seems like an inappropriate use of 'magic constants.' Perhaps you are worried about the compiler not catching typos.
+   Bah to you! Come up with a similarly flexible non-crufty typed representation capable of deeply nested topic trees, and I'll give
+   you a high five. Until then, I just don't make typos. No, but seriously, web developers are used to very quick run + debug cycles.
+   Typos add no significant overhead to my workflow. I can't speak for everybody. 
    
-   <p>However, strings are naturally pretty expressive and they also keep you from having to define arbitrary data structures such as enums or 
-   class static const variables to categorize things. On the other hand, the compiler is not going to hold your hand and tell you you've made 
-   a typo. Thats frustrating to some. I've learned to deal with that efficiently.
+   <p>
+   Strings are naturally expressive and they also keep you from having to define arbitrary data structures such as enums or 
+   class static const variables to categorize things.  One can also take things up a notch and define complicated routing 
+   logic. You can find this kind of thing in a topic exchange message queue, where you can subscribe to a group of channels 
+   by specifying a wildcard, such as 'user.*' &mdash; one can subscribe to updates about all users. This is also common in 
+   the web development world when specifying routes on an applciation server. Take <a href='http://expressjs.com'>Express</a> for 
+   example:
+   </p>
+
+   <pre><code>var express = require('express');
+var app = express.createServer();
+
+// String based routing in express takes the form app.get(routeString, handler)
+
+app.get('/', function(req, res){
+   res.end('Hello root!');
+});
+
+app.get('/lady', function(req, res){
+   res.end('Hello lady!');
+});
+
+app.get('/man', function(req, res){
+   res.end('Hello man!');
+});
+
+// The express routing DSL lets you introduced named parameters that will be
+// parsed into the request object under `params`
+
+app.get('/dude/:name', function(req, res){
+   res.end('Hello dude named ' + req.params.name);
+});
+
+app.listen(8080);</pre></code>
+
+   <p>
+   This routing DSL goes quite deep. The Express home page show something like 
+   15 - 25 examples which range from very simple static routes, to very complex 
+   wildcard based logic. In web, you often express the content type as part of 
+   these headers (a la .xml or .json) as an alternative to http headers. Its very flexible.
    </p>
 
    <p>
-   One can also take things up a notch and define complicated routing logic. You can find this kind of thing in a topic exchange message queue,
-   where you can subscribe to a group of channels by specifying a wildcard, such as 'user.*' &mdash; one can subscribe to updates about all users. This is also
-   common in the web development world when specifying routes on an applciation server. Take <a href='expressjs.com'>Express</a> for example:
+   Also, you don't have to trust the node dorks. Take a look around:
+   <ul>
+      <li>Sinatra (Ruby via xx)</li>
+      <li>Tornado (Python via FriendFeed/Facebook)
+      <li>Silex (PHP via Fabien)</li>
+   </ul>
+   There's also the fact that this has been around in the form of apache
+   rewrite rules for some time. It just sucked hugely to write Apache rewrite
+   rules.
    </p>
-
-   <pre><code>
-   </pre></code>
 </article>

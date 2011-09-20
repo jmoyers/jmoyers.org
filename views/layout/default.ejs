@@ -31,23 +31,24 @@
             margin-top: 0;
          }
 
-         #nav {
-            float: left;
-            position: fixed;
-            width: 150px;
-            margin-top: 100px;
-         }
-
          a, a:active, a:hover, a:visited {
             color: #cb5b16; 
          }
 
+         #nav {
+            position: fixed;
+            height: 100%;
+            width: 170px;
+            padding-top: 90px;
+            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            border-right: 2px solid gray;
+         } 
+
          #nav a {
             display: block;
             border-bottom: 2px solid white;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
             padding: 3px;
             line-height: 20px;
             color: #cb4b16;
@@ -55,15 +56,10 @@
             font-size: 14px;
          }
 
-         #nav a.selected {
-            border-bottom: 2px solid #C9C9C9;
-         }
-
          #nav a.h2-anchor {
             color: black;
             font-size: 16px;
             display: block;
-            width: 100%;
          }
 
          #nav ul {
@@ -77,19 +73,12 @@
             margin-bottom: 8px;
          }
 
-         #container {
-            width: 1250px;
-            margin: 0 auto;
-         }
-
          #main {
+            left: 180px;
+            width: 750px;
+            position: absolute;
             background-color: white;
-            width: 800px;
-            margin: 0 auto;
             padding: 30px 50px 30px 50px;
-            -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-            -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
          }
 
          article, code {
@@ -104,11 +93,42 @@
             -webkit-border-radius: 5px;
             padding: 20px;
          }
+
+         #arrow {
+            position: absolute;
+            left: 169px;
+         }
+
+         .arrow {
+            border-color: transparent transparent transparent gray;
+            border-style: solid;
+            border-width: 20px;
+            position:absolute;
+            height: 0;
+            width: 0;
+            left: 3px;
+            z-index: 998;
+         }
+
+         .arrow-border {
+            border-color: transparent transparent transparent white;
+            border-style: solid;
+            border-width: 20px;
+            height: 0;
+            width: 0;
+            left: 1px;
+            z-index: 999;
+            position: absolute;
+         }
       </style>
    </head>
    <body id='jmoyers'>
       <div id='container'>
          <div id='nav'>
+            <div id='arrow'>
+               <div class='arrow'></div>
+               <div class='arrow-border'></div>
+            </div>
             <ul>
             </ul>
          </div>
@@ -163,34 +183,21 @@
             lock: true
          });
 
-         var anchors = $('#nav a').click(function(){
-            clicked = this;
-         });
-
-         $(window).scroll($.throttle(300,function(){
+         $(window).scroll(function(){
             if (animationGuard) return;
-            if (clicked) {
-               anchors.removeClass('selected');
-               $(clicked).addClass('selected');
-               clicked = false;
-               return;
-            }
             var scrollTop = $(window).scrollTop(),
                 found = false,
                 selected = false;
             headings.each(function(){
-               if (scrollTop + 50 >= $(this).offset().top) {
+               if (scrollTop + 30 >= $(this).offset().top) {
                   selected = $('#nav a:contains('+$(this).text()+')');
                   found = true;
                }
             });
             if (found) {
-               anchors.removeClass('selected');
-               selected.addClass('selected');
-            } else {
-               anchors.removeClass('selected');
-            }
-         }));
+               $('#arrow').css('top', selected.position().top - 5 + 'px');
+            } 
+         });
 
          hljs.initHighlightingOnLoad();
       </script>
