@@ -139,10 +139,7 @@
             </ul>
          </div>
          <div id='main'>
-            <a name='top'></a>
-
             <%- body %>
-
             <div id="disqus_thread"></div>
          </div>
       </div>
@@ -194,7 +191,7 @@
                 found = false,
                 selected = false;
             headings.each(function(){
-               if (scrollTop + 30 >= $(this).offset().top) {
+               if (scrollTop >= $(this).offset().top) {
                   selected = $('#nav a:contains('+$(this).text()+')');
                   found = true;
                }

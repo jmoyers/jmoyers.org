@@ -17,18 +17,17 @@
    <h3>Who's got the right idea?</h3>
 
    <p>
-   The body of work out there that I prefer is largely based on well-known patterns like
-   <a href='http://en.wikipedia.org/wiki/Observer_pattern'>observer</a> and 
-   <a href='http://en.wikipedia.org/wiki/Publish/subscribe'>pub/sub</a>.
+   I prefer the <a href='http://en.wikipedia.org/wiki/Observer_pattern'>observer</a> and 
+   <a href='http://en.wikipedia.org/wiki/Publish/subscribe'>pub/sub</a> patterns.
    </p>
 
    <p>
-   The good citizens I'd like to reference are as follows:
+   A few good citizens:
    <ul>
-      <li><a href='http://nodejs.org/docs/v0.5.5/api/events.html#events.EventEmitter'>EventEmitter</a> (Node.js)</li>
-      <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html'>NSNotificationCenter</a> (iOS)</li>
-      <li>Key Value Observing (iOS)</li>
-      <li><a href='https://developer.mozilla.org/en/DOM/element.addEventListener'>addEventListener</a> (Browser)</li>
+      <li><a href='http://nodejs.org/docs/v0.5.5/api/events.html#events.EventEmitter'>EventEmitter</a> (Node.js on Back-end)</li>
+      <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSNotificationCenter_Class/Reference/Reference.html'>NSNotificationCenter</a> (iOS - Front-end)</li>
+      <li><a href='http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html'>Key Value Observing</a> (iOS - Front-end)</li>
+      <li><a href='https://developer.mozilla.org/en/DOM/element.addEventListener'>addEventListener</a> (Browser - Front-end)</li>
    </ul>
 
    <p>
@@ -74,24 +73,19 @@ emitter.emit('channel', {
 
    <h3>Design considerations</h3>
 
-   <p>
-   There are a few key design principles which need to be observed to end up with something workable.
-   </p>
-
    <ul>
       <li>Avoid the enormous switch statement, or <strong>keep it in context</strong></li>
       <li>Avoid kitchen sink event classes, or <strong>give me only the data I need</strong>
       <li>Avoid spinning up a thread and blocking on read loops, or <strong>embrace asynchronous push</strong></li>
       <li>Avoid strongly typed channel/route specifiers, or <strong>keep your routing method generalized</strong></li>
-      <li>Think hard about using an event bus as a global shim, or <strong>scope your emitters with appropriate narrowness</strong></li>
    </ul>
 
    <p>
-      There are some ancilliary things that make a huge difference in practice. The biggest being this
-      is usually a hot code path, and therefore needs to be like, <em>fast</em>. There are lots of 
-      interesting issues when it comes to trying to preserve a strongly typed environment. I haven't
-      quite internalized all that just yet, but I have some pointers after having <a href='https://github.com/jmoyers/EventEmitter'>
-      explored a little bit</a>.
+      There are some ancilliary things that make a huge difference in practice. Event can be a 
+      a hot code path, especially in a server application, and therefore needs to be like, <em>fast</em>. 
+      There are a lot of interesting practical issues around API in a strongly typed language, mostly
+      around maintaining the right balance between type safety and complexity. I've done some exploring
+      on an EventEmitter implementation in C++ <a href='http://github.com/jmoyers/EventEmitter'>here</a>.
    </p>
 
    <h3>Keep it in context</h3>
@@ -176,16 +170,13 @@ network.emit("user.92329D39-6F5C-4520-ABFC-AAB64544E172", {
    <h3>Give me only the data I need</h3>
 
    <p>
-   This one is relatively simple, but it seems to happen on projects that grow organically over time, especially 
-   in a typed language. You build a class or data structure that is used to propogate data through your event system.
-   You end using the same bus for more than one type of data. And thus a baby kitchen sink class is born. You start using
-   flags and accessors to deleniate usage. 
-   </p>
-
-   <p>
    If you find yourself building branching logic into event handlers, you are
    going down the wrong alley. Head it off at the pass with sufficiently narrow event emitters and data structures that
-   have the data you need and no more. Think hard about whether you should put the state itself on the events, or provide 
+   have the data you need and no more.
+   </p>
+   
+   <p>
+   Think hard about whether you should put the state itself on the events, or provide 
    a pointer. I'm generally a fan of including the data itself on an event, rather than a pointer &mdash; this way one can
    reason about the threading model and not have to worry about locks. This data is <strong>mine</strong>!
    </p>
@@ -281,11 +272,13 @@ var news = io
    });</pre></code>
 
    <p>
-   As you can see, in this model, we are given two objects, chat and news, which are essentially there to provide a place to hang 
-   business logic specific to those channels. If you keep a good domain driven design, these channels can be sufficiently specific
-   such that you're able to write code only applicable to one part of the application at a time. This is quite nice from a context
-   perspective, because you know very specifically that you're working on <em>just news</em> or <em>just chat</em>. It also makes
-   things easier to read for those new to the code base &mdash; there are no complicated shims related to glue.
+   <ul>
+      <li>No shims for subscribing to a more specific channel</li>
+      <li>
+      If you maintain good domain driven design, channels allow your code to be
+      nicely specific to a given part of the business logic. You're working on
+      <em>just chat</em>, or <em>just news</em>
+   </ul>
    </p>
 
    <h3>Embrace asynchronous push</h3>
@@ -389,12 +382,14 @@ app.listen(8080);</pre></code>
    <p>
    Also, you don't have to trust the node dorks. Take a look around:
    <ul>
-      <li>Sinatra (Ruby via xx)</li>
-      <li>Tornado (Python via FriendFeed/Facebook)
-      <li>Silex (PHP via Fabien)</li>
+      <li><a href='https://github.com/sinatra/sinatra'>Sinatra</a> (Ruby via <a href='https://github.com/bmizerany'>Blake Mizerany</a>)</li>
+      <li><a href='https://github.com/facebook/tornado'>Tornado</a> (Python via <a href='https://github.com/facebook'>FriendFeed/Facebook</a>)
+      <li><a href='https://github.com/fabpot/Silex'>Silex</a> (PHP via <a href='https://github.com/fabpot'>Fabien Potencier</a>)</li>
    </ul>
-   There's also the fact that this has been around in the form of apache
-   rewrite rules for some time. It just sucked hugely to write Apache rewrite
-   rules.
+   </p>
+   <p>
+   There's tons more that could be said about how this same concept applies to the UI.
+   However, I'll cut things short there. Hopefully there's enough to get your brain thinking
+   about events as more of a scalpel than a hammer.
    </p>
 </article>
