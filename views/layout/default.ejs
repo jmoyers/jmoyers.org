@@ -183,7 +183,7 @@
             lock: true
          });
 
-         $(window).scroll(function(){
+         $(window).scroll($.throttle(100,function(){
             if (animationGuard) return;
             var scrollTop = $(window).scrollTop(),
                 found = false,
@@ -195,9 +195,11 @@
                }
             });
             if (found) {
-               $('#arrow').css('top', selected.position().top - 5 + 'px');
+               var arrow = $('#arrow');
+               var newTop = selected.position().top + (selected.height()/2) - 15;
+               arrow.css('top', newTop + 'px');
             } 
-         });
+         }));
 
          hljs.initHighlightingOnLoad();
       </script>
