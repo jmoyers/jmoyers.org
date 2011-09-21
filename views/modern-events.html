@@ -123,31 +123,77 @@ while(ReadEvent(&event)){
    }
 }</pre></code>
    <p>
-   The alternative is to build your state model such that it updates itself, or has a generic parent that
-   handles that task. There are pitfalls here, depending on how you look at things. Some people prefer 
-   to put as much logic into a model as possible -- Martin Fowler <a href='http://www.martinfowler.com/bliki/AnemicDomainModel.html'>
-   bags on the Anemic Domain Model approach furiously</a>. Some prefer to keep the models as anemic as possible and push
-   logic into a controller or view controller.
+   The alternative is to push data directly to subscribers who care via callback. So, we need to...
    </p>
+
+   <h3>Embrace asynchronous push</h3>
+
+   <p>
+   People use threads freely.  That is to say, it is convenient to spin up a thread when you need to attach to a blocking api,
+   such as a socket or reading from disk. They are not exactly free. There is a default thread stack which is totally platform 
+   dependent. Sometimes you have to reason about mutable shared memory &mdash; deadlocks, livelocks. I'm not saying you can't mitigate some of 
+   these problems. Embracing share-nothing and immutable memory. <a href='http://en.wikipedia.org/wiki/Thread_pool_pattern'>Thread Pools</a> 
+   or resource sharing tactics.
+   </p>
+
+   <p>
+   However, for a large class of problems you are simply waiting &mdash; you are doing no active computation. You just want to be notified
+   about a network event. Consider the following node program.
+   </p>
+
+   <pre><code class='javascript'>var http = require('http');
+
+// Create a server and pass in the request handler function
+var server = http.createServer(function(req, res){
+   // SOMEONE HAS CONNECTED! YES, I HAVE BEEN NOTIFIED!
+
+   // You have a handle to the request and the response, both if which are evented
+   // streams. You can listen for data events from the request if you need to
+   // parse data incrementally from the client, or send data incrementally out
+   // through the request
+
+   // For our purposes, we'll just immediately respond
+   res.end('Hello world!');
+});
+
+// Listen on port 8080
+server.listen(8080);</code></pre>
+
+   <ul>
+      <li>We use the smallest language construct capable of encapsulating behavior as the listener, the function</li>
+      <li>There is no thread model present at this level of the application. No read loop, no locks/mutexes or worry over shared data</li>
+      <li>As described, here we are simply waiting on someone to connect, so that we may exhange some data with them.</li>
+      <li>
+         Under the hood this is powered by select, kqueue, epoll, or <a href='http://en.wikipedia.org/wiki/Input/output_completion_port'>IOCP</a>
+         and an event loop powered by <a href='https://github.com/joyent/libuv'>libuv</a>. Low memory and thread footprint.
+      </li>
+   </ul>
+
+   There we go. I can focus on my application now and not reasoning about a deadlock, livelock, or how to manage a resource pool.
+   As for the underlying technique, <a href='http://en.wikipedia.org/wiki/New_I/O'>NIO</a> does something similar for the JVM. Erlang
+   takes a slightly different and also effective approach with their <a href='http://www.erlang.org/doc/efficiency_guide/processes.html'>process model</a>.
+   </p>
+
 
    <h3>Give me only the data I need</h3>
 
    <p>
    If you find yourself building branching logic into event handlers, you are
-   going down the wrong alley. Head it off at the pass with sufficiently narrow event emitters and data structures that
+   going down the wrong alley. Combat this with sufficiently narrow event emitters and data structures that
    have the data you need and no more.
    </p>
    
    <p>
    Think hard about whether you should put the state itself on the events, or provide 
-   a pointer. I'm generally a fan of including the data itself on an event, rather than a pointer &mdash; this way one can
-   reason about the threading model and not have to worry about locks. This data is <strong>mine</strong>!
+   a pointer. If multiple people can access and mutate this data, we have problems. If its
+   immutable, thats much more acceptable &mdash; you don't have to reason about locks.
    </p>
 
    <p>
    A good example is the evolution of <a href='http://socket.io'>socket.io</a>. Pre 0.7, you have exactly one channel over
-   which you could send arbitrary json-encoded data. Many folks ended up building a shim to properly re-emit more specific events. 
-   For example:
+   which you could send arbitrary json-encoded data. If you only have a generic 'message' channel, you end up with a switch
+   statement and a bunch of logic creeping in until you get fed up and build a shim to re-emit more specific events based on
+   a type. See below example of this shim.
    </p>
 
 <pre><code>// Subscribe to the generic `message` event on the socket interface
@@ -242,54 +288,11 @@ var news = io
       nicely specific to a given part of the business logic. You're working on
       <em>just chat</em>, or <em>just news</em>
    </ul>
-   </p>
-
-   <h3>Embrace asynchronous push</h3>
-
-   <p>
-   People use threads freely.  That is to say, it is convenient to spin up a thread when you need to attach to a blocking api,
-   such as a socket or reading from disk. They are not exactly free. There is a default thread stack which is totally platform 
-   dependent. Sometimes you have to reason about mutable shared memory &mdash; deadlocks, livelocks. I'm not saying you can't mitigate some of 
-   these problems. Embracing share-nothing and immutable memory. <a href='http://en.wikipedia.org/wiki/Thread_pool_pattern'>Thread Pools</a> 
-   or resource sharing tactics.
-   </p>
-
-   <p>
-   However, for a large class of problems you are simply waiting &mdash; you are doing no active computation. You just want to be notified
-   about a network event. Consider the following node program.
-   </p>
-
-   <pre><code class='javascript'>var http = require('http');
-
-// Create a server and pass in the request handler function
-var server = http.createServer(function(req, res){
-   // SOMEONE HAS CONNECTED! YES, I HAVE BEEN NOTIFIED!
-
-   // You have a handle to the request and the response, both if which are evented
-   // streams. You can listen for data events from the request if you need to
-   // parse data incrementally from the client, or send data incrementally out
-   // through the request
-
-   // For our purposes, we'll just immediately respond
-   res.end('Hello world!');
-});
-
-// Listen on port 8080
-server.listen(8080);</code></pre>
-
-   <ul>
-      <li>We use the smallest language construct capable of encapsulating behavior as the listener, the function</li>
-      <li>There is no thread model present at this level of the application. No read loop, no locks/mutexes or worry over shared data</li>
-      <li>As described, here we are simply waiting on someone to connect, so that we may exhange some data with them.</li>
-      <li>
-         Under the hood this is powered by select, kqueue, epoll, or <a href='http://en.wikipedia.org/wiki/Input/output_completion_port'>IOCP</a>
-         and an event loop powered by <a href='https://github.com/joyent/libuv'>libuv</a>. Low memory and thread footprint.
-      </li>
-   </ul>
-
-   There we go. I can focus on my application now and not reasoning about a deadlock, livelock, or how to manage a resource pool.
-   As for the underlying technique, <a href='http://en.wikipedia.org/wiki/New_I/O'>NIO</a> does something similar for the JVM. Erlang
-   takes a slightly different and also effective approach with their process model.
+   
+   You can now even imagine a world where the models themselves are aware of state coming off the wire and can update themselves. 
+   There are pitfalls here, depending on how you look at things. Some people prefer to put as much logic into a model as possible &mdash;
+   Martin Fowler <a href='http://www.martinfowler.com/bliki/AnemicDomainModel.html'> bags on the Anemic Domain Model approach 
+   furiously</a>. Some prefer to keep the models as anemic as possible and push logic into a controller.
    </p>
 
    <h3>Keep your routing method generalized</h3>
