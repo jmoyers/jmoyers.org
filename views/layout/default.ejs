@@ -151,7 +151,7 @@
       <script type='text/javascript'>
          function urlify(string){
             return string.replace(/ /g, '-')
-               .replace(/[^a-zA-Z\-]+/g, '')
+               .replace(/[^a-zA-Z0-9\-]+/g, '')
                .toLowerCase();
          }
 
@@ -172,7 +172,7 @@
          });
 
          var title = $('h2');
-         title.wrapInner('<a href="posts/'+urlify(title.text())+'" />');
+         title.wrapInner('<a href="/posts/'+urlify(title.text())+'" />');
 
          $('#nav').localScroll({
             onBefore: function(){
@@ -199,9 +199,8 @@
                selected = $('#nav a:contains('+headings.first().text()+')');
             }
 
-            var arrow = $('#arrow');
             var newTop = selected.position().top + (selected.height()/2) - 15;
-            arrow.css('top', newTop + 'px');
+            $('#arrow').css('top', newTop + 'px');
             selected = false;
          }));
 
