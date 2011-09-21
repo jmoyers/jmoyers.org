@@ -185,22 +185,24 @@
             lock: true
          });
 
-         $(window).scroll($.throttle(100,function(){
+         $(window).scroll($.debounce(100,function(){
             if (animationGuard) return;
             var scrollTop = $(window).scrollTop(),
-                found = false,
                 selected = false;
             headings.each(function(){
                if (scrollTop >= $(this).offset().top) {
                   selected = $('#nav a:contains('+$(this).text()+')');
-                  found = true;
                }
             });
-            if (found) {
-               var arrow = $('#arrow');
-               var newTop = selected.position().top + (selected.height()/2) - 15;
-               arrow.css('top', newTop + 'px');
-            } 
+            
+            if (!selected) {
+               selected = $('#nav a:contains('+headings.first().text()+')');
+            }
+
+            var arrow = $('#arrow');
+            var newTop = selected.position().top + (selected.height()/2) - 15;
+            arrow.css('top', newTop + 'px');
+            selected = false;
          }));
 
          hljs.initHighlightingOnLoad();
