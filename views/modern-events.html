@@ -34,44 +34,9 @@
    </ul>
 
    <p>
-   They certainly aren't all perfect, especially the browser implementation with
-   all its warts and cross-platform inconsistencies (this version is not properly
-   supported in IE until version 9, for instance). However, every modern application
-   framework for the browser has event support built on top of this mechanism, and as
-   such a lot of people have spent a lot of time agonizing over smoothing it over.
-   </p>
-
-   <p>
-   In Node, we have a push metaphor that uses strings to route with a typeless payload. 
-   Here is a simple example to illustrate basic use. This won't blow your mind, but 
-   this concept feeds into and evolves into better abstractions.
-   </p>
-
-   <pre><code>var EventEmitter = require('events').EventEmitter,
-emitter = new EventEmitter();
-
-emitter.on('channel', function(event){
-   console.log(event);
-});
-
-emitter.emit('channel', {
-   name        : 'Event',
-   description : 'An arbitrary hash of data in an object literal'
-});</code></pre>
-
-   <p>
-   This feels like a simple concept. Like, perhaps <em>too</em> simple.
-   Strings as channel or route specifier? Well, it turns out you can do 
-   some pretty fancy routing if you embrace strings. If you're interested,
-   you can take a look at RabbitMQ
-   <a href='http://www.rabbitmq.com/tutorials/tutorial-five-python.html'>
-   topic exchange examples</a> or 
-   <a href='https://github.com/hij1nx/EventEmitter2'>hij1nx/EventEmitter2</a>.
-   Regardless, you can get pretty far with no DSL related to routing at
-   all. A plain string is expressive, it doesn't require a crufty type definition
-   somewhere, and it can be stored in a hash for quick lookup. The only reasonable
-   downside I've heard is that its succeptible to typos, and you get no compile 
-   time errors. Okay, whatever.
+   They aren't all perfect. The browser implementation has tons of inconsistencies.
+   The iOS ones are, in typical objective-c fashion, <em>verbose</em>. However, they
+   all share the same reverence for a few core principles.
    </p>
 
    <h3>Design considerations</h3>
