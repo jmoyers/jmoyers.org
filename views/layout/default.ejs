@@ -190,7 +190,7 @@
             var scrollTop = $(window).scrollTop(),
                 selected = false;
             headings.each(function(){
-               if (scrollTop >= $(this).offset().top) {
+               if (scrollTop + 10 >= $(this).offset().top) {
                   selected = $('#nav a:contains('+$(this).text()+')');
                }
             });
