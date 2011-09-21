@@ -130,46 +130,6 @@ while(ReadEvent(&event)){
    logic into a controller or view controller.
    </p>
 
-   <p>
-   My preference is to have a generic way for an object to keep track of its state. Assume your network 
-   interface is an event emitter that will push data about your models on to specific channels, say with 
-   a channel structure like: <pre></code>entity.id [or] user.92329D39-6F5C-4520-ABFC-AAB64544E172</code></pre>
-
-   In this case, you can build some assumptions about the channel structure into your models and encapsulate
-   interpreting the state coming off the wire within your model objects. You can also move this logic into an
-   external construct, but I find it convenient that they update themselves.
-
-<pre><code>// The constructor for the User object. We pass the network interface in the 
-// constructor as a contrived example
-function User(network){
-   // The attributes we're interested in tracking
-   this.attributes = {
-      first_name: "",
-      last_name: "",
-      email: ""
-   };
-
-   // Uniquely identify the model
-   this.id = uuid();
-
-   // Subscribe to events about this particular model
-   network.on("user." + this.id, function(state){
-      // And our model is in sync
-      this.attributes = state;
-   }.bind(this));
-}
-
-var user = new User(network);
-
-// Here an example of an event the network interface might fire. We get a state
-// update over the wire, and emit this as an event on the {entity.id} channel.
-// The objects listening for state updates on this entity will see this new data
-network.emit("user.92329D39-6F5C-4520-ABFC-AAB64544E172", {
-   first_name: "Joshua",
-   last_name: "Moyers",
-   email: "jmoyers [at] gmail.com"
-});</code></pre>
-
    <h3>Give me only the data I need</h3>
 
    <p>
