@@ -1,0 +1,31 @@
+{
+  "name": "jmoyers.org",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "serve.js",
+  "dependencies": {
+    "async": "~0.1.10",
+    "express": "~3.1.0",
+    "ejs": "~0.4.3",
+    "grunt": "~0.4.0",
+    "grunt-contrib-less": "~0.5.0",
+    "node-uuid": "~1.2.0",
+    "optimist": "~0.2.6",
+    "grunt-contrib-less": "~0.5.0",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jmoyers/jmoyers.org.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "gitHead": "e8883148aa0e0eced8c3373fbeddd15eaea9025c"
+}
