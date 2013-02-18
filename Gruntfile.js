@@ -12,6 +12,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    uglify: {
+      production: {
+        files: {
+          "public/js/output.js": ["src/client_js/*.js"]
+        }
+      }
+    },
     jshint: {
       files: ['gruntfile.js', 'src/**/*.js'],
       options: {
