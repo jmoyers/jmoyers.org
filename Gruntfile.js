@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -8,20 +10,29 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "public/css/main.css": "src/less/main.less"
+          "public/css/main.css": ["src/style/*"]
         }
       }
     },
     uglify: {
+      options: {
+        mangle: false
+      },
       production: {
         files: {
-          "public/js/output.js": ["src/client_js/*.js"]
+          "public/js/client.js": [
+            "src/client_js/jquery-1.9.1.js", 
+            "src/client_js/highlight.js",
+            "src/client_js/bootstrap.js"
+          ]
         }
       }
     },
     jshint: {
-      files: ['gruntfile.js', 'src/**/*.js'],
+      files: ['gruntfile.js', 'main.js'],
       options: {
+        node: true,
+        es5: true,
         globals: {
           jQuery: true,
           console: true,
@@ -31,8 +42,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>', 'src/less/*'],
-      tasks: ['jshint', 'less']
+      files: ['<%= jshint.files %>', 'src/style/*.less', 'src/style/*.css'],
+      tasks: ['jshint', 'less', 'uglify']
     }
   });
 
@@ -41,6 +52,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.registerTask('default', ['jshint', 'less']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'less']);
 
 };
