@@ -879,6 +879,7 @@ h2{font-size:22px;margin:30px 0 5px 0;}
 .job h3{margin-top:0;}
 p,ul,li{font-size:18px;line-height:120%;}
 p{margin-bottom:20px;}
+.job p{margin-bottom:5px;}
 
 pre code{display:block;padding:0.5em;background:#002b36;color:#839496;}
 pre .comment,pre .template_comment,pre .diff .header,pre .doctype,pre .lisp .string,pre .javadoc{color:#586e75;font-style:italic;}
