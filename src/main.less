@@ -1,4 +1,7 @@
-@import "components/bootstrap/less/variables.less";
+@import "components/bootstrap/less/bootstrap.less";
+@import "components/source/github.less";
+@import "components/source/solarized.less";
+@import "fonts.less";
 
 body {
   font-family: "Open Sans", arial, sans-serif;
@@ -14,65 +17,105 @@ body {
   }
 
   .header {
-    border-bottom: 5px solid #dddddd;
-    padding: 0 0 30px 0;
-    margin: 0 0 30px 0;
+    @header-padding: 30px;
+    @header-margin: 30px;
 
-    .profile {
-      @media (min-width: @screen-sm-min) {
-        float: right;
-        padding-right: 1px;
+    @unstacked-layout: @screen-sm-min;
+
+    @photo-width: 185px;
+    @photo-width-unstacked: 165px;
+
+    border-bottom: 5px solid #dddddd;
+    padding: 0 0 @header-padding 0;
+    margin: 0 0 @header-margin 0;
+    position: relative;
+
+    .navigation {
+      overflow: auto;
+      text-align: center;
+
+      @media (min-width: @unstacked-layout) {
+        position: absolute;
+        bottom: @header-padding;
+        text-align: left;
       }
 
-      img {
-        @media (min-width: @screen-sm-min) {
-          width: 155px;
-          margin-bottom: 0;
-          float: right;
-        }
+      ul {
+        position: relative;
+        overflow: auto;
+        display: inline-block;
+        margin: 20px auto 0 auto;
+        padding: 0;
+        font-size: 25px;
+        font-weight: 700;
+        list-style: none;
 
-        width: 185px;
-        height: auto;
-        margin: 0 auto 10px auto;
-        display: block;
+        li {
+          margin: 0 10px 0 10px;
+          float: left;
+          padding: 0;
+        }
       }
     }
 
     .about {
-      @media (min-width: @screen-sm-min) {
-        text-align: right;
-        padding-right: 35px;
-      }
-
       text-align: center;
-    }
 
-    h1 {
-      font-weight: 700;
-      margin: 0;
-    }
-  }
-
-  // List of social icons
-  .social {
-    list-style: none;
-    padding: 0;
-    width: (24 + 5) * 4px;
-    margin: 0 auto;
-
-    @media (min-width: @screen-sm-min) {
-      width: auto;
-    }
-
-    li {
-      @media (min-width: @screen-sm-min) {
-        float: right;
-        margin: 0 0 0 5px;
+      @media (min-width: @unstacked-layout) {
+        text-align: right;
       }
 
-      float: left;
-      margin: 0 5px 0 0;
-      padding: 0;
+      // Hacks: combined with col-md-offset-2
+      // because custom column widths aren't a thing
+      @media (min-width: @screen-md-min) {
+        padding-right: 30px;
+      }
+
+      h1 {
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .social {
+        list-style: none;
+        padding: 0;
+        width: (24 + 5) * 4px;
+        margin: 0 auto;
+        overflow: auto;
+
+        @media (min-width: @unstacked-layout) {
+          width: auto;
+        }
+
+        li {
+          @media (min-width: @unstacked-layout) {
+            float: right;
+            margin: 0 0 0 5px;
+          }
+
+          float: left;
+          margin: 0 5px 0 0;
+          padding: 0;
+        }
+      }
+    }
+
+    .profile {
+      @media (min-width: @unstacked-layout) {
+        padding: 0;
+      }
+
+      img {
+        @media (min-width: @unstacked-layout) {
+          width: @photo-width-unstacked;
+          margin: 0 0 0 auto;
+        }
+
+        width: @photo-width;
+        height: auto;
+        margin: 0 auto 10px auto;
+        display: block;
+      }
     }
   }
 
