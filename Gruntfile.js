@@ -26,8 +26,9 @@ module.exports = function(grunt) {
       production: {
         files: {
           "public/javascript/client.js": [
-            "src/components/bootstrap/js/carousel.js",
             "src/components/jquery/dist/jquery.js",
+            "src/components/bootstrap/js/transition.js",
+            "src/components/bootstrap/js/carousel.js",
             "src/components/source/highlight.js"
           ]
         }

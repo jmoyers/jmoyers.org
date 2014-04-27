@@ -1,100 +1,73 @@
+@import "components/bootstrap/less/variables.less";
+
 body {
-  background: url(/image/dark_matter.png);
-  font-family: "Open Sans";
-  color: rgb(71, 82, 97);
+  font-family: "Open Sans", arial, sans-serif;
+  color: #424242;
 }
 
-#profile-photo {
-  border: 1px solid #EEEEEE;
-}
+.main {
+  max-width: 900px;
 
-h1 {
-  line-height: 30px;
-  margin: 10px 0 0 0;
-  font-size: 28px;
-}
-
-.title {
-  line-height: 24px;
-  margin: 0 0 0 0;
-  font-weight: normal;
-  font-size: 22px;
-}
-
-.location {
-  color: gray;
-  font-size: 12px;
-}
-
-#social {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-#social li {
-  float: left;
-  margin-right: 5px;
-  padding: 0;
-}
-
-#summary {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: 14px;
-  font-weight: bold;
-  margin: 20px 0 0 0;
-  line-height: 18px;
-}
-
-.aside {
-  font-weight: normal;
-  font-style: italic;
-}
-
-#main {
-  background-color: white;
   margin-top: 40px;
-  padding: 30px;
   margin-right: auto;
   margin-left: auto;
-  max-width: 900px;
-}
+  padding: 30px;
 
-h2 {
-  font-size: 22px;
-  margin: 30px 0 5px 0;
-}
+  // Photo
+  .profile {
+    @media (min-width: @screen-sm-min) {
+      float: right;
+    }
 
-// Carousel label doesn't overlap with fixed size team space image
-#teamspace-carousel .carousel-caption {
-  position: relative;
-  margin-top: -10px;
-}
+    img {
+      @media (min-width: @screen-sm-min) {
+        height: 125px;
+        margin-bottom: 0;
+        float: right;
+      }
+      height: 165px;
+      margin-bottom: 10px;
+    }
+  }
 
-.job {
-  margin-bottom: 25px;
-}
+  .about {
+    @media (min-width: @screen-sm-min) {
+      text-align: right;
+      padding-right: 20px;
+    }
+  }
 
-.job h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 20px 0 0 0;
-  line-height: 18px;
-  margin-top: 0;
-}
+  // Joshua
+  h1 {
+    font-weight: 700;
+    margin: 0;
+  }
 
-p, ul, li {
-  font-size: 18px;
-  line-height: 120%;
-}
+  h2 {
+    margin: 0;
+  }
 
-p {
-  margin-bottom: 20px;
-}
 
-.job p {
-  margin-bottom: 20px;
+  // List of social icons
+  .social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      @media (min-width: @screen-sm-min) {
+        float: right;
+        margin: 0 0 0 5px;
+      }
+
+      float: left;
+      margin: 0 5px 0 0;
+      padding: 0;
+    }
+  }
+
+  // Inline company logo in job listing
+  .company {
+    height: 25px;
+  }
 }
