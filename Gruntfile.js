@@ -10,7 +10,12 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "public/css/main.css": ["src/style/*"]
+          "public/style/main.css": [
+            "src/components/bootstrap/less/bootstrap.less",
+            "src/source/github.css",
+            "src/source/solarized.css",
+            "src/main.less"
+          ]
         }
       }
     },
@@ -20,10 +25,10 @@ module.exports = function(grunt) {
       },
       production: {
         files: {
-          "public/js/client.js": [
-            "src/client_js/jquery-1.9.1.js", 
-            "src/client_js/highlight.js",
-            "src/client_js/bootstrap.js"
+          "public/javascript/client.js": [
+            "src/components/bootstrap/js/carousel.js",
+            "src/components/jquery/dist/jquery.js",
+            "src/components/source/highlight.js"
           ]
         }
       }
@@ -32,7 +37,6 @@ module.exports = function(grunt) {
       files: ['gruntfile.js', 'main.js'],
       options: {
         node: true,
-        es5: true,
         globals: {
           jQuery: true,
           console: true,

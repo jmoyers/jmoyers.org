@@ -1,6 +1,8 @@
 var express = require('express'),
-  app = express();
+  app = express(),
+  compress = require('compression')();
 
-app.use(express.compress());
+app.use(compress);
 app.use(express.static(__dirname + '/public'));
+
 app.listen(8080);
