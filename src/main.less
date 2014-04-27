@@ -13,46 +13,67 @@ body {
   margin-left: auto;
   padding: 30px;
 
-  // Photo
-  .profile {
-    @media (min-width: @screen-sm-min) {
-      float: right;
-    }
+  .header {
+    border-bottom: 5px solid #dddddd;
+    padding: 0 0 30px 0;
+    margin: 0 0 30px 0;
 
-    img {
+    .profile {
       @media (min-width: @screen-sm-min) {
-        height: 125px;
-        margin-bottom: 0;
         float: right;
+        padding-right: 1px;
       }
-      height: 165px;
-      margin-bottom: 10px;
-    }
-  }
 
-  .about {
-    @media (min-width: @screen-sm-min) {
-      text-align: right;
-      padding-right: 20px;
-    }
-  }
+      img {
+        @media (min-width: @screen-sm-min) {
+          width: 155px;
+          margin-bottom: 0;
+          float: right;
+        }
 
-  // Joshua
-  h1 {
-    font-weight: 700;
-    margin: 0;
+        width: 185px;
+        height: auto;
+        margin: 0 auto 10px auto;
+        display: block;
+      }
+    }
+
+    .about {
+      @media (min-width: @screen-sm-min) {
+        text-align: right;
+        padding-right: 35px;
+      }
+
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 700;
+      margin: 0;
+    }
   }
 
   h2 {
-    margin: 0;
+    font-weight: 600;
+    margin: 30px 0 20px 0;
   }
 
+  h3 {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 25px 0 10px 0;
+  }
 
   // List of social icons
   .social {
     list-style: none;
-    margin: 0;
     padding: 0;
+    width: (24 + 5) * 4px;
+    margin: 0 auto;
+
+    @media (min-width: @screen-sm-min) {
+      width: auto;
+    }
 
     li {
       @media (min-width: @screen-sm-min) {
@@ -66,8 +87,30 @@ body {
     }
   }
 
-  // Inline company logo in job listing
-  .company {
-    height: 25px;
+  .job {
+    h3 {
+      margin-bottom: 0;
+    }
+
+    .location {
+      line-height: 1;
+      margin-bottom: 15px;
+      color: #b6b6b6;
+    }
+
+    // Inline company logo in job listing
+    .company {
+      height: 25px;
+    }
+  }
+
+
+  p {
+    line-height: 1.6;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+
+    margin: 0 0 15px 0;
   }
 }
