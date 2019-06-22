@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "main": "main.js",
   "dependencies": {
+    "compression": "^1.0.1",
     "express": "^4.1.0",
-    "compression": "^1.0.1"
+    "http-proxy-middleware": "^0.15.0"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
