@@ -1,6 +1,7 @@
 *.swp
 .DS_Store
 node_modules
+backup
 .idea
 public/random
 public/img/u
