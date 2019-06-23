@@ -3,9 +3,10 @@
 node_modules
 backup
 .idea
-public/random
-public/img/u
-src/components/bootstrap
-src/components/jquery
-public/book
-public/compilers
+*terraform.tfvars*
+.terraform
+assets
+*.tfstate*
+*id_rsa*
+*.ssh*
+*out.plan*

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# https://stackoverflow.com/a/246128/128581
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+docker save static | gzip | pv | ssh -i $DIR/../.ssh/id_rsa root@$(terraform output -state=$DIR/../terraform.tfstate public_ip) 'gunzip | docker load'

@@ -12,4 +12,4 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run-script", "production"]
+CMD ["npm", "run-script", "prod"]

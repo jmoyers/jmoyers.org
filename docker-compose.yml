@@ -12,13 +12,17 @@ configs:
     name: nginx${stack_configs_nginx_conf_file}
 services:
   static:
-    image: jmoyers_org
+    image: static
+    networks:
+      - overlay
+    environment:
+      - STATIC_PORT=8000
   https:
     image: nginx:1.16.0-alpine
 		command: ["nginx", "-g", "daemon off;"]
     secrets:
-      - dev.opencourse.app-certchain.crt
-      - dev.opencourse.app.key
+      - jmoyers.org-certchain.crt
+      - jmoyers.org.key
 		configs:
 			- source: nginx_conf
 				target: /etc/nginx/conf.d/nginx.conf	
