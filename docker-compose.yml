@@ -1,0 +1,29 @@
+version: "3.7"
+secrets:
+  # public facing ssl certs for dev.opencourse.app, loaded into the nginx
+  # instance to terminate ssl for our dev cluster
+  jmoyers.org-certchain.crt:
+    file: ./.ssl/jmoyers.org-certchain.crt
+  jmoyers.org.key:
+    file: ./.ssl/jmoyers.org.key
+configs:
+  nginx_conf:
+    file: nginx/nginx.conf
+    name: nginx${stack_configs_nginx_conf_file}
+services:
+  static:
+    image: jmoyers_org
+  https:
+    image: nginx:1.16.0-alpine
+		command: ["nginx", "-g", "daemon off;"]
+    secrets:
+      - dev.opencourse.app-certchain.crt
+      - dev.opencourse.app.key
+		configs:
+			- source: nginx_conf
+				target: /etc/nginx/conf.d/nginx.conf	
+    ports:
+      - 443:443
+			- 80:80
+    networks:
+      - overlay
