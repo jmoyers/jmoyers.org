@@ -7,26 +7,9 @@ resource "digitalocean_droplet" "node01" {
 	image = "ubuntu-16-04-x64"
 	name = "node01"
 	region = "sfo1"
-	size = "512mb"
+	size = "s-1vcpu-1gb"
 	private_networking = false
 	ssh_keys = [digitalocean_ssh_key.default.fingerprint]
-
-  connection {
-    type = "ssh"
-    user = "root"
-    private_key = file(".ssh/id_rsa")
-    host = self.ipv4_address
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "apt update",
-      "apt upgrade",
-      "apt install docker.io",
-      "systemctl start docker",
-      "systemctl enable docker"
-    ]
-  }
 }
 
 output "public_ip" {
@@ -49,10 +32,31 @@ resource "digitalocean_firewall" "default" {
 		port_range         = "80"
 		source_addresses   = ["0.0.0.0/0", "::/0"]
 	}
+  
+  # fetch packages, docker images and so on
+	outbound_rule {
+		protocol                = "tcp"
+		port_range              = "80"
+		destination_addresses   = ["0.0.0.0/0", "::/0"]
+	}
 
+	outbound_rule {
+		protocol                = "tcp"
+		port_range              = "443"
+		destination_addresses   = ["0.0.0.0/0", "::/0"]
+	}
+
+  # static site
 	inbound_rule {
 		protocol           = "tcp"
 		port_range         = "8000"
+		source_addresses   = ["0.0.0.0/0", "::/0"]
+	}
+
+  # ghost blog
+	inbound_rule {
+		protocol           = "tcp"
+		port_range         = "2368"
 		source_addresses   = ["0.0.0.0/0", "::/0"]
 	}
 
@@ -83,4 +87,14 @@ resource "digitalocean_firewall" "default" {
 		protocol                = "icmp"
 		destination_addresses   = ["0.0.0.0/0", "::/0"]
 	}
+}
+
+resource "null_resource" "post_apply" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "scripts/inventory ${digitalocean_droplet.node01.ipv4_address}"
+  }
 }

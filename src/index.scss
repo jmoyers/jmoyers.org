@@ -17,6 +17,11 @@
   padding: 0;
 }
 
+a {
+  color: rgba(0, 0, 200, 0.5);
+  text-decoration: none;
+}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -50,27 +55,37 @@ body {
   margin-bottom: 2.5rem;
   border-bottom: 0.5rem solid rgba(0, 0, 0, 0.1);
 
-  .about {
+  &__nav {
+    display: flex;
+    list-style: none;
+    margin-right: auto;
+  }
+
+  &__link {
+    margin-right: 1rem;
+  }
+
+  &__about {
     display: flex;
     margin-right: 3rem;
     flex-direction: column;
     justify-content: flex-end;
     text-align: right;
     height: 14.8rem;
-
-    h1 {
-      padding: 0;
-      font-weight: bold;
-    }
-
-    p {
-      margin: 1.5rem 0 0 0;
-      padding: 0;
-      line-height: 2rem;
-    }
   }
 
-  .profile img {
+  &__name {
+    padding: 0;
+    font-weight: bold;
+  }
+
+  &__whoami {
+    margin: 1.5rem 0 0 0;
+    padding: 0;
+    line-height: 2rem;
+  }
+
+  &__profile img {
     width: 17rem;
   }
 }
@@ -102,7 +117,7 @@ body {
     padding-left: 1rem;
   }
 
-  h2 {
+  &__title {
     font-size: 3rem;
     margin: 2rem 0 0 0;
   }

@@ -1,0 +1,15 @@
+{{!< default}}
+{{#author}}
+  <section class="author">
+    <h1 class="author__title">{{name}}</h1>
+    <h2 class="author__lead">{{bio}}</h2>
+    <div class="author__meta">
+      {{location}}
+      {{website}}
+    </div>
+  </section>
+{{/author}}
+
+<main class="container-fluid" role="main">
+{{> "loop"}}
+</main>
