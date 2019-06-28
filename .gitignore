@@ -1,5 +1,6 @@
 *.swp
 *local_install*
+public
 resources
 .DS_Store
 node_modules
@@ -12,7 +13,7 @@ assets
 *.tfstate*
 *id_rsa*
 *.ssh*
-.ssl
+*.ssl*
 *out.plan*
 *out.lock*
 *hosts*

@@ -1,0 +1,20 @@
+version: "3.5"
+networks:
+  overlay:
+secrets:
+  jmoyers.org-certchain.crt:
+    file: ./.ssl/jmoyers.org-certchain.crt
+  jmoyers.org.key:
+    file: ./.ssl/jmoyers.org.key
+services:
+  https:
+    image: jmoyers_org_static
+    ports:
+      - 80:80
+      - 443:443
+    secrets:
+      - jmoyers.org-certchain.crt
+      - jmoyers.org.key
+    networks:
+      - overlay
+    command: ["nginx", "-g", "daemon off;"]

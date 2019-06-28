@@ -28,8 +28,8 @@
   tasks:
   - name: Deploy stack to docker swarm
     shell: |
-      docker -H ssh://node01 stack deploy -c ../stack/docker-compose.yml jmoyers_org
+      docker -H ssh://node01 stack deploy -c ../docker-compose.yml jmoyers_org
   - name: Build static docker image, send build context to node01
     shell: |
-      docker -H ssh://node01 build ../../ -t static
+      docker -H ssh://node01 build ../ -t jmoyers_org_static
 

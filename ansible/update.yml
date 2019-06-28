@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Update https service to latest image
+    shell: |
+      docker -H ssh://node01 service update jmoyers_org_https --force
+

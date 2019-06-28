@@ -1,4 +1,0 @@
-- set up ssh docker connection
-- set up registry stack
-- connect to docker through ssh
-- check ansible for docker swarm module
