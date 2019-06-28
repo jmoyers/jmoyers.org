@@ -1,0 +1,19 @@
+{{ define "main" }}
+  {{ range .Paginator.Pages }}
+  <article 
+    onclick="location.href='{{ .Permalink }}'" 
+    class="article article-summary" >
+      <h1 class="article__title">
+        <a href="{{ .Permalink }}" class="article__link">{{ .Title }}</a>
+      </h1>
+      <p class="article__subhead">
+        Posted on {{ .Date.Format "January 02, 2006" }}
+      </p>
+
+      <div class="article__summary">
+        <p>{{ .Summary | plainify | safeHTML }}..</p>
+      </div>
+    </article>
+  {{ end }}
+{{ partial "pagination.html" . }}
+{{ end }}

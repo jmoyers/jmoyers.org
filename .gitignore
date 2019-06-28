@@ -1,5 +1,6 @@
 *.swp
 *local_install*
+resources
 .DS_Store
 node_modules
 backup
