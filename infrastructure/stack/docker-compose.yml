@@ -2,7 +2,6 @@ version: "3.7"
 networks:
   overlay:
 volumes:
-  docker-registry-data:
   ghost-data:
 secrets:
   jmoyers.org-certchain.crt:
@@ -14,16 +13,6 @@ configs:
     file: https/nginx.conf
     name: nginx${stack_configs_nginx_conf_file}
 services:
-  docker-registry:
-    environment:
-      - REGISTRY_STORAGE_DELETE_ENABLED=true
-    image: registry:2
-    ports:
-      - 5000:5000
-    volumes:
-      - docker-registry-data:/var/lib/registry
-    networks:
-      - overlay
   static:
     image: static
     ports:
@@ -32,16 +21,10 @@ services:
       - overlay
     environment:
       - STATIC_PORT=8000
-  ghost:
-    image: ghost:2.25.1-alpine
-    volumes:
-      - ghost-data:/var/lib/ghost/content
+  hugo:
+    image: hugo_jmoyers_org
     ports:
-      - 2368:2368
-    environment:
-      - url=https://192.241.232.130/blog/
-    networks:
-      - overlay
+      - 1313:1313
   https:
     image: nginx:1.16.0-alpine
     secrets:
