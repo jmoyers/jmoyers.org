@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+hugo server --baseUrl=172.18.80.154 --bind="0.0.0.0" --watch
