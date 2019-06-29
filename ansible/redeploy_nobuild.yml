@@ -1,0 +1,8 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Redeploy stack
+    shell: |
+      docker -H ssh://node01 stack rm jmoyers_org
+      docker -H ssh://node01 stack deploy -c ../docker-compose.yml jmoyers_org
+

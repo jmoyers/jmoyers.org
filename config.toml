@@ -5,16 +5,8 @@ paginate = 5
 [params]
   description = "engineering leadership"
 
-[menu]
-  [[menu.main]]
-    name = "Work"
-    url = "/"
-  [[menu.main]]
-    name = "Blog"
-    url = "/posts/"
-  [[menu.main]]
-    name = "Github"
-    url = "https://github.com/jmoyers"
-  [[menu.main]]
-    name = "Twitter"
-    url = "https://twitter.com/joshuamoyers"
+[imaging]
+  resampleFilter = "box"
+  quality = 75
+  anchor = "smart"
+

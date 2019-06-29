@@ -1,0 +1,12 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Build static docker image, send build context to node01
+    shell: |
+      docker -H ssh://node01 build ../ -t jmoyers_org_static
+  - name: Redeploy stack
+    shell: |
+      docker -H ssh://node01 stack rm jmoyers_org
+      sleep 5s
+      docker -H ssh://node01 stack deploy -c ../docker-compose.yml jmoyers_org
+
