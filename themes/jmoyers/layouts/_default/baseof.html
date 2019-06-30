@@ -30,8 +30,8 @@
           </li>
         </ul>
         <div class="header__about">
-          <h1>{{ .Site.Title }}</h1>
-          <p class="job__description">
+          <h1 class="header__name">{{ .Site.Title }}</h1>
+          <p class="header__whoami">
             {{ .Site.Params.Description }}<br />
             {{ .Site.Params.Contact }}
           </p>
@@ -72,7 +72,8 @@
         {{ end }}
       </div>
       <div class="copyright">
-        &copy; Copyright {{ dateFormat "2006" now }}, Joshua Moyers, josh@jmoyers.org
+        &copy; Copyright {{ dateFormat "2006" now }}, 
+        Joshua Moyers, josh@jmoyers.org
       </div>
     </div>
   </body>
