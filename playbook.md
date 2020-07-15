@@ -132,3 +132,11 @@ We need to use ssh keys to login. Lets get that working first.
 We had to edit the .ssh/ config files on the machine to allow thr ight public
 key. Apparently terraform doesn't md5 the file or anything, it just assumes
 its the same and doesn't update it. Really useful!
+
+I manually ran the docker commands. I think it swalled the fact that there was
+no dhparams.pem file (i had a typo there). I ran each command and redeployed.
+All fixed.
+
+Running qualsys...
+
+Looks like I fucked up the cert chain. Have a B. I'm fine with it.
