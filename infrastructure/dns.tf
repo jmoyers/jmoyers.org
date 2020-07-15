@@ -5,7 +5,7 @@ resource "digitalocean_domain" "jmoyers" {
 
 # imported
 resource "digitalocean_record" "ns1" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "NS"
   name   = "@"
   value  = "ns1.digitalocean.com."
@@ -14,7 +14,7 @@ resource "digitalocean_record" "ns1" {
 
 # imported
 resource "digitalocean_record" "ns2" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "NS"
   name   = "@"
   value  = "ns2.digitalocean.com."
@@ -23,7 +23,7 @@ resource "digitalocean_record" "ns2" {
 
 # imported
 resource "digitalocean_record" "ns3" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "NS"
   name   = "@"
   value  = "ns3.digitalocean.com."
@@ -32,7 +32,7 @@ resource "digitalocean_record" "ns3" {
 
 # imported
 resource "digitalocean_record" "bare" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "A"
   name   = "@"
   value  = digitalocean_droplet.node01.ipv4_address
@@ -41,7 +41,7 @@ resource "digitalocean_record" "bare" {
 
 # imported
 resource "digitalocean_record" "www" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "A"
   name   = "www"
   value  = digitalocean_droplet.node01.ipv4_address
@@ -50,7 +50,7 @@ resource "digitalocean_record" "www" {
 
 # imported
 resource "digitalocean_record" "mx1" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "MX"
   name   = "@"
   value  = "aspmx.l.google.com."
@@ -60,7 +60,7 @@ resource "digitalocean_record" "mx1" {
 
 # imported
 resource "digitalocean_record" "mx2" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "MX"
   name   = "@"
   value  = "aspmx2.googlemail.com."
@@ -70,7 +70,7 @@ resource "digitalocean_record" "mx2" {
 
 # imported
 resource "digitalocean_record" "mx3" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "MX"
   name   = "@"
   value  = "aspmx3.googlemail.com."
@@ -80,7 +80,7 @@ resource "digitalocean_record" "mx3" {
 
 # imported
 resource "digitalocean_record" "altmx1" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "MX"
   name   = "@"
   value  = "alt1.aspmx.l.google.com."
@@ -90,7 +90,7 @@ resource "digitalocean_record" "altmx1" {
 
 # imported
 resource "digitalocean_record" "altmx2" {
-  domain = "${digitalocean_domain.jmoyers.name}"
+  domain = "jmoyers.org"
   type   = "MX"
   name   = "@"
   value  = "alt2.aspmx.l.google.com."

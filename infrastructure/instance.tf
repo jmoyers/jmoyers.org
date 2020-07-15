@@ -1,10 +1,10 @@
 resource "digitalocean_ssh_key" "default" {
   name       = "default"
-  public_key = file(".ssh/id_rsa.pub")
+  public_key = file("~/.ssh/id_rsa.pub")
 }
 
 resource "digitalocean_droplet" "node01" {
-  image = "ubuntu-16-04-x64"
+  image = "48554971" # 48554971 = ubuntu-16-04-x64
   name = "node01"
   region = "sfo1"
   size = "s-1vcpu-1gb"

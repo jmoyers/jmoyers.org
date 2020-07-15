@@ -1,3 +1,3 @@
 provider "digitalocean" {
-  token = "${var.DO_TOKEN}"
+  token = var.DO_TOKEN
 }

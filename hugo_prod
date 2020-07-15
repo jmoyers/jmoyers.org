@@ -1,0 +1,5 @@
+
+# !/usr/bin/env bash
+# this builds our static site, dumps it in public and gets ready for docker
+# container build process
+hugo --baseURL https://jmoyers.org
