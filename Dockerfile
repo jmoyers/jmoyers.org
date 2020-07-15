@@ -1,5 +1,5 @@
 FROM nginx:1.16.0-alpine
-MAINTAINER jmoyers@gmail.com
+LABEL maintainer="jmoyers@gmail.com"
 
 RUN mkdir -p /usr/local/src/jmoyers_org/public
 WORKDIR /usr/local/src/jmoyers_org/public
