@@ -9,7 +9,6 @@ backup
 *terraform.tfvars*
 *.retry
 .terraform
-assets
 *.tfstate*
 *id_rsa*
 *.ssh*
