@@ -124,3 +124,11 @@ is literally the worst thing ever. Might as well commit the fkin' state to a
 private repository or something.
 
 Okay, we fixed terraform state. Manually imported every record, real dumb.
+
+Now we need to get the node01 alias working via .ssh/config, this is not
+automatically spit out by terraform post commit hook.
+
+We need to use ssh keys to login. Lets get that working first.
+We had to edit the .ssh/ config files on the machine to allow thr ight public
+key. Apparently terraform doesn't md5 the file or anything, it just assumes
+its the same and doesn't update it. Really useful!
