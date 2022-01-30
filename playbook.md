@@ -1,3 +1,11 @@
+Notes from 2022:
+
+* Change content for posts and the main resume page in content/
+* huge-prod command rebuilds static site
+* ansible-playbook redeploy.yml rebuilds docker image and sends it to node01,
+which is an ssh host set up
+* Docker Desktop must be running
+
 Notes from 7/15/2020
 
 Try to spin up dev server. Following errors.

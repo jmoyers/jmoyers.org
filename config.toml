@@ -3,7 +3,7 @@ theme = "jmoyers"
 paginate = 5
 
 [params]
-  description = "engineering leadership"
+  description = "Full Stack Software Engineering"
 
 [imaging]
   resampleFilter = "box"
