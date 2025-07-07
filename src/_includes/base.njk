@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title or site.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/blog.css" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <div class="main">
+      <header class="header">
+        <ul class="header__nav">
+          <li>
+            <a href="/" class="link">
+              <div class="link__emoji">💼</div> 
+              <div class="link__text">Work</div>
+            </a>
+          </li>
+          <li>
+            <a href="/posts/" class="link">
+              <div class="link__emoji">📝</div> 
+              <div class="link__text">Posts</div> 
+            </a>
+          </li>
+        </ul>
+        <div class="header__about">
+          <h1 class="header__name">Joshua</h1>
+          <p class="header__whoami">
+            CTO @ <a href="https://encamp.com" target="_blank" rel="noopener">Encamp</a><br />
+            jmoyers@gmail.com
+          </p>
+          <ul class="social">
+            <li>
+              <a href="http://www.linkedin.com/in/jmoyers">
+                <img src="/image/linkedin.png" />
+              </a>
+            </li>
+            <li>
+              <a href="https://twitter.com/joshuamoyers">
+                <img src="/image/twitter.png" />
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/jmoyers">
+                <img src="/image/github.png" />
+              </a>
+            </li>
+            <li>
+              <a href="http://stackoverflow.com/users/128581/josh">
+                <img src="/image/stackoverflow.png" />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="header__profile">
+          <img src="/image/profile.jpg" />
+        </div>
+      </header>
+      <div class="content">
+        {{ content | safe }}
+      </div>
+      <div class="copyright">
+        &copy; Copyright {% year %}, 
+        Joshua Moyers, jmoyers@gmail.com
+      </div>
+    </div>
+  </body>
+</html> 

@@ -1,0 +1,37 @@
+---
+layout: base
+---
+<article class="article">
+  <h1 class="article__title">
+    <a href="{{ page.url }}">
+      {{ title }}
+    </a>
+  </h1>
+  <div class="article__subhead">
+    Posted on {{ page.date | dateFormat }}
+  </div>
+  <div class="article__content">
+    {{ content | safe }}
+  </div>
+</article>
+
+{%- set posts = collections.posts -%}
+{%- set currentIndex = -1 -%}
+{%- for post in posts -%}
+  {%- if post.url == page.url -%}
+    {%- set currentIndex = loop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if currentIndex < posts.length - 1 -%}
+  {%- set olderPost = posts[currentIndex + 1] -%}
+  <div class="post-navigation">
+    <div class="next-post">
+      <span class="next-post__label">Previous post</span>
+      <a href="{{ olderPost.url }}" class="next-post__link">
+        <h3 class="next-post__title">{{ olderPost.data.title }}</h3>
+        <p class="next-post__date">{{ olderPost.date | dateFormat }}</p>
+      </a>
+    </div>
+  </div>
+{%- endif -%} 

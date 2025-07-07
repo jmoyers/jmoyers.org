@@ -1,0 +1,38 @@
+---
+layout: base
+title: Blog Posts
+pagination:
+  data: collections.posts
+  size: 5
+  alias: posts
+permalink: "posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
+---
+{% for post in posts %}
+<article 
+  onclick="location.href='{{ post.url }}'" 
+  class="article article-summary">
+    <h1 class="article__title">
+      <a href="{{ post.url }}" class="article__link">{{ post.data.title }}</a>
+    </h1>
+    <p class="article__subhead">
+      Posted on {{ post.date | dateFormat }}
+    </p>
+
+    <div class="article__summary">
+      <p class="article__excerpt">{{ post.templateContent | excerpt | safe }}</p>
+      <div class="article__more">More</div>
+    </div>
+</article>
+{% endfor %}
+
+{% if pagination.href.previous or pagination.href.next %}
+<nav class="pagination" role="pagination">
+  {% if pagination.href.previous %}
+    <a class="newer-posts" href="{{ pagination.href.previous }}"><span aria-hidden="true">&larr;</span> Newer Posts</a>
+  {% endif %}
+  <span class="page-number">Page {{ pagination.pageNumber + 1 }} of {{ pagination.pages.length }}</span>
+  {% if pagination.href.next %}
+    <a class="older-posts" href="{{ pagination.href.next }}">Older Posts <span aria-hidden="true">&rarr;</span></a>
+  {% endif %}
+</nav>
+{% endif %} 

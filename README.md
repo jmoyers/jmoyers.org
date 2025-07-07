@@ -1,26 +1,85 @@
-https://jmoyers.org - personal website!
+# jmoyers.org
 
-**Goals**
+Personal website built with 11ty, TypeScript, and SCSS. Deployed to AWS S3 +
+CloudFront.
 
-- Minimal administrative headache
-- Write in a text editor on my local machine
-- Programmatic backup and restore
-- Ability to live edit css and any template
-- Store some very basic meta data, like date, title, tags
-- Some very basic date-based pagination
-- Easy access to post processing tools for scss, minification etc
-- Permalinks
-- Containerized
-- Process monitoring and logging through single node docker swarm
-- One click deploy and service update
+## Tech Stack
 
-**Using**
+- **11ty** - Static site generator
+- **TypeScript** - Build toolchain
+- **SCSS** - Styling with Sass
+- **Yarn** - Package management
+- **Turborepo** - Build caching (configured but not actively used yet)
+- **AWS S3 + CloudFront** - Hosting (infrastructure setup pending)
 
-- Docker for containerization
-- nginx for tls termination, gzip compression
-- Terraform for infrastructure deployment (Digital Ocean here)
-- Ansible for provisioning - setting up docker swarm, minimal packages
-- Hugo for static site generation
-- vim, tmux, wsl for dev and writing environment
-- Markdown with Front Matter for blog posts
-- HTML/scss with BEM stylings, no external dependencies
+## Development
+
+```bash
+# Install dependencies
+yarn install
+
+# Start development server with hot reload
+yarn dev
+
+# Build for production
+yarn build
+
+# Clean build artifacts
+yarn clean
+```
+
+## Project Structure
+
+```
+src/
+├── _includes/          # Templates
+│   ├── base.njk       # Base layout
+│   ├── home.njk       # Homepage layout
+│   └── post.njk       # Blog post layout
+├── assets/            # Static assets
+│   ├── scss/          # Styles
+│   ├── fonts/         # Fonts
+│   └── images/        # Images
+├── content/           # Content
+│   ├── index.md       # Homepage
+│   ├── posts.njk      # Blog listing
+│   └── posts/         # Blog posts (markdown)
+└── _data/             # Global data
+    └── eleventyComputed.js  # Computed permalinks
+
+dist/                  # Build output
+```
+
+## Writing Posts
+
+Create a new markdown file in `src/content/posts/[slug]/index.md`:
+
+```markdown
+---
+title: "Your Post Title"
+date: "2024-07-06"
+tags: ["tag1", "tag2"]
+---
+
+Your content here...
+```
+
+## Deployment
+
+AWS deployment setup is pending. The plan is:
+
+- S3 bucket for static hosting
+- CloudFront for CDN
+- Route53 for DNS
+- Terraform for infrastructure as code
+
+## Migration from Hugo
+
+This site was migrated from Hugo to 11ty in July 2024. Key changes:
+
+- Hugo → 11ty for static site generation
+- Go toolchain → Node.js/TypeScript
+- Docker/DigitalOcean → AWS S3/CloudFront
+- Same content and visual design preserved
+- Updated contact email to jmoyers@gmail.com
+- Updated title to CTO @ Encamp
