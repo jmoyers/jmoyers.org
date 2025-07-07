@@ -1,0 +1,26 @@
+# Project-specific Cursor Rules
+
+## Always Use Project CLI Commands
+
+- NEVER use raw `terraform` commands directly
+- ALWAYS use `yarn cli terraform [args...]` instead of `terraform apply`
+- ALWAYS use `yarn cli deploy-infra` to deploy AWS infrastructure
+- ALWAYS use `yarn cli update-env` to get terraform outputs
+- ALWAYS use `yarn cli deploy` for website deployments
+- Use `yarn cli status` to check current project status
+- Use `yarn cli config` to list all configurable variables
+- The CLI handles AWS profile, region, and environment variables properly from
+  `.env.local`
+- **NEVER run `terraform apply`, `terraform destroy`, `yarn cli deploy-infra`,
+  or any destructive commands** - the user will run these manually
+- **NEVER edit the `.env.local` file** - it's protected and user-managed
+
+## Infrastructure Management
+
+- This project uses AWS infrastructure with Terraform
+- Environment variables are managed through `.env.local` file
+- DNS can be managed through Route53 or external providers like Namecheap
+- SSL certificates are handled through AWS Certificate Manager with DNS
+  validation
+- The CLI automatically updates `.env.local` after successful terraform
+  operations

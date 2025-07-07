@@ -6,10 +6,12 @@ draft: false
 tags: ["chat", "api", "sococo"]
 ---
 
-**Note:** This is an old post from Sococo's blog. Keeping it around, because I
-like the artwork and history :-)
+**Note:** This is an old post from Sococo's blog. Keeping it around for history.
 
-![Beep boop](assets/aiWr4zQ.jpg)  
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 8px; margin: 2rem 0; color: white; font-family: monospace;">
+  🤖 beep boop 🤖<br>
+  <small style="opacity: 0.8;">original image placeholder</small>
+</div>  
 Hello friends!
 
 Lets talk about chat. Its one of our most used channels and we’re going to be

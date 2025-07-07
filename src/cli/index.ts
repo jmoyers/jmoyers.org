@@ -10,7 +10,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 // Load environment variables
-config({ path: ".env.local" });
+config({ path: ".env.local", quiet: true });
 
 interface EnvConfig {
   AWS_REGION?: string;
@@ -70,9 +70,53 @@ class JMoyersOrgCLI {
     options?: { cwd?: string }
   ): Promise<void> {
     const spinner = ora(`Running: ${command} ${args.join(" ")}`).start();
+    let childProcess: any = null;
+    let isInterrupted = false;
+    let interruptCount = 0;
+
+    // Handle interrupts gracefully
+    const handleInterrupt = () => {
+      interruptCount++;
+
+      if (interruptCount === 1) {
+        isInterrupted = true;
+        spinner.warn(
+          chalk.yellow(
+            "🔄 Received interrupt signal, attempting graceful cancellation..."
+          )
+        );
+        console.log(
+          chalk.yellow(
+            "💡 Press Ctrl+C again to force exit (may cause data loss)"
+          )
+        );
+
+        if (childProcess) {
+          // Send SIGTERM first for graceful shutdown
+          childProcess.kill("SIGTERM");
+
+          // If it doesn't respond in 10 seconds, send SIGKILL
+          setTimeout(() => {
+            if (!childProcess.killed) {
+              childProcess.kill("SIGKILL");
+            }
+          }, 10000);
+        }
+      } else if (interruptCount >= 2) {
+        spinner.fail(chalk.red("❌ Force exit requested"));
+        console.log(
+          chalk.red("⚠️  Forcing immediate exit - data loss may occur!")
+        );
+        process.exit(130); // Standard exit code for Ctrl+C
+      }
+    };
+
+    // Add interrupt handlers
+    process.on("SIGINT", handleInterrupt);
+    process.on("SIGTERM", handleInterrupt);
 
     try {
-      const result = await execa(command, args, {
+      childProcess = execa(command, args, {
         cwd: options?.cwd,
         stdio: "inherit",
         env: {
@@ -81,10 +125,29 @@ class JMoyersOrgCLI {
         },
       });
 
-      spinner.succeed(chalk.green(`✅ ${command} completed successfully`));
-    } catch (error) {
-      spinner.fail(chalk.red(`❌ ${command} failed`));
-      throw error;
+      await childProcess;
+
+      if (isInterrupted) {
+        spinner.warn(chalk.yellow("⚠️  Command was cancelled"));
+        throw new Error("Command cancelled by user");
+      } else {
+        spinner.succeed(chalk.green(`✅ ${command} completed successfully`));
+      }
+    } catch (error: any) {
+      if (isInterrupted) {
+        spinner.warn(chalk.yellow("⚠️  Command was cancelled gracefully"));
+        throw new Error("Command cancelled by user");
+      } else if (error.isCanceled) {
+        spinner.warn(chalk.yellow("⚠️  Command was cancelled"));
+        throw new Error("Command cancelled");
+      } else {
+        spinner.fail(chalk.red(`❌ ${command} failed`));
+        throw error;
+      }
+    } finally {
+      // Remove interrupt handlers
+      process.removeListener("SIGINT", handleInterrupt);
+      process.removeListener("SIGTERM", handleInterrupt);
     }
   }
 

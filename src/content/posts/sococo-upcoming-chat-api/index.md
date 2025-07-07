@@ -6,10 +6,12 @@ draft: false
 tags: ["chat", "sococo"]
 ---
 
-**Note**: This is an old post from Sococo's blog. Keeping it around, because I
-like the artwork and history :-)
+**Note**: This is an old post from Sococo's blog. Keeping it around for history.
 
-![Beep boop](./assets/XxexkxX.png)
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 8px; margin: 2rem 0; color: white; font-family: monospace;">
+  🤖 beep boop 🤖<br>
+  <small style="opacity: 0.8;">original image placeholder</small>
+</div>
 
 If you’re the type of person that’s been looking to get Sococo more integrated
 into your team’s workflow, our next few releases should have some gems that will

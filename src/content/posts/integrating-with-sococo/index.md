@@ -6,10 +6,12 @@ draft: false
 tags: ["chat", "api", "hubot", "sococo"]
 ---
 
-**Note:** This is an old post from Sococo's blog. Keeping it around, because I
-like the artwork and history :-)
+**Note:** This is an old post from Sococo's blog. Keeping it around for history.
 
-![Beep boop](assets/oSLQzvt.png)
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; margin: 2rem 0; color: white; font-family: monospace;">
+  🤖 beep boop 🤖<br>
+  <small style="opacity: 0.8;">original image placeholder</small>
+</div>
 
 With the chat focused release, we added a long requested feature: the ability to
 integrate with Sococo. The integration comes in the form of a very simple chat

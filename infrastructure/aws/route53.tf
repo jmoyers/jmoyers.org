@@ -58,6 +58,6 @@ resource "aws_acm_certificate_validation" "website" {
   validation_record_fqdns = [for record in aws_route53_record.website_validation : record.fqdn]
   
   timeouts {
-    create = "5m"
+    create = "45m"
   }
 } 
