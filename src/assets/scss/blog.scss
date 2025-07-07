@@ -230,9 +230,13 @@ body {
 }
 
 .content h2 {
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
+  margin-top: 4rem;
+  margin-bottom: 0.5rem;
   font-size: 2.4rem;
+}
+
+.content h2:first-child {
+  margin-top: 2rem;
 }
 
 .content h3 {
@@ -249,6 +253,24 @@ body {
 
 .content li {
   margin-bottom: 0.5rem;
+}
+
+.content p {
+  margin-bottom: 2.5rem;
+}
+
+.content em {
+  font-style: normal;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 1.4rem;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.content h2 + em {
+  margin-top: -0.2rem;
+  margin-bottom: 2rem;
 }
 
 .job__title {
@@ -616,5 +638,25 @@ body {
 
   .next-post__title {
     font-size: 1.8rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .content h2 {
+    margin-top: 3rem;
+    font-size: 2.2rem;
+  }
+
+  .content h2:first-child {
+    margin-top: 1.5rem;
+  }
+
+  .content em {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content p {
+    margin-bottom: 2rem;
   }
 }

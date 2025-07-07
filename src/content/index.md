@@ -4,88 +4,102 @@ title: "Joshua | Full Stack Software Engineering"
 permalink: /
 ---
 
-I enjoy building software to make life better. I'm a student of user-first,
-design-centric product development. Every pixel counts. Tools and process should
-never be self-serving. Always focus on the output and the challenge you set out
-to solve.
+I enjoy building software that solve problems in the real world. I think a lot
+about startups, the way in which we build software, and how to create an
+environment where hungry/humble/smart people can thrive. I love design and user
+experience and I care a lot about what I do. Outcome over process and output.
 
-## Owner & Principal Engineer — OpenCourse.app
+## CTO - Encamp
 
-2018 - 2022, Mill Valley, CA
+_2022 - present_
 
-Providing an open source education platform for everyone. Featuring beautiful,
-intelligent study sessions, course-building tools, trending resource discovery
-and search. Built offline-first, featuring a responsive mobile-friendly design
-while maintaining compatibility with 98% of the browser market.
+The end-to-end environmental compliance platform. I run product, engineering,
+and compliance. Our product helps companies understand, managage and comply with
+environmental regulations. We work on hard problems - integrating with 100+
+government agencies, processing complex regulatory documents, and delivering
+reports that keep emergency responders safe. We make sense of our customer's
+environmental data and make it an asset rather than a risk.
 
-### Handcrafted with...
+The company has a mission that is important - make what's good for business good
+for the environment. I spend a lot of time thinking about how to build systems
+that scale and reliably connect to a vast surface area of third party government
+agencies, how to keep our team productive, and how to push the boundaries of
+what's possible with modern tooling.
 
-- **React**: PWA with offline and mobile support using React Hooks, scss modules
-- **GraphQL**: a custom-built Apollo Server and Apollo Client to manage state
-- **Auth**: Using bcrypt, http only/secure JWT tokens, with OAuth2 (Google),
-  integrated into Apollo
-- **Node.js**: Server components utilizing Jest testing framework for
-  integration and unit tests
-- **nginx**: Reverse proxy for SSL termination using Lets Encrypt with upstreams
-  & load balancing
-- **PostgreSQL**: Performant, well-designed schema, integrated directly into
-  Auth and GraphQL servers
-- **Grafana/Prometheus**: Service-wide metrics monitoring with custom dashboards
-  for node health
-- **Filebeat/Elasticsearch/Kibana**: Service-wide swarm and host node logging
-- **Docker**: Everything containerized with orchestration using Docker Swarm, no
-  single point of failure
-- **Amazon Web Services**: Using Terraform for infrastructure-as-code & Ansible
-  for provisioning
-- **TestCafe and BrowserStack**: Full end-to-end integration testing on multiple
-  browsers
-- **Artifacts**: Swarm local registry:2 and Verdaccio to manage internally
-  shared components
+I'm particularly interested in AI-native development workflows. I've been
+experimenting with tools like Cursor, claude-4-opus, and building development
+environments that let us move faster while maintaining quality. The goal is to
+find the sweet spot where new technology amplifies human capability rather than
+replacing it.
 
-## VP of Engineering — Sococo
+We use TypeScript, React, Node.js, Postgres, Apollo GraphQL, and a bunch of AWS
+services. Everything is containerized, well-tested, and designed to handle the
+complexity of regulatory compliance at scale.
 
-2011 - 2015
+### What I think about
 
-Sococo is a virtual office for your company that helps you feel more connected
-and see what's happening. We've built a Windows, Mac, iPad and iPhone clients
-and have over 100 servers in production handling millions of media minutes per
-month.
+How to hire the best people to build our product. The parts of software that
+hold the most inertia - data model, public APIs (I'm a student of Will Larson).
+Being a good mentor and boss while maintaining high standards for throughput.
+Staying close to building the product - UX matters, our tools matter, our
+process matters. Researching and building with the AI-native stack as frontier
+models get better and better.
 
-### Metrics
+## Owner & Principal Engineer - OpenCourse.app
 
-- 100+ servers in production environment
-- 4.5 million real-time audio minutes per week
-- Support 5 platforms (Mac, Win, iPad, iPhone, Linux)
-- Increased revenue and paid seat count 4x over one year
-- Responsible for 20 engineering employees
+_2018 - 2022_
 
-## Full Stack Consulting
+Built an open source education platform from scratch. The idea was to create
+beautiful, intelligent study sessions with course-building tools and resource
+discovery. I focused on offline-first architecture and mobile-friendly design
+while keeping it compatible with basically every browser.
 
-2015 - 2022, Mill Valley, CA
+The whole thing was containerized and deployed with Docker Swarm. I used
+Terraform for infrastructure and Ansible for provisioning. React PWA on the
+frontend, GraphQL with Apollo for state management, Postgres for data, and a
+bunch of observability tools to keep everything running smoothly.
 
-Helping companies build products complete with automated test coverage, build
-automation, and sustainable development practices built-in from the start.
+## VP of Engineering - Sococo
 
-## Mac & Web Lead — Sococo
+_2011 - 2015_
 
-2009 - 2011
+Sococo was a virtual office platform - think of it as a persistent video chat
+space for distributed teams. I ran a team of 20 engineers building clients for 5
+platforms and managing 100+ servers handling millions of audio minutes per week.
 
-Served as the principal developer for web technologies, then transitioned over
-to build and launch the Mac desktop client. Other accomplishments include
-building all Sococo's internal tools for monitoring the health of our customer
-deployments, tracking top line metrics, and doing search engine marketing from
-ads to analytics.
+The real challenge was making real-time audio and video work reliably across all
+these different platforms. We had to solve for network conditions, codec
+compatibility, and user experience on everything from iPhones to Windows
+desktops.
 
-## Director, Commercial Operations — IronRidge
+During my time there we grew revenue and paid seats 4x.
 
-2004 - 2009
+## Fractional CTO / Founding Engineer
 
-I was responsible for management and delivery of our largest commercial
-projects, ranging from municipal power plants to large custom built rooftop
-systems.
+_2015 - 2022_
 
-I helped to direct strategy with our executive team, and managed a small team of
-engineers to develop products in a highly competitive industrial marketplace. I
-created partnerships with vendors in China and the United States to allow our
-business to grow. This included everything from contract negotiations and
-prototyping to scalable manufacturing and delivery of our products.
+Worked with companies to build products the right way from the start. I focused
+on automated testing, build automation, and sustainable development practices.
+The goal was always to set teams up for long-term success rather than just
+shipping something quickly.
+
+## Mac & Web Technical Lead - Sococo
+
+_2009 - 2011_
+
+Started as the principal web developer, then moved over to build and launch the
+Mac desktop client. Also built all of Sococo's internal tools for monitoring
+customer deployments and tracking metrics.
+
+## Director, Commercial Operations - IronRidge
+
+_2004 - 2009_
+
+Managed delivery of large commercial solar projects - everything from municipal
+power plants to custom rooftop systems. I worked with the executive team on
+strategy and managed a small team of engineers developing products in a
+competitive industrial marketplace.
+
+The work involved creating partnerships with vendors in China and the US,
+handling contract negotiations, prototyping, and figuring out how to scale
+manufacturing and delivery.
