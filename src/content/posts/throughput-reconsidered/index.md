@@ -66,7 +66,7 @@ Based on my detailed Cursor usage logs spanning June 29th - July 6th, 2025
 (note: this dataset covers a longer period than just the focused 2.5-day sprint
 described above):
 
-- **Total requests**: 11,945 across the full week (close to my initial estimate)
+- **Total requests**: 11,945 across the full week
 - **Average daily requests**: ~1,700 requests per day
 - **Peak activity**: Sustained periods of 30 - 50+ requests per hour during
   focused development sessions
