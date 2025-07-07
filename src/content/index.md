@@ -4,7 +4,7 @@ title: "Joshua | CTO @ Encamp"
 permalink: /
 ---
 
-I enjoy building software that solve problems in the real world. I think a lot
+I enjoy building software that solves problems in the real world. I think a lot
 about startups, the way in which we build software, and how to create an
 environment where hungry/humble/smart people can thrive. I love design and user
 experience and I care a lot about what I do. Outcome over output.

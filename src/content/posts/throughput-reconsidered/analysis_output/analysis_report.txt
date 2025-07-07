@@ -1,0 +1,28 @@
+
+CURSOR USAGE ANALYSIS REPORT
+============================
+
+Analysis Period: 2025-06-30 to 2025-07-06
+
+OVERALL METRICS:
+- Total Tokens: 1,034,736,186.0
+- Total Cost: $468.87
+- Average Daily Tokens: 147,819,455
+- Total Requests: 11,945
+
+CACHE EFFICIENCY:
+- True I/O Tokens: 7,329,288.0 (0.7%)
+- Cache Read Tokens: 965,758,145.0 (93.3%)
+- Cache Write Tokens: 61,648,753.0 (6.0%)
+
+TOP MODELS BY USAGE:
+- claude-4-sonnet: 358,572,844.0 tokens (34.7%)
+- claude-4-sonnet-thinking: 350,922,844.0 tokens (33.9%)
+- claude-4-opus-thinking: 318,155,796.0 tokens (30.7%)
+- o3: 4,683,391.0 tokens (0.5%)
+- default: 2,401,311.0 tokens (0.2%)
+
+KEY INSIGHTS:
+- Cache tokens represent 99.3% of total usage
+- Cache reads are 15.7x more frequent than writes
+- True I/O represents only 0.7% of total tokens, showing high cache efficiency

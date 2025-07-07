@@ -66,7 +66,8 @@ Based on my detailed Cursor usage logs spanning June 29th - July 6th, 2025
 (note: this dataset covers a longer period than just the focused 2.5-day sprint
 described above):
 
-- **Total requests**: ~12,980 across the full week
+- **Total requests**: 11,945 across the full week (close to my initial estimate)
+- **Average daily requests**: ~1,700 requests per day
 - **Peak activity**: Sustained periods of 30 - 50+ requests per hour during
   focused development sessions
 
@@ -100,13 +101,20 @@ different tiers:
 - "Max" mode enabled consistently throughout for maximum tool-use and
   re-prompting capabilities
 
-### Model switching strategy
+**Actual usage breakdown by model:**
 
-- claude-4-sonnet (Anthropic) - excellent throughput, good results, became the
-  fallback
-- o4-mini-high (OpenAI) - good for brainstorming and alternative perspectives
-- gemini-2.5-pro (Google) - comparable to opus for spatial reasoning tasks
-- o3/o3-pro (OpenAI) - useful for planning phases but slower iteration
+- **claude-4-sonnet**: 358M tokens (34.7%) - The workhorse model
+- **claude-4-sonnet-thinking**: 351M tokens (33.9%) - Deep reasoning tasks
+- **claude-4-opus-thinking**: 318M tokens (30.7%) - Premium model for complex
+  work
+- **o3**: 4.7M tokens (0.5%) - Occasional planning and architecture
+- **default**: 2.4M tokens (0.2%) - Miscellaneous tasks
+
+Interesting to see the fairly even split between Sonnet and Opus variants - I
+definitely hit those quota limits and had to adapt my workflow. If I wasn't
+purely testing, I definitely wouldn't have splurged as much on Opus. Sonnet
+turns out to be highly capable. I think the term "escape hatch" is probably
+correct - stuck in a debugging loop? Swap to Opus or o3.
 
 ## The new stack
 
@@ -412,23 +420,44 @@ providers due to optimizations we can't see:
 - **Background optimization**: Auto-completion may use different, lighter models
 - **Incremental processing**: Changes might only require partial re-computation
 
-### Economics (pure speculation)
+### Economics (with actual data)
 
 Initially I thought this must be unsustainable from a cost perspective for
-Cursor. However, I think there are factors in the request and context pipeline
-that must make Cursor's reported token usage over inflated. I am imaginging your
-repository being fully indexed lends itself extremely well to context
-compression. I also think that the system prompt applied here must be relying
-much more heavily on semantic search and tool use to narrow the context window
-down to something more reasonable on a per request basis - but behind and within
-Cursor's infra. Just a guess, but if my true token count is >1B over a week, I
-think they're going to have a Ultra plan problem and have to walk things back.
+Cursor. Turns out I was right to be skeptical - but for completely different
+reasons than I expected.
 
-Its a little hard to find inference costs for frontier models, but my guess is
-that even now that (as they tune usage and rate limiting) we are probably in a
-profitable zone. I'm also imagining that most users are not absolutely token
-maxing, and that the average use across all users in a tier are probably making
-things dramatically better.
+After digging deeper into my usage data, I discovered something fascinating
+about how these interactions actually work under the hood. The numbers are
+pretty wild:
+
+**The real breakdown:**
+
+- **Total tokens**: Over 1 billion tokens (1,034,736,186 to be exact)
+- **Actual cost**: $468.87 over the period
+- **True I/O tokens**: Only 7.3M tokens (0.7% of total usage)
+- **Cache reads**: 965M tokens (93.3% of total usage)
+- **Cache writes**: 61.6M tokens (6.0% of total usage)
+
+So my speculation about context caching was spot on, but I massively
+underestimated the extent. **99.3% of my token usage is cached content**. Cache
+reads are happening 15.7x more frequently than writes, which makes sense - most
+of my repository context, conversation history, and code snippets are being
+reused across requests.
+
+This explains why Cursor can offer "unlimited" usage at $200/month. The actual
+computational cost per request is tiny once your codebase and conversation
+context is cached. Most of what I thought were expensive 87k-token requests were
+actually just 500-1000 tokens of new input/output, with the rest being
+efficiently cached repository content.
+
+The economics suddenly make perfect sense. Cursor isn't paying for 1B+ tokens of
+inference - they're paying for 7M tokens of actual processing plus some caching
+infrastructure costs. That $468 I spent probably cost them closer to $15 - $30
+in actual compute and suddenly I'm a lot less sympathetic to some of the hate
+they've been receiving over Opus rates limiot. I think we're definitely going to
+be seeing downward pressure on price in this space, and thats a good thing.
+Claude Code and other tools seem comparable, and this is an arms race to be
+sure.
 
 ### Conclusion
 
