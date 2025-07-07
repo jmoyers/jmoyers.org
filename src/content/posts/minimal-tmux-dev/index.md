@@ -1,9 +1,9 @@
 ---
-title: 'Minimal tmux dev'
-date: '2016-06-03T05:47:55.000Z'
+title: "Minimal tmux dev"
+date: "2016-06-03T05:47:55.000Z"
 featured: false
 draft: false
-tags: ['vim', 'anti-ide', 'tmux', 'development', 'dev', 'minimalism']
+tags: ["vim", "anti-ide", "tmux", "development", "dev", "minimalism"]
 ---
 
 If you are currently in a anti-IDE frame of mind (which I cycle into from time
@@ -31,10 +31,10 @@ lines aint so bad.
 
 And so here we are `.tmux.conf`
 
-{{< gist jmoyers 101302f09632df908d84b3f79d7d54aa ".tmux.conf" >}}
+<script src="https://gist.github.com/jmoyers/101302f09632df908d84b3f79d7d54aa.js?file=.tmux.conf"></script>
 
 Lastly, as a bonus, I put together a shell script to open tmux with 3 panes and
 run vim. Completely optional, but also sort of useful if you reboot or kill the
 session.
 
-{{< gist jmoyers ae9b5408aa8d3f9a64b89bed04e23da9 "v.sh" >}}
+<script src="https://gist.github.com/jmoyers/ae9b5408aa8d3f9a64b89bed04e23da9.js?file=v.sh"></script>

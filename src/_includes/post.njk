@@ -36,22 +36,18 @@ layout: base
   <div class="post-navigation">
     <div class="nav-container{% if newerPost and olderPost %} nav-container--two-column{% endif %}">
       {%- if olderPost -%}
-        <div class="nav-post nav-post--previous">
+        <a href="{{ olderPost.url }}" class="nav-post nav-post--previous nav-post__link">
           <span class="nav-post__label">Previous post</span>
-          <a href="{{ olderPost.url }}" class="nav-post__link">
-            <h3 class="nav-post__title">{{ olderPost.data.title }}</h3>
-            <p class="nav-post__date">{{ olderPost.date | dateFormat }}</p>
-          </a>
-        </div>
+          <h3 class="nav-post__title">{{ olderPost.data.title }}</h3>
+          <p class="nav-post__date">{{ olderPost.date | dateFormat }}</p>
+        </a>
       {%- endif -%}
       {%- if newerPost -%}
-        <div class="nav-post nav-post--next">
+        <a href="{{ newerPost.url }}" class="nav-post nav-post--next nav-post__link">
           <span class="nav-post__label">Next post</span>
-          <a href="{{ newerPost.url }}" class="nav-post__link">
-            <h3 class="nav-post__title">{{ newerPost.data.title }}</h3>
-            <p class="nav-post__date">{{ newerPost.date | dateFormat }}</p>
-          </a>
-        </div>
+          <h3 class="nav-post__title">{{ newerPost.data.title }}</h3>
+          <p class="nav-post__date">{{ newerPost.date | dateFormat }}</p>
+        </a>
       {%- endif -%}
     </div>
   </div>

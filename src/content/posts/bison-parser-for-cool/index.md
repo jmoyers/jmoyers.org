@@ -91,4 +91,4 @@ regards to implementation).
 
 **Main Parser**
 
-{{< gist jmoyers 6a2c63a42726846a53a4a2ca3ec97b0e "cool.y" >}}
+<script src="https://gist.github.com/jmoyers/6a2c63a42726846a53a4a2ca3ec97b0e.js?file=cool.y"></script>

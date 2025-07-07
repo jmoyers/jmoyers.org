@@ -1,26 +1,26 @@
 ---
-title: 'A look at memcpy assembly'
-date: '2016-05-27T05:16:59.000Z'
+title: "A look at memcpy assembly"
+date: "2016-05-27T05:16:59.000Z"
 featured: false
 draft: false
 tags:
   [
-    'learning',
-    'open security traning',
-    'x86-64',
-    'asm',
-    'memcpy',
-    'university of washington',
-    'x86',
+    "learning",
+    "open security traning",
+    "x86-64",
+    "asm",
+    "memcpy",
+    "university of washington",
+    "x86",
   ]
 ---
 
 I've been learning x86(-64) assembly on both Mac and Windows.
 
-I've been using the resources at [Open Security
-Training](http://OpenSecurityTraining.info) as well as as the [University of
-Washington Hardware/Software
-Interface](http://coursera.org/course/hwswinterface) course.
+I've been using the resources at
+[Open Security Training](http://OpenSecurityTraining.info) as well as as the
+[University of Washington Hardware/Software Interface](http://coursera.org/course/hwswinterface)
+course.
 
 My intent is to read two different selections on Windows and Mac OS internals as
 well in a quest to get closer to the hardware.
@@ -28,7 +28,7 @@ well in a quest to get closer to the hardware.
 One of the exercises was to disassemble memcpy and take a look at what its doing
 down a particular branch. Found it interesting, so gist is below.
 
-{{< gist jmoyers b76cc8e9dbf122b60cab515025d7bb76 "memcpy.asm" >}}
+<script src="https://gist.github.com/jmoyers/b76cc8e9dbf122b60cab515025d7bb76.js?file=memcpy.asm"></script>
 
 1.  If the size of the struct is under 32 bytes, it will do 4 byte copies using
     mov (source -> edx -> destination), then 1 byte copies (source -> al ->

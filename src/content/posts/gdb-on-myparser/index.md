@@ -19,4 +19,4 @@ Still working on the actual parser, but I did run into a situation where I
 actually needed to debug the parser in gdb. Not immediately obvious how to get
 this working, so I modified the myparser shell script with my findings.
 
-{{< gist jmoyers 63c1c804a9db16ffe0e52bc66eda9aa7 "myparser.sh" >}}
+<script src="https://gist.github.com/jmoyers/63c1c804a9db16ffe0e52bc66eda9aa7.js?file=myparser.sh"></script>
