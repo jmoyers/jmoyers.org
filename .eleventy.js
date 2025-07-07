@@ -54,44 +54,7 @@ module.exports = function (eleventyConfig) {
       return content.split("<!--more-->")[0].trim();
     }
 
-    // Parse the HTML content to extract text
-    const cheerio = require("cheerio");
-    const $ = cheerio.load(content);
-
-    // Get all paragraph elements
-    const paragraphs = $("p");
-
-    if (paragraphs.length > 0) {
-      let excerptText = "";
-      const maxLength = 585; // Increased by 30% from 450
-
-      // Combine text from multiple paragraphs until we reach max length
-      for (let i = 0; i < paragraphs.length; i++) {
-        const paraText = $(paragraphs[i]).text().trim();
-
-        // If adding this paragraph would exceed our limit, truncate it
-        if (excerptText.length + paraText.length + 1 > maxLength) {
-          const remainingSpace = maxLength - excerptText.length - 1;
-          if (remainingSpace > 50) {
-            // Only add if we have meaningful space left
-            let truncatedPara = paraText.substring(0, remainingSpace);
-            const lastSpace = truncatedPara.lastIndexOf(" ");
-            if (lastSpace > 0) {
-              truncatedPara = truncatedPara.substring(0, lastSpace);
-            }
-            excerptText += (excerptText ? " " : "") + truncatedPara;
-          }
-          break;
-        }
-
-        // Add the full paragraph
-        excerptText += (excerptText ? " " : "") + paraText;
-      }
-
-      return excerptText + "...";
-    }
-
-    // Fallback - strip HTML and get first 520 chars
+    // Strip HTML and get first 520 chars
     const plainText = content.replace(/<[^>]*>/g, "").trim();
     let excerpt = plainText.substring(0, 520);
     const lastSpace = excerpt.lastIndexOf(" ");
@@ -126,7 +89,7 @@ module.exports = function (eleventyConfig) {
   const markdownIt = require("markdown-it");
   const markdownItOptions = {
     html: true,
-    breaks: true,
+    breaks: false,
     linkify: true,
   };
   eleventyConfig.setLibrary("md", markdownIt(markdownItOptions));

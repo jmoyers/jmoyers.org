@@ -89,7 +89,7 @@ body {
 .header {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 3rem;
   padding-bottom: 0.5rem;
   margin-bottom: 2rem;
@@ -150,10 +150,9 @@ body {
 .header__about {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   margin-right: 3rem;
   text-align: right;
-  height: 12rem;
+  height: 13rem;
 }
 
 @media only screen and (max-width: 600px) {
@@ -168,6 +167,8 @@ body {
   padding: 0;
   font-weight: 700;
   line-height: 1.2;
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
 }
 
 .header__whoami {
@@ -187,7 +188,7 @@ body {
 }
 
 .header__profile img {
-  width: 14rem;
+  width: 20rem;
 }
 
 @media only screen and (max-width: 600px) {
@@ -199,7 +200,7 @@ body {
 .social {
   display: flex;
   justify-content: flex-end;
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 0.8rem;
   list-style: none;
 }
 
@@ -309,10 +310,10 @@ body {
 .article-summary,
 .article-summary-summary {
   padding: 1.5rem 0 1.5rem 2rem;
-  height: 22rem;
   display: flex;
   flex-direction: column;
   position: relative;
+  transition: background-color 0.2s ease;
 }
 
 .article-summary::before,
@@ -350,6 +351,8 @@ body {
 .article-summary:hover,
 .article-summary-summary:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: background-color 0.2s ease;
 }
 
 @media only screen and (max-width: 600px) {
