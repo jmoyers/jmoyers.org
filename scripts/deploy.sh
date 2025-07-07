@@ -16,6 +16,7 @@ fi
 # Configuration (can be overridden by environment variables)
 BUCKET_NAME=${DOMAIN_NAME:-"jmoyers.org"}
 CLOUDFRONT_DISTRIBUTION_ID=${CLOUDFRONT_DISTRIBUTION_ID:-""}
+AWS_REGION=${AWS_REGION:-"us-west-2"}
 
 echo -e "${YELLOW}Starting deployment...${NC}"
 
@@ -36,10 +37,11 @@ echo -e "${YELLOW}Building site...${NC}"
 yarn build
 
 # Sync files to S3
-echo -e "${YELLOW}Syncing files to S3...${NC}"
+echo -e "${YELLOW}Syncing files to S3 (region: $AWS_REGION)...${NC}"
 
 # Sync static assets with long cache headers
 aws s3 sync dist/ s3://$BUCKET_NAME/ \
+    --region $AWS_REGION \
     --exclude "*.html" \
     --exclude "*.xml" \
     --exclude "*.txt" \
@@ -48,6 +50,7 @@ aws s3 sync dist/ s3://$BUCKET_NAME/ \
 
 # Sync HTML files with short cache headers
 aws s3 sync dist/ s3://$BUCKET_NAME/ \
+    --region $AWS_REGION \
     --exclude "*" \
     --include "*.html" \
     --include "*.xml" \
@@ -57,9 +60,11 @@ aws s3 sync dist/ s3://$BUCKET_NAME/ \
 
 # Set special cache headers for specific files
 aws s3 cp dist/index.html s3://$BUCKET_NAME/index.html \
+    --region $AWS_REGION \
     --cache-control "public, max-age=0, must-revalidate"
 
 aws s3 cp dist/404.html s3://$BUCKET_NAME/404.html \
+    --region $AWS_REGION \
     --cache-control "public, max-age=300"
 
 # Invalidate CloudFront cache if distribution ID is provided

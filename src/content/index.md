@@ -1,6 +1,6 @@
 ---
 layout: home
-title: "Joshua | Full Stack Software Engineering"
+title: "Joshua | CTO @ Encamp"
 permalink: /
 ---
 

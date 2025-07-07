@@ -10,8 +10,6 @@ why I believe this concern, while understandable, misses the bigger picture.
 
 <!--more-->
 
-## The Noise Problem
-
 First, let's address the elephant in the room: the "AI influencers" aren't
 incentivized to give you a measured, nuanced, or hopeful take on current
 advancements. The algorithm loves top 10 lists and rage bait. Rarely does
@@ -20,8 +18,6 @@ amplified.
 
 This creates a distorted view of what's actually happening in the field. The
 loudest voices aren't necessarily the most informed ones.
-
-## The Reality for Working Engineers
 
 If you're an experienced software engineer and you've explored tools like Cursor
 or Windsurf, you know it's been incredible not to have to write as much tedious
@@ -33,8 +29,6 @@ for the motivated individual.
 
 **Don't let go of the wheel.** Use LLMs to explore, build understanding, and
 hone your craft.
-
-## The Progression We're Seeing
 
 As underlying models have improved (ChatGPT-4, Anthropic Claude 3.5 Sonnet,
 ChatGPT-4o, DeepSeek, o1, o1-pro, and now o3-mini), it's been extremely exciting
@@ -48,8 +42,6 @@ This won't always be the case, and that's inevitable. However, as an industry
 and society, we'd be very shortsighted to think of this as a catalyst to strip
 away all the junior jobs. That is a bad take.
 
-## The Real Opportunity
-
 Instead, use these advancements to:
 
 - **Spend less time on boilerplate** - Focus energy on the parts that matter
@@ -58,16 +50,12 @@ Instead, use these advancements to:
 - **Build expertise more quickly** - With the incredible resources now at your
   fingertips
 
-## The Market Reality Check
-
 We are currently in a cycle where many of the bigger companies and funds have
 been belt-tightening, and so there are a lot of candidates in the market. Don't
 confuse this with the AI-doomer talk track.
 
 I'd look at it as a renewed call to action to think about and build your
 communication skills.
-
-## What Still Matters (Even More Now)
 
 It has always been the case that the most successful engineers are the ones who
 can communicate clearly and those who understand that software engineering, and
@@ -83,8 +71,6 @@ Ideally, you:
 - **Focus on first principles** - And the problems to be solved
 - **Avoid getting lost in minutiae** - While still maintaining attention to
   detail
-
-## The Path Forward
 
 The future belongs to engineers who can effectively collaborate with AI tools
 while maintaining their critical thinking skills and deep understanding of

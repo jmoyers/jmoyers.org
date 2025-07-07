@@ -3,8 +3,8 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "jmoyers-org"
-      Environment = "production"
+      Project     = var.project_name
+      Environment = var.environment
       ManagedBy   = "terraform"
     }
   }
@@ -17,8 +17,8 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "jmoyers-org"
-      Environment = "production"
+      Project     = var.project_name
+      Environment = var.environment
       ManagedBy   = "terraform"
     }
   }

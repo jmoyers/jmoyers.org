@@ -79,14 +79,43 @@ AWS infrastructure is configured and ready for deployment:
 - **CloudFront** for CDN with SSL certificate
 - **Route53** for DNS (optional migration)
 - **Terraform** for infrastructure as code
+- **TypeScript CLI** for modern deployment workflow
+
+### CLI Commands
+
+The project includes a modern TypeScript CLI for all deployment operations:
+
+```bash
+# Infrastructure management
+yarn cli deploy-infra    # Deploy AWS infrastructure using Terraform
+yarn cli update-env      # Update .env.local with Terraform outputs
+yarn cli terraform [...] # Run any terraform command with environment loaded
+
+# Deployment
+yarn cli deploy          # Deploy website to S3 and invalidate CloudFront
+
+# Information
+yarn cli status          # Show current infrastructure and build status
+yarn cli config          # List all configurable variables
+```
+
+### Terraform Integration
+
+Run any Terraform command through the CLI to ensure proper environment variable
+handling:
+
+```bash
+yarn cli terraform init     # Initialize Terraform
+yarn cli terraform plan     # Plan infrastructure changes
+yarn cli terraform apply    # Apply changes (auto-updates .env.local)
+yarn cli terraform output   # Check outputs
+```
 
 ### Setup
 
 1. Configure AWS credentials in `.env.local`
-2. Deploy infrastructure: `cd infrastructure/aws && terraform apply`
-3. Update `.env.local` with Terraform outputs:
-   `./scripts/update-env-from-terraform.sh`
-4. Deploy site: `./scripts/deploy.sh`
+2. Deploy infrastructure: `yarn cli deploy-infra` (auto-updates .env.local)
+3. Deploy site: `yarn cli deploy`
 
 See `infrastructure/aws/README.md` for detailed instructions.
 

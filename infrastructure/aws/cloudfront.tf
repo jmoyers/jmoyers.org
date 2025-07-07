@@ -49,7 +49,7 @@ resource "aws_cloudfront_distribution" "website" {
     }
 
     min_ttl     = 0
-    default_ttl = 3600
+    default_ttl = var.default_cache_ttl
     max_ttl     = 86400
   }
 
@@ -69,9 +69,9 @@ resource "aws_cloudfront_distribution" "website" {
       }
     }
 
-    min_ttl     = 31536000  # 1 year
-    default_ttl = 31536000  # 1 year
-    max_ttl     = 31536000  # 1 year
+    min_ttl     = var.static_cache_ttl  # 1 year
+    default_ttl = var.static_cache_ttl  # 1 year
+    max_ttl     = var.static_cache_ttl  # 1 year
   }
 
   # Cache behavior for images
@@ -90,9 +90,9 @@ resource "aws_cloudfront_distribution" "website" {
       }
     }
 
-    min_ttl     = 31536000  # 1 year
-    default_ttl = 31536000  # 1 year
-    max_ttl     = 31536000  # 1 year
+    min_ttl     = var.static_cache_ttl  # 1 year
+    default_ttl = var.static_cache_ttl  # 1 year
+    max_ttl     = var.static_cache_ttl  # 1 year
   }
 
   # Cache behavior for fonts
@@ -111,12 +111,12 @@ resource "aws_cloudfront_distribution" "website" {
       }
     }
 
-    min_ttl     = 31536000  # 1 year
-    default_ttl = 31536000  # 1 year
-    max_ttl     = 31536000  # 1 year
+    min_ttl     = var.static_cache_ttl  # 1 year
+    default_ttl = var.static_cache_ttl  # 1 year
+    max_ttl     = var.static_cache_ttl  # 1 year
   }
 
-  price_class = "PriceClass_100"  # Use only US, Canada and Europe
+  price_class = var.cloudfront_price_class  # Use only US, Canada and Europe by default
 
   restrictions {
     geo_restriction {

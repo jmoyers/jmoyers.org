@@ -3,10 +3,17 @@
   "private": true,
   "version": "1.0.0",
   "description": "Personal website for Joshua Moyers",
+  "bin": {
+    "jmoyers": "./dist/cli/index.js"
+  },
   "scripts": {
     "build": "NODE_ENV=production yarn build:css && yarn build:11ty",
     "build:css": "sass src/assets/scss/blog.scss dist/css/blog.css --style=compressed --no-source-map",
     "build:11ty": "NODE_ENV=production eleventy",
+    "build:cli": "tsc --project tsconfig.json --outDir dist && chmod +x dist/cli/index.js",
+    "cli": "yarn build:cli && yarn node dist/cli/index.js",
+    "cli:link": "yarn build:cli && yarn link",
+    "cli:unlink": "yarn unlink",
     "dev": "tsx watch scripts/dev.ts",
     "watch:css": "sass src/assets/scss/blog.scss dist/css/blog.css --watch",
     "watch:11ty": "eleventy --serve --port=8080",
@@ -14,7 +21,8 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
-    "@types/node": "^22.10.2",
+    "@types/inquirer": "^9.0.8",
+    "@types/node": "^24.0.10",
     "cheerio": "^1.0.0",
     "html-minifier": "^4.0.0",
     "markdown-it": "^14.1.0",
@@ -25,5 +33,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "yarn@4.5.3"
+  "packageManager": "yarn@4.5.3",
+  "dependencies": {
+    "chalk": "4",
+    "commander": "^14.0.0",
+    "dotenv": "^17.0.1",
+    "execa": "^9.6.0",
+    "inquirer": "^12.7.0",
+    "ora": "^8.2.0"
+  }
 }

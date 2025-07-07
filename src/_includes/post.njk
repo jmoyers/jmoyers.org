@@ -23,15 +23,36 @@ layout: base
   {%- endif -%}
 {%- endfor -%}
 
+{%- set newerPost = null -%}
+{%- set olderPost = null -%}
+{%- if currentIndex > 0 -%}
+  {%- set newerPost = posts[currentIndex - 1] -%}
+{%- endif -%}
 {%- if currentIndex < posts.length - 1 -%}
   {%- set olderPost = posts[currentIndex + 1] -%}
+{%- endif -%}
+
+{%- if newerPost or olderPost -%}
   <div class="post-navigation">
-    <div class="next-post">
-      <span class="next-post__label">Previous post</span>
-      <a href="{{ olderPost.url }}" class="next-post__link">
-        <h3 class="next-post__title">{{ olderPost.data.title }}</h3>
-        <p class="next-post__date">{{ olderPost.date | dateFormat }}</p>
-      </a>
+    <div class="nav-container{% if newerPost and olderPost %} nav-container--two-column{% endif %}">
+      {%- if olderPost -%}
+        <div class="nav-post nav-post--previous">
+          <span class="nav-post__label">Previous post</span>
+          <a href="{{ olderPost.url }}" class="nav-post__link">
+            <h3 class="nav-post__title">{{ olderPost.data.title }}</h3>
+            <p class="nav-post__date">{{ olderPost.date | dateFormat }}</p>
+          </a>
+        </div>
+      {%- endif -%}
+      {%- if newerPost -%}
+        <div class="nav-post nav-post--next">
+          <span class="nav-post__label">Next post</span>
+          <a href="{{ newerPost.url }}" class="nav-post__link">
+            <h3 class="nav-post__title">{{ newerPost.data.title }}</h3>
+            <p class="nav-post__date">{{ newerPost.date | dateFormat }}</p>
+          </a>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%} 

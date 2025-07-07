@@ -27,38 +27,50 @@ cp env.template .env.local
 
 # Edit .env.local with your AWS credentials and settings
 # You can use either AWS credentials or an AWS profile
+# Make sure to set AWS_REGION (required for Terraform and deployment)
 ```
 
 ## Deployment Steps
 
-### 1. Initialize Terraform
+### Option 1: Using the automated script (recommended)
 
 ```bash
+# From project root
+./scripts/terraform-apply.sh
+```
+
+This script will:
+
+- Load environment variables from `.env.local`
+- Initialize Terraform if needed
+- Run `terraform plan` for review
+- Apply changes after confirmation
+- Provide next steps
+
+### Option 2: Manual deployment
+
+```bash
+# 1. Source environment variables
+source .env.local
+export TF_VAR_aws_region="$AWS_REGION"
+
+# 2. Initialize Terraform
 cd infrastructure/aws
 terraform init
-```
 
-### 2. Review the plan
-
-```bash
+# 3. Review the plan
 terraform plan
-```
 
-### 3. Deploy infrastructure
-
-```bash
+# 4. Deploy infrastructure
 terraform apply
-```
 
-### 4. Update environment variables
-
-```bash
-# Return to project root and update .env.local with Terraform outputs
+# 5. Update environment variables
 cd ../..
 ./scripts/update-env-from-terraform.sh
 ```
 
-This script will automatically populate your `.env.local` file with:
+Both the automated script and `terraform apply` will automatically populate your
+`.env.local` file with:
 
 - CloudFront Distribution ID
 - S3 Bucket Name
@@ -125,3 +137,5 @@ To migrate DNS from DigitalOcean to Route53:
 - S3 bucket is private, only accessible via CloudFront
 - CloudFront enforces HTTPS
 - Origin Access Control (OAC) used instead of legacy OAI
+- Terraform state files and variables are properly gitignored
+- Only `.terraform.lock.hcl` is committed (for provider version locking)

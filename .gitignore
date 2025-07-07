@@ -6,16 +6,25 @@ resources
 node_modules
 backup
 .idea
-*terraform.tfvars*
 *.retry
-.terraform
-*.tfstate*
 *id_rsa*
 *.ssh*
 *.ssl*
+*hosts*
+
+# Terraform
+# Exclude sensitive state and variable files, but keep .terraform.lock.hcl
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.auto.tfvars
+*.plan
+*.backup
+crash.log
+crash.*.log
 *out.plan*
 *out.lock*
-*hosts*
 
 # Yarn
 .yarn/*

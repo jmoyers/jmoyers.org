@@ -359,10 +359,10 @@ power users. I don't want to operate an agent through Slack.
 ## Pitfalls
 
 Mainly, code review is extremely important. And with this volume of output, its
-extremely burdensome. Models (even the smart ones), on their own produce,
+extremely burdensome. Models (even the smart ones), on their own, produce
 monolith untestable components, leave dead code paths, forget the PR context
-between conversations, inconsistently test or write placeholder tests. The PRs
-get extremely large, extremely quickly. Its your principle job when piloting
+between conversations, and inconsistently test or write placeholder tests. The
+PRs get extremely large, extremely quickly. Its your principle job when piloting
 this to be the downward pressure on size, complexity and hold a high quality
 bar.
 
