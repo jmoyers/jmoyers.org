@@ -29,11 +29,9 @@ Anyway, lets see some results.
   - Files Modified: 1,272 files (65 + 14 + 70 + 29 + 1,079 + 15)
 - **Duration: 2.5 days**
 
-![Results Overview](images/image-0.png)
-
 ## Outcome
 
-### 4 new features for Encamp (startup where I serve as CTO)
+### 4 new features for Encamp
 
 - A document upload and indexing pipeline using LLMs for structured metadata
   extraction with a vector database for semantic search
@@ -64,25 +62,51 @@ Anyway, lets see some results.
 
 ## Model usage
 
-- All these calls were through Cursor, unfortunately I didn't track other tools
-- ~120–200 req/hr, peaking near 280 req/hr in late afternoon on our second day
+Based on my detailed Cursor usage logs spanning June 29th - July 6th, 2025
+(note: this dataset covers a longer period than just the focused 2.5-day sprint
+described above):
 
-![Model Usage Statistics](images/image-1.png)
+- **Total requests**: ~12,980 across the full week
+- **Peak activity**: Sustained periods of 30 - 50+ requests per hour during
+  focused development sessions
+
+![Requests Per Minute Over Time](images/requests_per_minute.png)
+
+<figure style="margin: 0.5rem 0 2rem 0; text-align: center;">
+  <figcaption style="font-size: 1.2rem; color: #666;">
+    Figure 1: Temporal distribution of Cursor requests showing intense bursts during focused development sessions
+  </figcaption>
+</figure>
 
 ## Model types
 
-- **claude-4-opus-thinking (daily driver)**: 1,668 requests (6.6% error rate)
-- **default**: 33 requests (9.1% error rate)
-- I ran out of quota (on Ultra) near the end of the second day, reverted to
-  claude-4-sonnet
-- "Max" (more re-prompting and tool-use) mode mostly enabled until quota issues
+The data reveals interesting patterns in model usage and the transition between
+different tiers:
 
-### Alternatives
+![Model Distribution](images/model_types.png)
 
-- claude-4-sonnet (Anthropic) - good/fast results
-- o4-mini-high (OpenAI) - good/fast results
-- gemini-2.5-pro (Google) - comparable to opus, maybe better spatial reasoning
-- o3/o3-pro (OpenAI) - weakest anecdotally, but good at planning
+<figure style="margin: 0.5rem 0 2rem 0; text-align: center;">
+  <figcaption style="font-size: 1.2rem; color: #666;">
+    Figure 2: Model usage distribution showing the transition from Opus to Sonnet as quota limits were reached
+  </figcaption>
+</figure>
+
+- **claude-4-opus-thinking**: Primary model for complex reasoning tasks, used
+  heavily during peak productivity periods
+- **claude-4-sonnet-thinking**: Fallback model after hitting Opus quota limits,
+  still highly capable
+- **Usage patterns**: Clear transition from Ultra (included) quota to
+  usage-based billing partway through
+- "Max" mode enabled consistently throughout for maximum tool-use and
+  re-prompting capabilities
+
+### Model switching strategy
+
+- claude-4-sonnet (Anthropic) - excellent throughput, good results, became the
+  fallback
+- o4-mini-high (OpenAI) - good for brainstorming and alternative perspectives
+- gemini-2.5-pro (Google) - comparable to opus for spatial reasoning tasks
+- o3/o3-pro (OpenAI) - useful for planning phases but slower iteration
 
 ## The new stack
 
@@ -180,12 +204,12 @@ environment, quirks of tooling, versions, operating systems and so on.
 
 I can see remote agents being the way in the future as you scale this process up
 extensively, but its going to require us to have the next generation of tooling
-in my opinion. With how fast things are moving, this might be 6 months from now
-though. Honestly, I hope as an industry we focus on the "native" experience with
-keybinds and management systems optimized for the absolute power user. We'll get
-disproportionate impact. I think thats why Claude Code is so instantly popular -
-they're focusing on the hardcore engineer who loves their environment and cares
-deeply about getting into the flow state.
+in my opinion. With how fast things are moving, this might be a few months from
+now though. Honestly, I hope as an industry we focus on the "native" experience
+with keybinds and management systems optimized for the absolute power user.
+We'll get disproportionate impact. I think thats why Claude Code is so instantly
+popular - they're focusing on the hardcore engineer who loves their environment
+and cares deeply about getting into the flow state.
 
 ## Git worktrees
 
@@ -207,7 +231,9 @@ and `turbo build` again (or whatever your flavor). If you've got a relatively
 hygenic codebase, hopefully this is limited to 5 - 7 files and a few directories
 worth of state.
 
-![Git Worktrees Structure](images/image-2.png)
+This parallel development approach was crucial for maximizing the efficiency of
+AI-assisted development, allowing multiple threads of work to proceed
+simultaneously without conflicts.
 
 It looks like this:
 
@@ -236,7 +262,7 @@ roll.
 
 As you build up habits and realize the parts that the model is going to
 consistently get wrong, you absolutely need to record your findings. I started
-out with README.md files - I moved to Cursor Rules, which are affectively the
+out with `README.md` files - I moved to Cursor Rules, which are affectively the
 same thing, but with a front matter-style block to tell the agent when to attach
 the rules to the context automatically. I've found that the rules are somewhat
 inconsistently applied, but I'm confident thats going to get better.
@@ -285,41 +311,126 @@ this case), and it produces surprisingly excellent results. I nudged towards a
 near pixel perfect implementation with around 15 minutes of fiddling the first
 time through.
 
-![Figma Integration Workflow](images/image-3.png)
+The integration works remarkably well for translating design intent into working
+code while maintaining our application's architecture and design patterns.
 
 ## How can we make this better?
 
-A few small things could make this even more pleasant. One thing is that I
-currently stick to manual approval for terminal commands. This is fine, and I
-prefer it for safety. However, when using multiple agents, there is no fast way
-to figure out which one is waiting for input. Cursor has a notification sound
-when an agent completes, but not when it needs intervention. All we really need
-is a notification system that takes us to where we need to be after
-acknowledging it — the right window, the right tab, and the right text input
-focused.
+A few small things could make this even more pleasant.
 
-We could also use more nuanced rules about auto-apply. Its hard to imagine
-agents not being involved in the decision making process here, but we could, at
-a smallish extra expense, try for a multi-model quorum. We could be looking at a
-tool-use invocation and be judging its destructiveness based on an expanding
-circle of privilege (mutate local state, mutate state outside current context,
-mutate state out of project, touch the network, touch infrastructure etc).
+- An "agent needs attention" notification and pipelining system so I can go
+  directly to the window and pane where I need to review something. Cursor has a
+  "bell" type notification, but its insufficient and inconsistently applied.
+- Better visual differenation options for multiple cursor windows - named based
+  on branch / sandbox / directory and color coded
+- Cursor rules need clear patterns for whats applied when, and it needs to be
+  more intelligent than file globs. "Agent decides" currently doesn't work well.
+  `yarn` over `npm`, don't use interactive shell commands, beware that AWS CLI
+  has a terminal pager by default, don't kill my dev server. I'm leaning towards
+  one terse "always apply," but it needs to be more sophisticated than this.
+- Clear visuals about how often you can use your smarter models before running
+  into usage caps. I want to hold on to my precious Opus and O3 tokens.
+- Select model per window, not universally for every window and tab.
+- A usability bug - your chat input clears when a model finishes a task,
+  potentially blowing away something I was about to clean up
+- Model needs to be able to use the debugger with breakpoints - this would be a
+  huge win. I was debugging flaky integration tests by hand and it was extremely
+  painful to have it use console.log
+- Edit the todo list that the agent keeps on hand without asking the model to do
+  it (you need the model to as well)
+- Cursor agent needs to be able to re-use a terminal rather than endlessly
+  spawning a dev server over and over after `pkill`ing the old one
+- Slightly stupider local agent should be used for tasks like "should we apply a
+  rule" without having to round trip for your main thinking model
 
-That said, I think we're fine for another 6 months to a year if we just had some
-better UX for directing us to the right places for intervention when managing
-multiple agents. Make keybinds, keep us in a flow state, and help us manage
-multiple contexts.
+Other things that helped that I built as I went:
 
-## An aside on cost
+- Unified logging, including API server, type checking and generation processes,
+  browser logging (I built a console.log shim) - the model being aware of the
+  logs made a feedback loop extremely fast
+- Per project containerized test databases - working on multiple branches I
+  needed to integration test multiple features with different schema
+- Multiple AWS sandboxes - I found myself needing and wanting to deploy to a
+  sandbox per branch
 
-I think these tools must be sold as a significant loss leader if my napkin math
-is close to the mark. It seems like even if there is wild efficiency in Cursor's
-context pipeline, the inference costs for a power user seem like they'd
-reach >$20k/year. Am I totally off base here?
+One thing above all else: keep us in the flow state. Optimize for keybinds and
+power users. I don't want to operate an agent through Slack.
 
-![Cost Analysis](images/image-4.png)
+## Pitfalls
 
-## Conclusion
+Mainly, code review is extremely important. And with this volume of output, its
+extremely burdensome. Models (even the smart ones), on their own produce,
+monolith untestable components, leave dead code paths, forget the PR context
+between conversations, inconsistently test or write placeholder tests. The PRs
+get extremely large, extremely quickly. Its your principle job when piloting
+this to be the downward pressure on size, complexity and hold a high quality
+bar.
+
+I found myself reviewing a particular large PR for hours - applying extreme
+pressure to reduce footprint and complexity in the code. Do the normal stuff -
+DRY, testing, explanation, documentation, code quality, consistent style and so
+on. If you don't stick to your guns and just simply care more than other people,
+you're going to produce slop at a rate that is utterly unsustainable. I actually
+cannot imagine this tooling in the hands of a true junior not focused on
+learning their carft. It'll be an absolute nightmare to review.
+
+It will absolutely multiple the effectiveness of an already effective
+practioner. And its going to spiral the ineffective engineer into net negative
+contribution so fast its going to make our collective heads pop off our
+shoulders.
+
+## Token usage and cost analysis
+
+![Daily Token Usage](images/daily_tokens.png)
+
+<figure style="margin: 0.5rem 0 2rem 0; text-align: center;">
+  <figcaption style="font-size: 1.2rem; color: #666;">
+    Figure 3: Daily token consumption showing variance between intensive development and more meeting heavy days
+  </figcaption>
+</figure>
+
+## Usage patterns and cost observations
+
+**Dashboard measurements** (what Cursor reports):
+
+- **Large context windows**: Average 87k tokens/request (~130 pages of text)
+- **High request frequency**: Up to 17 requests/minute during peak sessions
+- **Substantial volume**: ~12,980 requests over the week-long period
+- **Mixed billing**: Transition from "Ultra" included quota to usage-based
+  pricing
+
+**Reported costs**: ~$24k/year extrapolated from my usage patterns
+
+### What this probably doesn't reflect
+
+This dashboard data probably doesn't reflect the actual computational load on
+providers due to optimizations we can't see:
+
+- **Context caching**: Repeated code/chat context likely cached between requests
+- **Request pipelining**: Multiple logged "requests" may share computational
+  resources
+- **Background optimization**: Auto-completion may use different, lighter models
+- **Incremental processing**: Changes might only require partial re-computation
+
+### Economics (pure speculation)
+
+Initially I thought this must be unsustainable from a cost perspective for
+Cursor. However, I think there are factors in the request and context pipeline
+that must make Cursor's reported token usage over inflated. I am imaginging your
+repository being fully indexed lends itself extremely well to context
+compression. I also think that the system prompt applied here must be relying
+much more heavily on semantic search and tool use to narrow the context window
+down to something more reasonable on a per request basis - but behind within
+Cursor's infra. Just a guess, but if my true token count is >1B over a week, I
+think they're going to have a Ultra plan problem and have to walk things back.
+
+Its a little hard to find inference costs for frontier models, but my guess is
+that even now that (as they tune usage and rate limiting) we are probably in a
+profitable zone. I'm also imagining that most users are not absolutely token
+maxing, and that the average use across all users in a tier are probably making
+things dramatically better.
+
+### Conclusion
 
 This is more than real. It's a huge throughput gain with zero sacrifices other
 than becoming utterly and completely dependent on new technology. That is scary.
@@ -348,5 +459,4 @@ but large parts of it are hopeful.
 - Agents are like capable juniors: effective, especially with tight scope and
   context rules
 - Massive throughput improvement, feels sustainable with native workflows
-- Costs to vendors likely unsustainable (estimate: >$100K/yr inference costs)
 - Dives into methods, ergonomics, and why remote agent UX still isn't there yet

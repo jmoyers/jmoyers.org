@@ -1,0 +1,59 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="200" fill="#f8f9fa"/>
+  
+  <!-- Timeline line -->
+  <line x1="80" y1="120" x2="720" y2="120" stroke="#333" stroke-width="3"/>
+  
+  <!-- Date markers -->
+  <g stroke="#666" stroke-width="1">
+    <line x1="80" y1="110" x2="80" y2="130"/>
+    <line x1="180" y1="110" x2="180" y2="130"/>
+    <line x1="280" y1="110" x2="280" y2="130"/>
+    <line x1="380" y1="110" x2="380" y2="130"/>
+    <line x1="480" y1="110" x2="480" y2="130"/>
+    <line x1="580" y1="110" x2="580" y2="130"/>
+    <line x1="680" y1="110" x2="680" y2="130"/>
+    <line x1="720" y1="110" x2="720" y2="130"/>
+  </g>
+  
+  <!-- Date labels -->
+  <g font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666">
+    <text x="80" y="150">Jun 29</text>
+    <text x="180" y="150">Jun 30</text>
+    <text x="280" y="150">Jul 1</text>
+    <text x="380" y="150">Jul 2</text>
+    <text x="480" y="150">Jul 3</text>
+    <text x="580" y="150">Jul 4</text>
+    <text x="680" y="150">Jul 5</text>
+    <text x="720" y="150">Jul 6</text>
+  </g>
+  
+  <!-- Sprint period highlight -->
+  <rect x="430" y="105" width="200" height="30" fill="#ff6b6b" fill-opacity="0.3" stroke="#ff6b6b" stroke-width="2" rx="5"/>
+  
+  <!-- Activity indicators -->
+  <g fill="#4a90e2">
+    <circle cx="80" cy="120" r="4" opacity="0.6"/>
+    <circle cx="180" cy="120" r="6" opacity="0.7"/>
+    <circle cx="280" cy="120" r="8" opacity="0.8"/>
+    <circle cx="380" cy="120" r="10" opacity="0.9"/>
+    <circle cx="480" cy="120" r="14" opacity="1"/>
+    <circle cx="580" cy="120" r="16" opacity="1"/>
+    <circle cx="680" cy="120" r="12" opacity="0.9"/>
+    <circle cx="720" cy="120" r="6" opacity="0.7"/>
+  </g>
+  
+  <!-- Labels -->
+  <text x="80" y="30" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Analytics Data Collection Period</text>
+  <text x="80" y="50" font-family="Arial, sans-serif" font-size="12" fill="#666">June 29 - July 6, 2025</text>
+  
+  <!-- Sprint label -->
+  <text x="530" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ff6b6b" text-anchor="middle">2.5-Day Sprint</text>
+  
+  <!-- Legend -->
+  <g transform="translate(550, 160)">
+    <circle cx="10" cy="5" r="6" fill="#4a90e2" opacity="0.8"/>
+    <text x="20" y="9" font-family="Arial, sans-serif" font-size="11" fill="#666">Development Activity Level</text>
+  </g>
+</svg> 
