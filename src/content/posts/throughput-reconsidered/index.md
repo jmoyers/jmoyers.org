@@ -182,7 +182,7 @@ Threaded development paradigms come in different flavors in our stack:
   windows or directories, but the cons are pretty heavy: agents interact with
   each other poorly, undo each others work, got into deadlocks editing the same
   files. And when your ideas are too dissimilar, they need to be in a different
-  branch for hygeine. I primarily use it to make small edits to a secondary set
+  branch for hygiene. I primarily use it to make small edits to a secondary set
   of files or work on a back-end task while something is working principally on
   front-end, but in the same concept, so therefore the same branch
 
@@ -215,9 +215,9 @@ extensively, but its going to require us to have the next generation of tooling
 in my opinion. With how fast things are moving, this might be a few months from
 now though. Honestly, I hope as an industry we focus on the "native" experience
 with keybinds and management systems optimized for the absolute power user.
-We'll get disproportionate impact. I think thats why Claude Code is so instantly
-popular - they're focusing on the hardcore engineer who loves their environment
-and cares deeply about getting into the flow state.
+We'll get disproportionate impact. I think that's why Claude Code is so
+instantly popular - they're focusing on the hardcore engineer who loves their
+environment and cares deeply about getting into the flow state.
 
 ## Git worktrees
 
@@ -270,10 +270,10 @@ roll.
 
 As you build up habits and realize the parts that the model is going to
 consistently get wrong, you absolutely need to record your findings. I started
-out with `README.md` files - I moved to Cursor Rules, which are affectively the
+out with `README.md` files - I moved to Cursor Rules, which are effectively the
 same thing, but with a front matter-style block to tell the agent when to attach
 the rules to the context automatically. I've found that the rules are somewhat
-inconsistently applied, but I'm confident thats going to get better.
+inconsistently applied, but I'm confident that's going to get better.
 
 As you learn the shortcomings, you are basically shoring these up with a context
 aware system prompt. Start investing in this immediately and you'll only have to
@@ -380,10 +380,10 @@ DRY, testing, explanation, documentation, code quality, consistent style and so
 on. If you don't stick to your guns and just simply care more than other people,
 you're going to produce slop at a rate that is utterly unsustainable. I actually
 cannot imagine this tooling in the hands of a true junior not focused on
-learning their carft. It'll be an absolute nightmare to review.
+learning their craft. It'll be an absolute nightmare to review.
 
 It will absolutely multiply the effectiveness of an already effective
-practioner. And its going to spiral the ineffective engineer into net negative
+practitioner. And its going to spiral the ineffective engineer into net negative
 contribution so fast its going to make our collective heads pop off our
 shoulders.
 
@@ -453,11 +453,10 @@ efficiently cached repository content.
 The economics suddenly make perfect sense. Cursor isn't paying for 1B+ tokens of
 inference - they're paying for 7M tokens of actual processing plus some caching
 infrastructure costs. That $468 I spent probably cost them closer to $15 - $30
-in actual compute and suddenly I'm a lot less sympathetic to some of the hate
-they've been receiving over Opus rates limiot. I think we're definitely going to
-be seeing downward pressure on price in this space, and thats a good thing.
-Claude Code and other tools seem comparable, and this is an arms race to be
-sure.
+in actual compute and suddenly I'm a lot more sympathetic to some of the users
+complaining about being Opus rate limited. I think we're definitely going to be
+seeing downward pressure on price in this space, and that's a good thing. Claude
+Code and other tools seem comparable, and this is an arms race to be sure.
 
 ### Conclusion
 
