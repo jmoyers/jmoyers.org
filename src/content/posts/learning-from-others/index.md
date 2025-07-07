@@ -4,30 +4,37 @@ date: "2025-03-02"
 tags: ["leadership", "training", "sales", "encamp", "growth"]
 ---
 
-Learning from the best people around you is one of the most underrated growth
-strategies in business.
+It sounds obvious - but putting yourself in an environment where you can
+actually learn from the people around you is maybe the most critical part of
+adjusting your career trajectory.
+
+I recently came across a random post on LinkedIn about how companies scale
+revenue teams effectively, and it got me thinking about the incredible learning
+opportunities I've had this year at Encamp.
 
 <!--more-->
-
-I recently came across insights about how companies scale revenue teams
-effectively, and it got me thinking about the incredible learning opportunities
-I've had this year at Encamp.
 
 > "Most startups don't have an AE problem - they have an onboarding problem. A
 > bad ramp won't just slow down a rep, it can fundamentally impact your ability
 > to scale effectively."
 
-This resonates deeply with what I've been experiencing firsthand.
+I love when I find something like this that actually matches my mental model of
+the problems you face every day when scaling up a revenue organization in a
+startup. It matches the challenge on the engineering and product side as well.
+Encamp is in a niche space - and the average prospective employee is not going
+to know much about our ICP or target personas (the environmental program
+champion inside an enterprise). Its our job as leaders to build an efficient way
+to put our customer's shoes on.
 
 ## Learning from Luke
 
-Luke has been leading founder-led sales at Encamp, and watching him work has
-been like getting a masterclass in authentic selling. He doesn't just pitch our
-product - he genuinely understands our customers' pain points and builds real
-relationships. There's something powerful about a founder who can articulate not
-just what we do, but why we exist. His approach to discovery calls and his
-ability to connect our mission to real business outcomes has taught me how much
-storytelling matters in B2B sales.
+Like almost all startups, we started with founder-led sales at Encamp. However,
+watching Luke work has been like getting a masterclass in authentic selling. He
+doesn't just pitch our product - he genuinely understands our customers' pain
+points and builds real relationships. There's something powerful about a founder
+who can articulate not just what we do, but why we exist. His approach to
+discovery calls and his ability to connect our mission to real business outcomes
+has taught me how much storytelling matters in B2B sales.
 
 ## Learning from Jenny Vance
 

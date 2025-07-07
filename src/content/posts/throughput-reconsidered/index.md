@@ -1,5 +1,5 @@
 ---
-title: "Throughput, Reconsidered"
+title: "Throughput, reconsidered"
 date: "2025-07-06"
 tags: ["posts"]
 ---
@@ -332,7 +332,7 @@ A few small things could make this even more pleasant.
   into usage caps. I want to hold on to my precious Opus and O3 tokens.
 - Select model per window, not universally for every window and tab.
 - A usability bug - your chat input clears when a model finishes a task,
-  potentially blowing away something I was about to clean up
+  potentially blowing away something you were about to submit
 - Model needs to be able to use the debugger with breakpoints - this would be a
   huge win. I was debugging flaky integration tests by hand and it was extremely
   painful to have it use console.log
@@ -374,7 +374,7 @@ you're going to produce slop at a rate that is utterly unsustainable. I actually
 cannot imagine this tooling in the hands of a true junior not focused on
 learning their carft. It'll be an absolute nightmare to review.
 
-It will absolutely multiple the effectiveness of an already effective
+It will absolutely multiply the effectiveness of an already effective
 practioner. And its going to spiral the ineffective engineer into net negative
 contribution so fast its going to make our collective heads pop off our
 shoulders.
@@ -420,7 +420,7 @@ that must make Cursor's reported token usage over inflated. I am imaginging your
 repository being fully indexed lends itself extremely well to context
 compression. I also think that the system prompt applied here must be relying
 much more heavily on semantic search and tool use to narrow the context window
-down to something more reasonable on a per request basis - but behind within
+down to something more reasonable on a per request basis - but behind and within
 Cursor's infra. Just a guess, but if my true token count is >1B over a week, I
 think they're going to have a Ultra plan problem and have to walk things back.
 

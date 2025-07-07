@@ -9,16 +9,19 @@ about startups, the way in which we build software, and how to create an
 environment where hungry/humble/smart people can thrive. I love design and user
 experience and I care a lot about what I do. Outcome over process and output.
 
+<div class="resume-layout">
+<div class="resume-main">
+
 ## CTO - Encamp
 
 _2022 - present_
 
-The end-to-end environmental compliance platform. I run product, engineering,
-and compliance. Our product helps companies understand, managage and comply with
-environmental regulations. We work on hard problems - integrating with 100+
-government agencies, processing complex regulatory documents, and delivering
-reports that keep emergency responders safe. We make sense of our customer's
-environmental data and make it an asset rather than a risk.
+Encamp is the end-to-end environmental compliance platform. I run product,
+engineering, and compliance. Our product helps companies understand, manage and
+comply with environmental regulations. We work on hard problems - integrating
+with 100+ government agencies, processing complex regulatory documents, and
+delivering reports that keep emergency responders safe. We make sense of our
+customer's environmental data.
 
 The company has a mission that is important - make what's good for business good
 for the environment. I spend a lot of time thinking about how to build systems
@@ -103,3 +106,49 @@ competitive industrial marketplace.
 The work involved creating partnerships with vendors in China and the US,
 handling contract negotiations, prototyping, and figuring out how to scale
 manufacturing and delivery.
+
+</div>
+<div class="resume-sidebar">
+
+## Reading
+
+<div class="sidebar-item">
+<strong>Will Larson</strong> - Staff Engineer, An Elegant Puzzle. Best writing on engineering management and systems thinking I've found.
+</div>
+
+<div class="sidebar-item">
+<strong>The Phoenix Project</strong> - Gene Kim and team. Changed how I think about software delivery and organizational health.
+</div>
+
+<div class="sidebar-item">
+<strong>Andrew Grove</strong> - High Output Management. Still the best book on management fundamentals.
+</div>
+
+<div class="sidebar-item">
+<strong>Patrick Lencioni</strong> - The Ideal Team Player. Simple framework for thinking about who you want to work with.
+</div>
+
+<div class="sidebar-item">
+<strong>Jocko Willink</strong> - Extreme Ownership, Dichotomy of Leadership. Leadership principles that actually work under pressure.
+</div>
+
+<div class="sidebar-item">
+<strong>Camille Fournier</strong> - The Manager's Path. Practical guide to engineering leadership that doesn't sugarcoat the hard parts.
+</div>
+
+## When I'm not working
+
+<div class="sidebar-item">
+<strong>Electronics and robotics</strong> - currently building a first-person view quadcopter drone from scratch. It's a good excuse to remember how hardware works.
+</div>
+
+<div class="sidebar-item">
+<strong>Music</strong> - playing guitar for about 20 years now. You'll probably see a Fender Stratocaster or Taylor Grand Auditorium in the background of video calls.
+</div>
+
+<div class="sidebar-item">
+<strong>Reading</strong> - science fiction, fantasy, and engineering books. Ursula K. Le Guin and Iain M. Banks are favorites. Always looking for good book recommendations.
+</div>
+
+</div>
+</div>

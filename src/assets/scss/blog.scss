@@ -230,17 +230,17 @@ body {
 }
 
 .content h2 {
-  margin-top: 4rem;
+  margin-top: 2.5rem;
   margin-bottom: 0.5rem;
   font-size: 2.4rem;
 }
 
 .content h2:first-child {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .content h3 {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
@@ -256,7 +256,7 @@ body {
 }
 
 .content p {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .content em {
@@ -475,7 +475,7 @@ body {
 
 .article__content p,
 .article-summary__content p {
-  margin: 0 0 2rem;
+  margin: 0 0 1.8rem;
 }
 
 .article__content {
@@ -500,14 +500,14 @@ body {
 
 .article__content h2,
 .article-summary__content h2 {
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .article__content h3,
 .article-summary__content h3 {
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .article__content pre,
@@ -540,6 +540,60 @@ body {
   display: block;
   max-width: 100%;
   margin: 1rem auto;
+}
+
+.article__content blockquote,
+.article-summary__content blockquote {
+  position: relative;
+  margin: 2.5rem 0;
+  padding: 1.5rem 0 1.5rem 2rem;
+  background-color: rgba(0, 0, 0, 0.015);
+  border-left: 0.4rem solid #dbeafe;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 1.8rem;
+  line-height: 1.6;
+}
+
+.article__content blockquote p,
+.article-summary__content blockquote p {
+  margin: 0 0 1rem;
+}
+
+.article__content blockquote p:last-child,
+.article-summary__content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Alternate blockquote colors to match excerpt styling */
+.article__content blockquote:nth-of-type(4n + 1),
+.article-summary__content blockquote:nth-of-type(4n + 1) {
+  border-left-color: #dbeafe;
+}
+
+.article__content blockquote:nth-of-type(4n + 2),
+.article-summary__content blockquote:nth-of-type(4n + 2) {
+  border-left-color: #d1fae5;
+}
+
+.article__content blockquote:nth-of-type(4n + 3),
+.article-summary__content blockquote:nth-of-type(4n + 3) {
+  border-left-color: #e9d5ff;
+}
+
+.article__content blockquote:nth-of-type(4n + 4),
+.article-summary__content blockquote:nth-of-type(4n + 4) {
+  border-left-color: #fed7aa;
+}
+
+@media only screen and (max-width: 600px) {
+  .article__content blockquote,
+  .article-summary__content blockquote {
+    margin: 2rem 0;
+    padding: 1.2rem 0 1.2rem 1.5rem;
+    border-left-width: 0.3rem;
+    font-size: 1.7rem;
+  }
 }
 
 .article__more {
@@ -658,5 +712,122 @@ body {
 
   .content p {
     margin-bottom: 2rem;
+  }
+}
+
+.resume-layout {
+  display: flex;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.resume-main {
+  flex: 7;
+  min-width: 0;
+}
+
+.resume-sidebar {
+  flex: 3;
+  min-width: 0;
+}
+
+.resume-sidebar h2 {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.resume-sidebar h2:first-child {
+  margin-top: 0;
+}
+
+.resume-sidebar h2:not(:first-child) {
+  margin-top: 3rem;
+}
+
+.resume-sidebar p {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-item {
+  padding: 1.5rem 0 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 0.4rem;
+  background-color: #dbeafe;
+}
+
+/* Cycle through soft colors for different sidebar items */
+.sidebar-item:nth-child(odd)::before {
+  background-color: #dbeafe;
+}
+
+.sidebar-item:nth-child(even)::before {
+  background-color: #d1fae5;
+}
+
+.sidebar-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-item p {
+  margin: 0;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+@media only screen and (max-width: 900px) {
+  .resume-layout {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .resume-main,
+  .resume-sidebar {
+    flex: none;
+  }
+
+  .resume-sidebar h2 {
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+
+  .resume-sidebar h2:first-child {
+    margin-top: 2rem;
+  }
+
+  .resume-sidebar p {
+    font-size: 1.8rem;
+  }
+
+  .sidebar-item {
+    padding: 1rem 0 1rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar-item::before {
+    width: 0.3rem;
+    top: 1rem;
+    bottom: 1rem;
+  }
+
+  .sidebar-item p {
+    font-size: 1.8rem;
+  }
+
+  .sidebar-item:hover {
+    background-color: transparent;
   }
 }

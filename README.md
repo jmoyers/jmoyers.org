@@ -18,11 +18,18 @@ CloudFront.
 # Install dependencies
 yarn install
 
+# Set up environment variables for deployment
+cp env.template .env.local
+# Edit .env.local with your AWS credentials
+
 # Start development server with hot reload
 yarn dev
 
 # Build for production
 yarn build
+
+# Deploy to AWS (after infrastructure setup)
+./scripts/deploy.sh
 
 # Clean build artifacts
 yarn clean
@@ -66,12 +73,22 @@ Your content here...
 
 ## Deployment
 
-AWS deployment setup is pending. The plan is:
+AWS infrastructure is configured and ready for deployment:
 
-- S3 bucket for static hosting
-- CloudFront for CDN
-- Route53 for DNS
-- Terraform for infrastructure as code
+- **S3 bucket** for static hosting
+- **CloudFront** for CDN with SSL certificate
+- **Route53** for DNS (optional migration)
+- **Terraform** for infrastructure as code
+
+### Setup
+
+1. Configure AWS credentials in `.env.local`
+2. Deploy infrastructure: `cd infrastructure/aws && terraform apply`
+3. Update `.env.local` with Terraform outputs:
+   `./scripts/update-env-from-terraform.sh`
+4. Deploy site: `./scripts/deploy.sh`
+
+See `infrastructure/aws/README.md` for detailed instructions.
 
 ## Migration from Hugo
 
