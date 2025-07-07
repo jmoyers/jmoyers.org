@@ -14,10 +14,10 @@ most comfortable and fluid experience possible.
 I'll provide my background so you can decide if this is relevant to you, but
 also to lend some credence to my claim. I've been an engineering leader and
 staff engineer for a couple of decades. My day job is managing around 40 people
-in a distributed environment as a CTO of a venture backed startup. I've touched
-a lot of platforms and languages over the years, including native and close to
-the metal commercial products. Plenty of failures and a few commercial successes
-along the way. I am mostly quiet on social media.
+in a distributed environment as the CTO of a venture backed startup. I've
+touched a lot of platforms and languages over the years, including native and
+close to the metal commercial products. Plenty of failures and a few commercial
+successes along the way. I am mostly quiet on social media.
 
 Anyway, lets see some results.
 
