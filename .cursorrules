@@ -16,6 +16,8 @@
 - **NEVER edit the `.env.local` file** - it's protected and user-managed
 - **ALWAYS disable AWS CLI pager** - use `--no-cli-pager` flag or `AWS_PAGER=""`
   to prevent output issues
+- **NEVER use "!" in CLI text/messages** unless it's part of desired terminal
+  functionality - "!" has special meaning in bash/zsh for history expansion
 
 ## Infrastructure Management
 
