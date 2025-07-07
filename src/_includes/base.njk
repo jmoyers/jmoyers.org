@@ -1,8 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>{{ title or site.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/css/blog.css" as="style">
+    <link rel="preload" href="/font/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/font/OpenSans-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    
+    <!-- Prefetch likely next navigations -->
+    {% if page.url == "/" %}
+    <link rel="prefetch" href="/posts/">
+    <link rel="prefetch" href="/posts/index.html">
+    {% endif %}
+    
+    <!-- DNS prefetch for external links -->
+    <link rel="dns-prefetch" href="https://encamp.com">
+    <link rel="dns-prefetch" href="https://github.com">
+    <link rel="dns-prefetch" href="https://twitter.com">
+    <link rel="dns-prefetch" href="http://www.linkedin.com">
+    <link rel="dns-prefetch" href="http://stackoverflow.com">
+    
     <link rel="stylesheet" href="/css/blog.css" />
     <link rel="manifest" href="/site.webmanifest" />
   </head>
@@ -64,5 +84,48 @@
         Joshua Moyers, jmoyers@gmail.com
       </div>
     </div>
+    
+    <!-- Prefetch internal links on hover for instant navigation -->
+    <script>
+      // Keep track of prefetched URLs to avoid duplicates
+      const prefetched = new Set();
+      
+      // Only prefetch internal links
+      function shouldPrefetch(url) {
+        try {
+          const urlObj = new URL(url);
+          return urlObj.origin === window.location.origin && !prefetched.has(url);
+        } catch (e) {
+          return false;
+        }
+      }
+      
+      // Prefetch a URL
+      function prefetchLink(url) {
+        if (!shouldPrefetch(url)) return;
+        
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+        prefetched.add(url);
+      }
+      
+      // Add hover listeners to all links
+      document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('a[href]');
+        
+        links.forEach(link => {
+          link.addEventListener('mouseenter', () => {
+            prefetchLink(link.href);
+          }, { passive: true });
+          
+          // Also prefetch on touchstart for mobile
+          link.addEventListener('touchstart', () => {
+            prefetchLink(link.href);
+          }, { passive: true });
+        });
+      });
+    </script>
   </body>
 </html> 

@@ -7,6 +7,14 @@ pagination:
   alias: posts
 permalink: "posts/{% if pagination.pageNumber > 0 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
 ---
+
+<!-- Prefetch the first 3 posts on this page for instant navigation -->
+{% for post in posts %}
+  {% if loop.index0 < 3 %}
+    <link rel="prefetch" href="{{ post.url }}">
+  {% endif %}
+{% endfor %}
+
 {% for post in posts %}
 <article 
   onclick="location.href='{{ post.url }}'" 

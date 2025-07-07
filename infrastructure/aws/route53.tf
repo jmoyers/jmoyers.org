@@ -51,8 +51,10 @@ resource "aws_route53_record" "website_validation" {
 }
 
 # Certificate validation
+# This resource waits for the certificate to be validated
+# Set wait_for_certificate_validation = false to skip waiting
 resource "aws_acm_certificate_validation" "website" {
-  count           = var.create_route53_zone ? 1 : 0
+  count           = var.create_route53_zone && var.wait_for_certificate_validation ? 1 : 0
   provider        = aws.us_east_1
   certificate_arn = aws_acm_certificate.website.arn
   validation_record_fqdns = [for record in aws_route53_record.website_validation : record.fqdn]

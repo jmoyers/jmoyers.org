@@ -7,6 +7,31 @@ resource "aws_cloudfront_origin_access_control" "website" {
   signing_protocol                  = "sigv4"
 }
 
+# CloudFront function to handle directory URLs
+resource "aws_cloudfront_function" "index_redirect" {
+  name    = "${replace(var.domain_name, ".", "-")}-index-redirect"
+  runtime = "cloudfront-js-2.0"
+  comment = "Redirect directory URLs to index.html"
+  publish = true
+  code    = <<-EOT
+function handler(event) {
+    var request = event.request;
+    var uri = request.uri;
+    
+    // Check if the URI ends with a slash (directory)
+    if (uri.endsWith('/')) {
+        request.uri = uri + 'index.html';
+    }
+    // Check if the URI is a directory without trailing slash
+    else if (!uri.includes('.')) {
+        request.uri = uri + '/index.html';
+    }
+    
+    return request;
+}
+EOT
+}
+
 # ACM Certificate for CloudFront (must be in us-east-1)
 resource "aws_acm_certificate" "website" {
   provider          = aws.us_east_1
@@ -40,6 +65,12 @@ resource "aws_cloudfront_distribution" "website" {
     target_origin_id       = "S3-${aws_s3_bucket.website.bucket}"
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
+
+    # Attach the CloudFront function to handle directory URLs
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.index_redirect.arn
+    }
 
     forwarded_values {
       query_string = false

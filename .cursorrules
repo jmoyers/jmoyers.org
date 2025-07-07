@@ -14,6 +14,8 @@
 - **NEVER run `terraform apply`, `terraform destroy`, `yarn cli deploy-infra`,
   or any destructive commands** - the user will run these manually
 - **NEVER edit the `.env.local` file** - it's protected and user-managed
+- **ALWAYS disable AWS CLI pager** - use `--no-cli-pager` flag or `AWS_PAGER=""`
+  to prevent output issues
 
 ## Infrastructure Management
 

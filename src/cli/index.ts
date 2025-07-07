@@ -420,7 +420,7 @@ class JMoyersOrgCLI {
       "--delete",
     ]);
 
-    // Sync HTML files with short cache headers
+    // Sync HTML files with short cache headers and UTF-8 content type
     await this.runCommand("aws", [
       "s3",
       "sync",
@@ -432,6 +432,23 @@ class JMoyersOrgCLI {
       "*",
       "--include",
       "*.html",
+      "--content-type",
+      "text/html; charset=utf-8",
+      "--cache-control",
+      "public, max-age=300",
+      "--delete",
+    ]);
+
+    // Sync XML and TXT files separately
+    await this.runCommand("aws", [
+      "s3",
+      "sync",
+      "dist/",
+      `s3://${bucketName}/`,
+      "--region",
+      awsRegion,
+      "--exclude",
+      "*",
       "--include",
       "*.xml",
       "--include",
@@ -449,6 +466,8 @@ class JMoyersOrgCLI {
       `s3://${bucketName}/index.html`,
       "--region",
       awsRegion,
+      "--content-type",
+      "text/html; charset=utf-8",
       "--cache-control",
       "public, max-age=0, must-revalidate",
     ]);
@@ -461,6 +480,8 @@ class JMoyersOrgCLI {
       `s3://${bucketName}/404.html`,
       "--region",
       awsRegion,
+      "--content-type",
+      "text/html; charset=utf-8",
       "--cache-control",
       "public, max-age=300",
     ]);

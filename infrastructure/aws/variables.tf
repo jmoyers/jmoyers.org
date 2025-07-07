@@ -50,4 +50,10 @@ variable "static_cache_ttl" {
   description = "Cache TTL for static assets (in seconds)"
   type        = number
   default     = 31536000
+}
+
+variable "wait_for_certificate_validation" {
+  description = "Whether to wait for ACM certificate validation to complete"
+  type        = bool
+  default     = false
 } 
