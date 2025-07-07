@@ -26,3 +26,14 @@
   validation
 - The CLI automatically updates `.env.local` after successful terraform
   operations
+
+## Emergency Cost Control (Viral Traffic Protection)
+
+- **Emergency brake (nuclear option)** if costs spiral out of control:
+  - Disable CloudFront distribution (makes site unavailable temporarily)
+  - Command: `yarn cli terraform plan -var="enable_cloudfront=false"`
+  - Follow with: `yarn cli terraform apply -var="enable_cloudfront=false"`
+- **Re-enable after emergency**: Change back to `enable_cloudfront=true` and
+  apply
+- **Monitor costs**: Use AWS Cost Explorer and CloudWatch for real-time tracking
+- **Budget alerts**: Configured via Terraform with email notifications

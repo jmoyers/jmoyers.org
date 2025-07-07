@@ -56,4 +56,28 @@ variable "wait_for_certificate_validation" {
   description = "Whether to wait for ACM certificate validation to complete"
   type        = bool
   default     = false
+}
+
+variable "monthly_budget_limit" {
+  description = "Monthly budget limit in USD for cost alerts"
+  type        = number
+  default     = 50
+}
+
+variable "budget_alert_email" {
+  description = "Email address for budget alerts"
+  type        = string
+  default     = ""
+}
+
+variable "budget_alert_phone" {
+  description = "Phone number for budget SMS alerts (format: +1-555-123-4567)"
+  type        = string
+  default     = ""
+}
+
+variable "enable_cost_monitoring" {
+  description = "Enable cost monitoring with budgets and alarms"
+  type        = bool
+  default     = true
 } 

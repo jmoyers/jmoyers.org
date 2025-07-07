@@ -25,6 +25,10 @@ interface EnvConfig {
   ENABLE_VERSIONING?: string;
   DEFAULT_CACHE_TTL?: string;
   STATIC_CACHE_TTL?: string;
+  MONTHLY_BUDGET_LIMIT?: string;
+  BUDGET_ALERT_EMAIL?: string;
+  BUDGET_ALERT_PHONE?: string;
+  ENABLE_COST_MONITORING?: string;
 }
 
 class JMoyersOrgCLI {
@@ -189,6 +193,23 @@ class JMoyersOrgCLI {
 
     if (this.envConfig.STATIC_CACHE_TTL) {
       envVars.TF_VAR_static_cache_ttl = this.envConfig.STATIC_CACHE_TTL;
+    }
+
+    if (this.envConfig.MONTHLY_BUDGET_LIMIT) {
+      envVars.TF_VAR_monthly_budget_limit = this.envConfig.MONTHLY_BUDGET_LIMIT;
+    }
+
+    if (this.envConfig.BUDGET_ALERT_EMAIL) {
+      envVars.TF_VAR_budget_alert_email = this.envConfig.BUDGET_ALERT_EMAIL;
+    }
+
+    if (this.envConfig.BUDGET_ALERT_PHONE) {
+      envVars.TF_VAR_budget_alert_phone = this.envConfig.BUDGET_ALERT_PHONE;
+    }
+
+    if (this.envConfig.ENABLE_COST_MONITORING) {
+      envVars.TF_VAR_enable_cost_monitoring =
+        this.envConfig.ENABLE_COST_MONITORING;
     }
 
     if (this.envConfig.AWS_PROFILE) {
@@ -734,6 +755,39 @@ class JMoyersOrgCLI {
         current: this.envConfig.PROJECT_NAME,
         default: "jmoyers-org",
         terraformVar: "TF_VAR_project_name",
+      },
+      {
+        name: "MONTHLY_BUDGET_LIMIT",
+        description: "Monthly budget limit in USD for cost alerts",
+        required: false,
+        current: this.envConfig.MONTHLY_BUDGET_LIMIT,
+        default: "50",
+        terraformVar: "TF_VAR_monthly_budget_limit",
+      },
+      {
+        name: "BUDGET_ALERT_EMAIL",
+        description: "Email address for budget and cost alerts",
+        required: false,
+        current: this.envConfig.BUDGET_ALERT_EMAIL,
+        default: "your-email@example.com",
+        terraformVar: "TF_VAR_budget_alert_email",
+      },
+      {
+        name: "BUDGET_ALERT_PHONE",
+        description:
+          "Phone number for budget SMS alerts (format: +1-555-123-4567)",
+        required: false,
+        current: this.envConfig.BUDGET_ALERT_PHONE,
+        default: "+1-555-123-4567",
+        terraformVar: "TF_VAR_budget_alert_phone",
+      },
+      {
+        name: "ENABLE_COST_MONITORING",
+        description: "Enable cost monitoring with budgets and alarms",
+        required: false,
+        current: this.envConfig.ENABLE_COST_MONITORING,
+        default: "true",
+        terraformVar: "TF_VAR_enable_cost_monitoring",
       },
       {
         name: "ENABLE_VERSIONING",
