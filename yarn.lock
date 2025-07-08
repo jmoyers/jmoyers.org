@@ -2565,6 +2565,8 @@ __metadata:
     sass: "npm:^1.83.0"
     tsx: "npm:^4.19.2"
     typescript: "npm:^5.7.2"
+  bin:
+    jmoyers: ./dist/cli/index.js
   languageName: unknown
   linkType: soft
 
