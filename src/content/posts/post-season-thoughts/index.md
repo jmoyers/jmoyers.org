@@ -1,5 +1,5 @@
 ---
-title: "Post-season thoughts"
+title: "Post-Season Thoughts"
 date: "2025-04-01"
 tags: ["encamp", "leadership", "technology", "growth"]
 ---

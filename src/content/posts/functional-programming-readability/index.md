@@ -1,5 +1,5 @@
 ---
-title: "Functional programming readability"
+title: "Functional Programming Readability"
 date: "2016-05-27T06:47:38.000Z"
 featured: false
 draft: false

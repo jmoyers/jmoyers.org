@@ -1,5 +1,5 @@
 ---
-title: "Throughput, reconsidered"
+title: "Throughput, Reconsidered"
 date: "2025-07-06"
 tags: ["posts"]
 ---

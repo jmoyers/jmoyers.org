@@ -1,5 +1,5 @@
 ---
-title: "We did it"
+title: "We Did It"
 date: "2025-03-01"
 tags: ["encamp", "success", "regulatory", "team", "technology"]
 ---

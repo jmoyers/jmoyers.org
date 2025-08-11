@@ -1,5 +1,5 @@
 ---
-title: "Foxes and hedgehogs"
+title: "Foxes and Hedgehogs"
 date: "2025-08-09"
 tags: ["posts", "ai", "software-development", "productivity"]
 ---

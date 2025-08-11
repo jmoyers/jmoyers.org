@@ -1,5 +1,5 @@
 ---
-title: "Stanford compilers: flex lexer for Cool"
+title: "Stanford Compilers: Flex Lexer for Cool"
 date: "2016-06-06T09:04:39.000Z"
 featured: false
 draft: false

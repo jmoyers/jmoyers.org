@@ -1,5 +1,5 @@
 ---
-title: "(Sococo archive) upcoming chat API"
+title: "(Sococo Archive) Upcoming Chat API"
 date: "2014-04-04T14:17:00.000Z"
 featured: false
 draft: false

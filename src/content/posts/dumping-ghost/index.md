@@ -1,5 +1,5 @@
 ---
-title: "Why I dumped Ghost"
+title: "Why I Dumped Ghost"
 date: "2019-06-28"
 featured: false
 draft: false

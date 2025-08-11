@@ -1,5 +1,5 @@
 ---
-title: "Automating and modernizing my site"
+title: "Automating and Modernizing My Site"
 date: "2019-06-28"
 ---
 

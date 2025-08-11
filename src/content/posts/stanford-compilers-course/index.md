@@ -1,5 +1,5 @@
 ---
-title: "Stanford compilers"
+title: "Stanford Compilers"
 date: "2016-06-05T07:03:09.000Z"
 featured: false
 draft: false

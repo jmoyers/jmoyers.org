@@ -1,5 +1,5 @@
 ---
-title: 'Inbox zero'
+title: 'Inbox Zero'
 date: '2016-05-27T07:09:52.000Z'
 featured: false
 draft: false

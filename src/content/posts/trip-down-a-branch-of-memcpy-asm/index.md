@@ -1,5 +1,5 @@
 ---
-title: "A look at memcpy assembly"
+title: "A Look at Memcpy Assembly"
 date: "2016-05-27T05:16:59.000Z"
 featured: false
 draft: false

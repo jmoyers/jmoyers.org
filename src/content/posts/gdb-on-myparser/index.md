@@ -1,5 +1,5 @@
 ---
-title: "Stanford compilers: gdb with myparser"
+title: "Stanford Compilers: GDB With MyParser"
 date: "2016-06-08T05:25:49.000Z"
 featured: false
 draft: false

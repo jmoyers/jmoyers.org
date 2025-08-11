@@ -1,5 +1,5 @@
 ---
-title: "Minimal tmux dev"
+title: "Minimal Tmux Dev"
 date: "2016-06-03T05:47:55.000Z"
 featured: false
 draft: false

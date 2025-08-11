@@ -1,5 +1,5 @@
 ---
-title: "A sneak peek at our chat release"
+title: "A Sneak Peek at Our Chat Release"
 date: "2014-05-01T14:31:00.000Z"
 featured: false
 draft: false

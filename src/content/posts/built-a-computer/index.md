@@ -1,5 +1,5 @@
 ---
-title: 'Building a computer from nand gates 🔨'
+title: 'Building a Computer From NAND Gates 🔨'
 date: '2016-06-04T09:24:03.000Z'
 featured: false
 draft: false

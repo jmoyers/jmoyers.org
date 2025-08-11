@@ -1,5 +1,5 @@
 ---
-title: "Hands on the wheel"
+title: "Hands on the Wheel"
 date: "2025-06-15"
 tags: ["ai", "software-development", "tools", "engineering", "career", "llm"]
 ---

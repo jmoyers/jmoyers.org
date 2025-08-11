@@ -1,5 +1,5 @@
 ---
-title: "Student mindset in revenue"
+title: "Student Mindset in Revenue"
 date: "2025-03-02"
 tags: ["leadership", "training", "sales", "encamp", "growth"]
 ---

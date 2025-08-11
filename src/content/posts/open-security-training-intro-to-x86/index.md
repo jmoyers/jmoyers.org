@@ -1,5 +1,5 @@
 ---
-title: "Review of Open Security Training x86 courses"
+title: "Review of Open Security Training X86 Courses"
 date: "2016-05-27T06:16:08.000Z"
 featured: false
 draft: false

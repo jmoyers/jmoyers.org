@@ -1,5 +1,5 @@
 ---
-title: "Stanford compilers: bison parser for Cool"
+title: "Stanford Compilers: Bison Parser for Cool"
 date: "2016-06-11T14:26:29.000Z"
 featured: false
 draft: false

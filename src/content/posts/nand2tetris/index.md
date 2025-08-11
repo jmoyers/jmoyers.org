@@ -1,5 +1,5 @@
 ---
-title: "The elements of computing systems"
+title: "The Elements of Computing Systems"
 date: "2016-05-29T09:23:44.000Z"
 featured: false
 draft: false

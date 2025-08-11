@@ -1,5 +1,5 @@
 ---
-title: 'fork() is weird'
+title: 'Fork() Is Weird'
 date: '2016-05-27T14:08:49.000Z'
 featured: false
 draft: false
