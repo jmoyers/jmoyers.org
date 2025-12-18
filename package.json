@@ -7,9 +7,10 @@
     "jmoyers": "./dist/cli/index.js"
   },
   "scripts": {
-    "build": "NODE_ENV=production yarn build:css && yarn build:11ty",
+    "build": "NODE_ENV=production yarn build:css && yarn build:11ty && yarn build:backprop",
     "build:css": "sass src/assets/scss/blog.scss dist/css/blog.css --style=compressed --no-source-map",
     "build:11ty": "NODE_ENV=production eleventy",
+    "build:backprop": "cd backprop && yarn build && cp -r dist ../dist/backprop",
     "build:cli": "tsc --project tsconfig.json --outDir dist && chmod +x dist/cli/index.js",
     "cli": "yarn build:cli && yarn node dist/cli/index.js",
     "cli:link": "yarn build:cli && yarn link",

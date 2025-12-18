@@ -13,6 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Build Components
 - `yarn build:css` - Build CSS from SCSS
 - `yarn build:11ty` - Build static site with Eleventy
+- `yarn build:backprop` - Build backprop teaching app
 - `yarn watch:css` - Watch SCSS files for changes
 - `yarn watch:11ty` - Watch site files with Eleventy dev server
 
@@ -65,6 +66,24 @@ src/
 - `dist/` - Production build output
 - `dist/css/` - Compiled CSS
 - `dist/posts/` - Generated blog pages
+- `dist/backprop/` - Backpropagation teaching app
+
+## Standalone Apps
+
+Standalone React/Vite apps are kept separate from the main Eleventy site but deploy to the same infrastructure.
+
+### backprop/
+Interactive teaching app for the 1986 Rumelhart, Hinton & Williams backpropagation paper.
+
+- **Stack**: React + TypeScript + Vite
+- **URL**: https://jmoyers.org/backprop/
+- **Build**: `yarn build:backprop` (runs automatically with `yarn build`)
+- **Dev**: `cd backprop && yarn dev` (runs on port 5173)
+
+#### Important
+- The app has its own `package.json` and `yarn.lock` (separate Yarn project)
+- Vite base path is set to `/backprop/` for correct asset URLs
+- Built output is copied to `dist/backprop/` during main build
 
 ### Development Workflow
 The development server runs two processes concurrently:
