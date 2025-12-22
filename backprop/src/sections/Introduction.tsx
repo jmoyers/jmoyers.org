@@ -79,9 +79,11 @@ export default function Introduction() {
             <text x="80" y="85" fill="white" fontSize="14" textAnchor="middle" fontFamily="JetBrains Mono">1</text>
             <text x="220" y="85" fill="white" fontSize="14" textAnchor="middle" fontFamily="JetBrains Mono">0</text>
             
-            {/* Attempted line - shows it can't work */}
-            <line x1="30" y1="150" x2="270" y2="150" stroke="#e8b54c" strokeWidth="2" strokeDasharray="8,4" opacity="0.6"/>
-            <text x="275" y="145" fill="#e8b54c" fontSize="10" fontFamily="Outfit">?</text>
+            {/* Multiple attempted lines - shows none can work */}
+            <line x1="30" y1="150" x2="270" y2="150" stroke="#e8b54c" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.5"/>
+            <line x1="150" y1="30" x2="150" y2="270" stroke="#e8b54c" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.5"/>
+            <line x1="30" y1="270" x2="270" y2="30" stroke="#e8b54c" strokeWidth="1.5" strokeDasharray="6,4" opacity="0.5"/>
+            <text x="150" y="150" fill="#e8b54c" fontSize="24" textAnchor="middle" dominantBaseline="middle" fontFamily="Georgia, serif" opacity="0.7">?</text>
           </svg>
         </div>
         <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginTop: '1rem', marginBottom: 0 }}>

@@ -396,13 +396,15 @@ export default function Perceptron() {
             <circle cx="120" cy="120" r="12" fill="#c9454c" />
             <circle cx="30" cy="30" r="12" fill="#c9454c" />
             <circle cx="120" cy="30" r="12" fill="#5cb85c" />
+            {/* Decision boundary separates (1,1) from the other three points */}
             <line
-              x1="0"
-              y1="-45"
-              x2="150"
-              y2="105"
+              x1="60"
+              y1="10"
+              x2="140"
+              y2="90"
               stroke="var(--accent-primary)"
               strokeWidth="2"
+              strokeDasharray="4,3"
             />
           </svg>
           <p
@@ -429,13 +431,15 @@ export default function Perceptron() {
             <circle cx="120" cy="120" r="12" fill="#5cb85c" />
             <circle cx="30" cy="30" r="12" fill="#5cb85c" />
             <circle cx="120" cy="30" r="12" fill="#5cb85c" />
+            {/* Decision boundary separates (0,0) from the other three points */}
             <line
-              x1="0"
-              y1="45"
-              x2="150"
-              y2="195"
+              x1="10"
+              y1="75"
+              x2="90"
+              y2="140"
               stroke="var(--accent-primary)"
               strokeWidth="2"
+              strokeDasharray="4,3"
             />
           </svg>
           <p
