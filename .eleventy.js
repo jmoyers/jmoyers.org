@@ -9,7 +9,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "themes/jmoyers/static/*.png": "/" });
   eleventyConfig.addPassthroughCopy({ "themes/jmoyers/static/*.ico": "/" });
   eleventyConfig.addPassthroughCopy({
-    "themes/jmoyers/static/site.webmanifest": "/",
+    "src/site.webmanifest": "/",
   });
 
   // Copy images from blog posts

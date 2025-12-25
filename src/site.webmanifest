@@ -1,0 +1,16 @@
+{
+  "name": "Joshua Moyers | CTO @ Encamp",
+  "short_name": "Joshua",
+  "description": "Personal site of Joshua Moyers - CTO, engineer, and builder",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "icons": [
+    {
+      "src": "/assets/images/profile.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    }
+  ]
+}
