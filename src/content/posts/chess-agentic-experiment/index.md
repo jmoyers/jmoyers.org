@@ -15,7 +15,7 @@ The core idea: build an agent harness with access to all the tools a chess playe
 
 ## Why Build This?
 
-The goal isn't to replace grandmaster instruction - that would be foolish. Title players provide structured teaching content, and for many of them, it's one of their few sources of secondary income. Chess requires tremendous focus, and these grandmasters have put their lives into analyzing this game.
+The goal isn't to replace master instruction - that would be foolish. Titled players provide structured teaching content, and supporting their work is valuable for the chess community. Chess requires tremendous focus, and these masters have put their lives into analyzing this game.
 
 However, a grandmaster's brain works very differently from your average chess.com player. Lots of steps get skipped. Assumed knowledge pervades the instruction. When I'm looking at a position, I probably need twenty or twenty-five more questions than a titled player to understand what I'm seeing.
 
@@ -98,7 +98,7 @@ I asked the agent to explain the system, and it correctly identified:
 
 But it struggled with some nuances. When I asked it to show what happens when Black falls for the trap, Gemini 3 Pro didn't demonstrate it as cleanly as I'd hoped. It highlighted the right squares but missed the chance to walk through the full tactical sequence.
 
-Interestingly, Claude Opus 4.5 - which has a lower chess ELO - proved to be a slightly better teacher. It's much better at using tools correctly and explains concepts more clearly. There's a fascinating disconnect between raw playing strength and teaching ability.
+Interestingly, Claude Opus 4.5 - which has a lower chess Elo - proved to be a slightly better teacher in the opening phase. It's much better at using tools correctly and explains concepts more clearly. However, towards the middle game, without additional prompt or context tuning, Opus started losing the thread - proceeding into what it called "typical lines" without first evaluating Stockfish or checking move popularity in the databases. There's a fascinating disconnect between raw playing strength and teaching ability, and clearly more work to be done on sustained coherence.
 
 ## Observations
 
