@@ -25,7 +25,6 @@ Following up on [Throughput Reconsidered](/posts/throughput-reconsidered/), here
 | Cache Read Tokens             | 2.72B      |
 | Input Tokens (w/ cache write) | 110.8M     |
 | Output Tokens                 | 14.6M      |
-| Total Cost                    | $2,805.78  |
 | Cache Hit Rate                | 96.1%      |
 | Pull Requests                 | 23         |
 | Lines Added                   | 159,179    |
@@ -38,8 +37,6 @@ Following up on [Throughput Reconsidered](/posts/throughput-reconsidered/), here
 ```
 
 91% merged (21 of 23 PRs).
-
-Something may have caught your eye: $2,805.78. I think for high end throughput, this is absolutely worth it, but your results may vary. Cursor is vastly more expensive than Claude Code when you want to use Anthropic models. I just currently have better success with Cursor, but I've been moving back and forth frequently.
 
 ## Traditional Testing
 
@@ -240,7 +237,7 @@ Sound software design and architecture removes problems. Once you have that firm
 
 - Terence Tao's recent work shows the pattern: AI generates, formal language (Lean) verifies, errors are caught automatically
 - Verifiable harnesses let agents iterate on complex problems (React performance, distributed systems) with concrete feedback
-- January: 23 PRs, 159K lines added, 1,744 tests, 91% merged, $2,806 in Cursor costs
+- January: 23 PRs, 159K lines added, 1,744 tests, 91% merged
 - The review problem is real at this volume - managing it through risk stratification, test coverage, LLM-assisted review, and verifiable outputs
 - Practitioners like Armin Ronacher vs. influencers with dramatic stance-flipping - the difference is in what they share about failures
 - Experts succeed because building harnesses requires first-principles understanding of what to measure
