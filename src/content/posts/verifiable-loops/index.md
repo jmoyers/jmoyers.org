@@ -4,12 +4,7 @@ date: "2026-01-26"
 tags: ["posts", "ai", "software-development", "productivity"]
 ---
 
-On January 7, Terence Tao [posted](https://mathstodon.xyz/@tao/115855840223258103) about an Erdős problem being solved "more or less autonomously by AI." The proof was formalized in Lean:
-
-1. ChatGPT produced a proof
-2. The proof contained minor errors
-3. Aristotle (an AI tool) automatically repaired the gaps and produced a Lean-verified proof
-4. The formal verification caught what would have been invisible errors
+On January 7, Terence Tao [posted](https://mathstodon.xyz/@tao/115855840223258103) about an Erdős problem being solved "more or less autonomously by AI." The key was Lean - a formal proof language that can mechanically verify mathematical arguments.
 
 Tao observed:
 
@@ -44,7 +39,7 @@ Following up on [Throughput Reconsidered](/posts/throughput-reconsidered/), here
 
 91% merged (21 of 23 PRs).
 
-Opus 4.5 is my workhorse. Mostly been using Cursor, but I've done several weekend jaunts back into Claude Code. Also explored OpenCode - mostly because I'm interested in OpenTUI, which is useful if you want to build stable CLI agents of your own.
+Something may have caught your eye: $2,805.78. I think for high end throughput, this is absolutely worth it, but your results may vary. Cursor is vastly more expensive than Claude Code when you want to use Anthropic models. I just currently have better success with Cursor, but I've been moving back and forth frequently.
 
 ## Traditional Testing
 
@@ -95,7 +90,7 @@ OTel/tracing was built for humans debugging production. Agent harnesses are buil
 
 ## Concrete Example
 
-One such harness I've been using is Bolt - a library that captures structured events during React/Apollo execution and exposes them via MCP (Model Context Protocol) so Cursor can query them directly.
+One such harness I've been using is Bolt - a small library I built that captures structured events during React/Apollo execution and exposes them via MCP (Model Context Protocol) so Cursor can query them directly.
 
 **Instrumentation side** (`bolt-metrics`):
 - `startInteraction("action.name")` - marks the beginning of a user action
@@ -197,13 +192,12 @@ From his posts:
 - Measures success by production operability
 - Acknowledges the rough edges: limited context windows, context degradation, "poisoned" conversations
 - Acknowledges failed and rotted tool experiments
-- The human owns the outcome, and that means owning the code quality
 
 His [recent podcast appearance](https://x.com/mitsuhiko/status/2014343603905085915) is worth the hour.
 
 ## High Skill Ceilings
 
-Building a verifiable harness requires knowing what outputs matter. This means first-principles understanding of the problem domain, intuition for what "good" looks like before you can define success criteria, judgment to recognize when the agent is going off the rails vs. making progress, and experience to know which edge cases will bite you in production.
+Building a verifiable harness requires knowing what outputs matter. This means first-principles understanding of the problem domain, intuition for what "good" looks like before you can define success criteria, judgment to recognize when the agent is going off the rails vs. making progress. Note, there is tremendous overlap with the skills that make you a good engineering leader.
 
 From [Foxes and Hedgehogs](/posts/foxes/):
 
@@ -211,7 +205,7 @@ From [Foxes and Hedgehogs](/posts/foxes/):
 
 Experts have done that work. They've built the mental models. When they define a harness that says "TTI < 500ms, single query wave, no spurious re-renders" - they know why those thresholds matter, what violations indicate, and what to do about them.
 
-The harness encodes judgment, but someone had to have the judgment first. The sheer fact that the API is shaped in a specific way influences outcomes. Agents tend to optimize for what they're told to measure, and not much else. Tunnel vision, in other words.
+The harness encodes judgment, but someone had to have the judgment first. The sheer fact that the API is shaped in a specific way influences outcomes. Agents tend to optimize for what they're told to measure, and not much else.
 
 Like any craft, there's deep intuition to develop. We're not limited by how fast we can type anymore - we're limited by how clearly we can think about architecture and how we can create situations where the outcome is guaranteed. Problems go away when systems are designed correctly. They get easier to solve as soon as you measure the correct thing. Micro-optimizations in the wrong area don't make your product any faster, and the same is true for the agentic coding loop. You learn about the bottlenecks by advancing your craft.
 
