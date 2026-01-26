@@ -162,11 +162,13 @@ Better harnesses let you tackle harder problems. Harder problems require better 
 
 ## Review
 
-At 159K lines added in a month, human review of every LOC is difficult to do unassisted. In [Throughput Reconsidered](/posts/throughput-reconsidered/), I noted PRs getting "extremely large, extremely quickly." For reviewers who are also producing their own work, the sheer volume makes it hard to devote enough time. The surface area becomes risky.
+At 159K lines added in a month, human review of every LOC is difficult to do unassisted.
 
 Tests help - 1,744 tests across 620 suites is a mitigating factor. But tests verify intended behavior. They don't catch the emergent issues that harnesses are designed for.
 
 Harnesses add another layer: they verify outcomes dynamically and with more nuance than binary pass/fail. They're especially helpful when using an agent as a sparring partner to subdivide complex problem spaces. Cursor's debug mode is a good example - you can iterate with the agent on a specific issue, with the harness providing concrete feedback on whether each attempt actually improved things.
+
+Another technique: have agents draw component/sequence/architecture diagrams. Have them spell out state machines and link them to desired behaviors described in terse language. Good architecture leads to better intuition about how things work and how we can verify they work. Code smell comes out immediately when you look at a diagram side by side with a large PR. If the diagram looks wrong, the code is probably wrong. After all, if you can't [prepare a freshman lecture](https://kottke.org/17/06/if-you-cant-explain-something-in-simple-terms-you-dont-understand-it) on the topic, you probably don't understand it.
 
 This isn't solved. We need to actively work on this as a community.
 
