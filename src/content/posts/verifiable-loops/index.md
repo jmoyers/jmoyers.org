@@ -48,9 +48,9 @@ Traditional verification methods fall short for certain problem classes:
 
 The gap is complex runtime behavior that emerges from composition:
 
-- A component re-renders 47 times when clicking a filter
+- An expensive component with hundreds of children re-renders 4-5 times when clicking a filter
 - A GraphQL query fires 3 times with identical variables
-- State changes propagate through 12 context consumers
+- Referential stability breaks when changes propagate through consumers
 - Total interaction takes 2.5 seconds when it should take 300ms
 
 These aren't bugs that unit tests catch. They're emergent behaviors that require understanding causality chains across the system.
