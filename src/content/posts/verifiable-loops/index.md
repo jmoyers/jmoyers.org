@@ -373,8 +373,8 @@ domain-specific tools close another gap.
 AI-solved proof formalized in Lean
 
 [2]
-[Integrated Explicit Analytic Number Theory Network](https://terrytao.wordpress.com/2026/01/15/the-integrated-explicit-analytic-number-theory-network/) -
-Tao's project requiring Lean verification for all AI-generated proofs
+[Dario Amodei & Demis Hassabis: The Day After AGI](https://www.youtube.com/watch?v=02YLwsCKUww) -
+Discussion on AI self-improvement loops
 
 [3] [Throughput Reconsidered](/posts/throughput-reconsidered/) - Previous post
 on AI-assisted coding methodology
@@ -388,3 +388,7 @@ the importance of deep understanding
 [6]
 [Agentic Coding Things That Didn't Work](https://lucumr.pocoo.org/2025/7/30/things-that-didnt-work/) -
 Armin Ronacher on failed automation attempts
+
+[7]
+[If you can't explain something in simple terms](https://kottke.org/17/06/if-you-cant-explain-something-in-simple-terms-you-dont-understand-it) -
+Feynman's freshman lecture test
