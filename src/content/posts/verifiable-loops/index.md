@@ -225,10 +225,6 @@ If the agent can verify success by running the code and checking the output, you
 
 ## Closing
 
-The parallel to model providers using models to improve models: they build evaluation harnesses to measure capability, use that feedback to iterate, and the harness is what makes the loop work. For developers, the harness serves the same function.
-
-This is different from "write more tests." Tests verify intended behavior (binary pass/fail). Harnesses verify emergent behavior and provide diagnostic data for why something failed. Tests tell you "it's broken"; harnesses tell you "it re-rendered 47 times because this prop changed."
-
 Sound software design and architecture removes problems. Once you have that firm base to stand on - and can verify something experientially and interactively - domain-specific tools close another gap.
 
 ---
