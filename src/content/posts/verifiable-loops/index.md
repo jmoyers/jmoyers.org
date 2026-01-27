@@ -17,17 +17,9 @@ Tao observed:
 > high-multiplicity conception of what a writeup of an argument is."
 
 This pattern keeps showing up. In AI research, we see labs investing heavily in
-proprietary evals. In a
-[recent conversation with Demis Hassabis](https://www.youtube.com/watch?v=02YLwsCKUww),
-Dario Amodei talks about this loop:
-
-> "The mechanism whereby I imagined it would happen is that we would make models
-> that were good at coding and good at AI research and we would use that to
-> produce the next generation of model."
-
-I have been experimenting with a similar pattern at a smaller scale to good
-effect: build domain-specific harnesses for sufficiently complex problems, and
-the agent can iterate with concrete feedback.
+proprietary evals. I have been experimenting with a similar pattern at a smaller
+scale to good effect: build domain-specific harnesses for sufficiently complex
+problems, and the agent can iterate with concrete feedback.
 
 ## January in Numbers
 
@@ -372,23 +364,19 @@ domain-specific tools close another gap.
 [Terence Tao on Erdős problem #728](https://mathstodon.xyz/@tao/115855840223258103) -
 AI-solved proof formalized in Lean
 
-[2]
-[Dario Amodei & Demis Hassabis: The Day After AGI](https://www.youtube.com/watch?v=02YLwsCKUww) -
-Discussion on AI self-improvement loops
-
-[3] [Throughput Reconsidered](/posts/throughput-reconsidered/) - Previous post
+[2] [Throughput Reconsidered](/posts/throughput-reconsidered/) - Previous post
 on AI-assisted coding methodology
 
-[4] [Foxes and Hedgehogs](/posts/foxes/) - On specialists vs. generalists and
+[3] [Foxes and Hedgehogs](/posts/foxes/) - On specialists vs. generalists and
 the importance of deep understanding
 
-[5] [90%](https://lucumr.pocoo.org/2025/9/29/90-percent/) - Armin Ronacher on
+[4] [90%](https://lucumr.pocoo.org/2025/9/29/90-percent/) - Armin Ronacher on
 40K lines of AI-generated production code
 
-[6]
+[5]
 [Agentic Coding Things That Didn't Work](https://lucumr.pocoo.org/2025/7/30/things-that-didnt-work/) -
 Armin Ronacher on failed automation attempts
 
-[7]
+[6]
 [If you can't explain something in simple terms](https://kottke.org/17/06/if-you-cant-explain-something-in-simple-terms-you-dont-understand-it) -
 Feynman's freshman lecture test
