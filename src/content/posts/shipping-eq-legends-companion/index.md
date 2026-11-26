@@ -268,7 +268,8 @@ time and re-verifies on main before pushing. I capped it at five for two
 reasons. I wanted the product's footprint to grow no faster than I could manage
 its quality. And everything ran on my gaming PC, which could only build and test
 so much in parallel. Scaling past that takes a managed agent setup with cloud
-compute and custom images, which I'll come back to.
+compute and custom images. My next post will cover that parallel managed agent
+setup.
 
 In the first two weeks that was 1,322 commits, 341 merged branches and 39
 releases - about one merge an hour and three releases a day. Each merge is
