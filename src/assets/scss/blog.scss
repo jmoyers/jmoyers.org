@@ -594,6 +594,127 @@ body {
   border: 0.1rem solid rgba(0, 0, 0, 0.1);
 }
 
+/* Tables: header rule, row rules, numbers right-aligned (use `---:` in
+   the markdown), scrolls sideways on narrow screens. */
+.article__content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 1.6rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.article__content th,
+.article__content td {
+  padding: 0.8rem 1.2rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.08);
+}
+
+.article__content th {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.55);
+  border-bottom: 0.2rem solid rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+}
+
+.article__content th:first-child,
+.article__content td:first-child {
+  padding-left: 0;
+}
+
+.article__content th:last-child,
+.article__content td:last-child {
+  padding-right: 0;
+}
+
+.article__content tbody tr:last-child td {
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.25);
+}
+
+/* Visualizations: <figure class="viz" data-src="x.svg"> inlines the SVG
+   (see .eleventy.js). SVGs style themselves with these classes. */
+.article__content figure.viz {
+  margin: 3rem 0;
+}
+
+.article__content figure.viz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: open sans, sans-serif;
+  font-size: 13px;
+}
+
+.article__content figure.viz figcaption {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.viz-box {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 1.25;
+}
+
+.viz-box--main {
+  fill: rgba(0, 0, 0, 0.07);
+  stroke: rgba(0, 0, 0, 0.8);
+  stroke-width: 2;
+}
+
+.viz-edge path {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 1.25;
+}
+
+.viz-arrowhead {
+  fill: rgba(0, 0, 0, 0.45);
+}
+
+.viz-bar {
+  fill: rgba(0, 0, 0, 0.22);
+}
+
+.viz-bar--main {
+  fill: rgba(0, 0, 0, 0.7);
+}
+
+.viz-axis {
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 1;
+}
+
+.viz-dot {
+  fill: rgba(0, 0, 0, 0.55);
+}
+
+.viz-text {
+  fill: rgba(0, 0, 0, 0.85);
+}
+
+.viz-label {
+  font-weight: 800;
+  fill: rgba(0, 0, 0, 0.85);
+}
+
+.viz-note {
+  font-size: 11.5px;
+  fill: rgba(0, 0, 0, 0.55);
+}
+
+.viz-note--main {
+  fill: rgba(0, 0, 0, 0.85);
+}
+
 .article__content img,
 .article-summary__content img {
   display: block;
@@ -843,7 +964,21 @@ body {
     width: 100%;
     overflow-x: auto;
     display: block;
-    white-space: nowrap;
+    font-size: 1.4rem;
+  }
+
+  /* Cells wrap, so a table of sentences stays on the screen; a table
+     with many columns still scrolls sideways. */
+  .article__content td {
+    min-width: 8rem;
+  }
+
+  .article__content figure.viz {
+    overflow-x: auto;
+  }
+
+  .article__content figure.viz svg {
+    min-width: 62rem;
   }
 
   .article__content img {
