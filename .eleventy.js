@@ -50,6 +50,22 @@ module.exports = function (eleventyConfig) {
   // Current year shortcode
   eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
 
+  // Stylesheet URL with a content hash. blog.css is served with a
+  // one-year immutable cache, so the URL has to change when the CSS does,
+  // or returning visitors keep the old styles.
+  eleventyConfig.addShortcode("cssUrl", () => {
+    const fs = require("fs");
+    const crypto = require("crypto");
+    const file = "dist/css/blog.css";
+    if (!fs.existsSync(file)) return "/css/blog.css";
+    const hash = crypto
+      .createHash("sha1")
+      .update(fs.readFileSync(file))
+      .digest("hex")
+      .slice(0, 10);
+    return `/css/blog.css?v=${hash}`;
+  });
+
   // Excerpt/summary filter
   eleventyConfig.addFilter("excerpt", (content) => {
     // First check for manual excerpt marker
